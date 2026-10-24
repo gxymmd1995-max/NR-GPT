@@ -9,11 +9,13 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 
 from cell import NRCell
+from diagnostics import ExampleLogger
 
 
-def main() -> None:
+def main(log: ExampleLogger) -> None:
     """生成 PNG/SVG，避免交互窗口；不将平均时隙示意当作精确 CP 时间轴。"""
     cell = NRCell(n_cell_id=42, n_start_grid=10, bwp_start=20, bwp_size=24)
+    log.dump_state(cell, "cell")
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 11})
     fig, (time_ax, freq_ax) = plt.subplots(2, 1, figsize=(12, 8.4), layout="constrained")
     # 为图底的规范出处预留独立区域，避免与横轴标签重叠。
@@ -47,8 +49,9 @@ def main() -> None:
     for suffix in ("png", "svg"):
         fig.savefig(output / f"NRCell_overview.{suffix}", dpi=160)
     plt.close(fig)
-    print(output / "NRCell_overview.png")
+    log.logger.info("Saved overview PNG/SVG in %s", output)
 
 
 if __name__ == "__main__":
-    main()
+    with ExampleLogger(__file__) as run:
+        main(run)

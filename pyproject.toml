@@ -21,6 +21,7 @@ namespaces = false
 
 [tool.setuptools.package-data]
 cell = ["NRCell.md"]
+diagnostics = ["ExampleLogger.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

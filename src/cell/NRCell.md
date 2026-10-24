@@ -319,7 +319,7 @@ MATLAB 默认 FFT 采用其带宽占用率规则，可能不同于本项目的�
 ```powershell
 .venv\Scripts\python examples/cell/NRCell_demo.py
 .venv\Scripts\python examples/cell/plot_NRCell.py
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
 matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
 ```
 
@@ -362,3 +362,9 @@ assert b.slot_start_sample == 15376
 ![FFT 与 CP 时序](../../examples/cell/NRCell_timing.png)
 
 运行 `python examples/cell/plot_NRCell_timing.py` 重新生成上图。`NRCell_demo.py` 同时导出 `NRCell_timing.json`（子帧数组及当前时隙明细）和 `NRCell_timing.csv`（当前时隙逐符号表），产物均与示例脚本同级。
+
+## 10. 日志与变量快照
+
+三个 Python 示例通过 [ExampleLogger](../diagnostics/ExampleLogger.md) 记录 main 到 NRCell 方法/属性的实际调用路径，构造器、参数检查和属性依赖也会出现。变量快照完整打印本类 12 个配置字段、8 个常量和 35 个只读属性，数组不截断。状态快照在指定对象创建后打印一次；希望观察新时隙时，可再对 `cell.with_slot_offset()` 调用 dump_state。
+
+日志与示例同级，终端默认显示完整状态和摘要，调用详情写入 DEBUG 文件。直接导入或构造 NRCell 不会自动开启日志，不为本类引入 logger 字段或修改计算结果。完整入口与环境变量用法见[示例目录说明](../../examples/cell/README.md)。

@@ -8,11 +8,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from cell import NRCell
+from diagnostics import ExampleLogger
 
 
-def main() -> None:
+def main(log: ExampleLogger) -> None:
     """展示 FFT 选择规则及普通 CP 时序；所有数值从 NRCell 获取。"""
     cell = NRCell()
+    log.dump_state(cell, "cell_30khz")
     fig, axes = plt.subplots(3, 1, figsize=(11, 10), layout="constrained")
     fig.get_layout_engine().set(rect=(0, 0.035, 1, 0.965))
     fig.suptitle(f"NRCell timing | Tc={cell.tc_s * 1e9:.9f} ns | Ts=64Tc\n"
@@ -26,6 +28,7 @@ def main() -> None:
     axes[0].set_ylim(0, 1400)
     axes[0].legend(ncols=2, loc="upper right")
     mu2 = NRCell(subcarrier_spacing_khz=60)
+    log.dump_state(mu2, "cell_60khz")
     slots = [mu2.with_slot_offset(i) for i in range(mu2.slots_per_subframe)]
     axes[1].bar(range(4), [c.slot_duration_s * 1e6 for c in slots], color="#2563EB", width=0.6)
     for index, slot in enumerate(slots):
@@ -49,8 +52,9 @@ def main() -> None:
     for suffix in ("png", "svg"):
         fig.savefig(output / f"NRCell_timing.{suffix}", dpi=150)
     plt.close(fig)
-    print(output / "NRCell_timing.png")
+    log.logger.info("Saved timing PNG/SVG in %s", output)
 
 
 if __name__ == "__main__":
-    main()
+    with ExampleLogger(__file__) as run:
+        main(run)

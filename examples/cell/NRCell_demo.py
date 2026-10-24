@@ -5,24 +5,21 @@ import csv
 from pathlib import Path
 
 from cell import NRCell
+from diagnostics import ExampleLogger
 
 
-def main() -> None:
+def main(log: ExampleLogger) -> None:
     """展示非零载波/BWP 起点、派生参数及 SFN 回绕。"""
     cell = NRCell(n_cell_id=42, n_start_grid=10, bwp_start=20, bwp_size=24,
                   n_frame=1023, n_slot=19, duplex_mode="TDD", n_tx_antennas=4, n_rx_antennas=2)
-    print(json.dumps(cell.to_dict(), ensure_ascii=False, indent=2))
-    print(f"μ={cell.numerology}, slots/frame={cell.slots_per_frame}, symbols/slot={cell.symbols_per_slot}")
-    print(f"PRB 0 → CRB {cell.prb_to_crb(0)}, grid k=0 → Point A + {cell.subcarrier_offset_hz(0)} Hz")
-    print(f"Nominal occupied bandwidth: {cell.occupied_bandwidth_hz / 1e6:.2f} MHz")
-    print(f"Next slot: {cell.with_slot_offset().to_dict()}")
-    print(f"{cell.duplex_mode}: Tx={cell.n_tx_antennas}, Rx={cell.n_rx_antennas}")
-    print(f"FFT={cell.n_fft}, Fs={cell.sample_rate_hz} Hz, Tc/sample={cell.tc_per_sample}")
-    print(f"Tc={cell.tc_s:.12g} s, Ts={cell.ts_s:.12g} s, first symbol={cell.symbol_timing(0)}")
+    log.dump_state(cell, "cell")
+    log.logger.info("PRB 0 -> CRB %s, first subcarrier offset=%s Hz", cell.prb_to_crb(0), cell.subcarrier_offset_hz(0))
+    log.logger.info("Next slot: %s", cell.with_slot_offset().to_dict())
+    log.logger.info("First symbol: %s", cell.symbol_timing(0))
     # 可复用的配置中间文件与示例脚本放在同一目录。
     output = Path(__file__).resolve().with_name("NRCell_config.json")
     output.write_text(json.dumps(cell.to_dict(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Saved config: {output}")
+    log.logger.info("Saved config: %s", output)
     timing = {
         "config": cell.to_dict(), "tc_s": cell.tc_s, "ts_s": cell.ts_s,
         "kappa": cell.KAPPA, "n_fft": cell.n_fft, "sample_rate_hz": cell.sample_rate_hz,
@@ -43,7 +40,9 @@ def main() -> None:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()
         writer.writerows(rows)
+    log.logger.info("Saved timing JSON/CSV in %s", output.parent)
 
 
 if __name__ == "__main__":
-    main()
+    with ExampleLogger(__file__) as run:
+        main(run)

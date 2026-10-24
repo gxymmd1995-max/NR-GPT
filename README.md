@@ -8,7 +8,7 @@
 python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[dev,plots]"
 .venv\Scripts\python examples/cell/NRCell_demo.py
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python examples/cell/plot_NRCell.py
 .venv\Scripts\python examples/cell/plot_NRCell_timing.py
 ```
@@ -48,6 +48,7 @@ examples/cell/
   NRCell_timing.csv      当前时隙逐符号 Tc / 采样点数
 tests/unit/              每个类的单元测试
 tests/matlab/            MATLAB 独立参考对比测试
+src/diagnostics/         ExampleLogger.py 与同级类说明：日志、调用路径和变量快照
 ```
 
 - [NRCell：变量、方法、公式与示例](src/cell/NRCell.md)
@@ -58,6 +59,7 @@ tests/matlab/            MATLAB 独立参考对比测试
 - [测试与 MATLAB 对比](documentation/validation/NRCell_validation.md)
 - [后续模块进度](documentation/feature_matrix.md)
 - [本次一致性检查记录](documentation/validation/project_audit.md)
+- [日志类、参数和使用方法](src/diagnostics/ExampleLogger.md)
 
 ![NRCell 时频结构](examples/cell/NRCell_overview.png)
 
@@ -78,3 +80,7 @@ NRCell 表示单方向、单 numerology 载波和一个活动 BWP 的配置切�
 这是自定义的源码可见许可，包含商业使用限制，不属于 [OSI 开源定义](https://opensource.org/osd)下的开源许可证。协议文档和第三方材料保留各自版权与许可；新条款不追溯撤销已合法取得的旧版本授权。
 
 `.coverage` 是 pytest-cov/coverage.py 运行时生成的覆盖率数据库，记录被测试执行的代码行与分支，不是仿真数据或源码。可以删除，下一次使用 `--cov` 测试时会重新生成；Git 已忽略此文件。
+
+## 示例日志
+
+直接运行三个 Python 示例会在 `examples/cell/` 同级生成 `NRCell_demo.log`、`plot_NRCell.log`、`plot_NRCell_timing.log`，记录函数调用路径、参数、出口值、耗时和完整 NRCell 变量快照（12 字段、8 常量、35 属性）。终端默认显示 INFO 摘要与变量，文件包含 DEBUG 调用详情；设置 `$env:NR_LOG_LEVEL = "DEBUG"` 可在终端同时查看调用链。日志 UTF-8、时间戳 UTC、每次运行覆盖，已被 Git 忽略。详见[日志类文档](src/diagnostics/ExampleLogger.md)。

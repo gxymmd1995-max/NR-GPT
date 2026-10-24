@@ -6,8 +6,8 @@
 
 - Python 3.14.0，Windows；pytest 9.1.1，pytest-cov 7.1.0。
 - MATLAB R2024a：24.1.0.2537033；5G Toolbox 24.1。
-- 116 项 pytest 测试全部通过，无跳过。其中 115 项为单元测试，另一个 MATLAB 对比测试在内部循环逐组检查 78 个配置；不能将这 78 组误报为 pytest 收集的 78 项测试。
-- `src/cell` 行覆盖率 100%，分支覆盖率 100%；这仅反映当前 NRCell 的测试覆盖，不等于 R15 全协议一致性认证。
+- 131 项 pytest 测试全部通过，无跳过。其中 130 项为单元测试（115 项 NRCell、15 项 ExampleLogger），另一个 MATLAB 对比测试在内部循环逐组检查 78 个配置；不能将这 78 组误报为 pytest 收集的 78 项测试。
+- `src/cell` 与 `src/diagnostics` 行覆盖率 100%，分支覆盖率 100%；这仅反映当前 NRCell 的测试覆盖，不等于 R15 全协议一致性认证。
 - 源码 docstring 示例通过 doctest；演示脚本和绘图脚本成功运行。
 
 ## MATLAB 对比依据与实际产物
@@ -53,7 +53,7 @@ FFT 策略为 max(128, next_power_of_two(12*NSizeGrid))，是平台约定。MATL
 
 ```powershell
 matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python -m doctest src/cell/NRCell.py
 .venv\Scripts\python examples/cell/NRCell_demo.py
 .venv\Scripts\python examples/cell/plot_NRCell.py
@@ -65,3 +65,7 @@ matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
 ## 命名和数据位置
 
 类名、类文件及关联文件均保留 `NRCell` 大小写。源码/类说明为 `src/cell/NRCell.py`、`NRCell.md`；单元测试为 `test_NRCell.py`，MATLAB 对比为 `test_NRCell_matlab.py`。示例数据和图片与对应脚本同级，格式说明见[示例目录说明](../../examples/cell/README.md)。
+
+## 示例日志验证
+
+三个 Python 示例实际运行生成同级 .log 文件，包含调用路径、参数、出口值、耗时和完整状态快照。ExampleLogger 的 15 项单元测试验证输出隔离、原 profiler 恢复、异常传播、文件覆盖、全部字段/属性输出及回调分支。日志仅为工程诊断，不重新生成或替代 MATLAB 参考向量。详见 [ExampleLogger 类说明](../../src/diagnostics/ExampleLogger.md)。

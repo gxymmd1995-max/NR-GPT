@@ -54,4 +54,6 @@ NRCell 根据载波频域 RE 数选择至少 128 的最小 2 的幂 FFT，并计
 
 ## 新类的交付要求
 
+诊断系统位于 `src/diagnostics/ExampleLogger.py`，类说明与源码同级，单元测试为 `tests/unit/test_ExampleLogger.py`。三个 Python 示例使用 with 作用域启用当前线程的项目调用跟踪，在同级 `.log` 文件中保存 DEBUG 详情，并通过显式 dump_state 输出具名对象的完整字段、常量和属性。诊断层依赖标准库，不改变 NRCell 算法，也不把 logger 写入不可变配置。日志属于运行中间文件，由 `*.log` 忽略。
+
 每个新类同时提交实现、单元测试与独立 Markdown 文档，说明每个字段/属性/方法并提供示例。每个协议参数表标原文章节与原表号；每个公式标版本和章节，推导式注明推导来源。具体物理信道还必须提交 MATLAB 生成脚本、带环境信息的独立输出及 Python 对比测试。

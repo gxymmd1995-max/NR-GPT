@@ -5,6 +5,7 @@
 | 模块 | 当前状态 | 单元测试与文档 | MATLAB 比对 |
 |---|---|---|---|
 | NRCell | 已实现 TDD/FDD 元数据、收发天线数、单 numerology、载波/BWP、Tc/Ts、FFT/采样率、逐符号 CP 及精确采样时序 | `tests/unit/test_NRCell.py`、[`src/cell/NRCell.md`](../src/cell/NRCell.md) | R2024a 5G Toolbox 78 组配置，载波/FFT/采样率/完整子帧时序对比 |
+| ExampleLogger | 已实现三个 Python 示例的调用链、参数/出口值/耗时、完整变量快照及异常日志 | `tests/unit/test_ExampleLogger.py`、[`src/diagnostics/ExampleLogger.md`](../src/diagnostics/ExampleLogger.md) | 标准库工程诊断，不对应物理信道，无需 MATLAB 算法向量 |
 | NRGrid | 未实现 | 待实现时同时提供 | 待提供 |
 | NRCommon | 未实现 | 待实现时同时提供 | 按算法提供独立参考 |
 | SSB | 未实现 | 待实现时同时提供 | 必须提供 |
