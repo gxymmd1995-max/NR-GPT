@@ -1,0 +1,14 @@
+{
+  "n_cell_id": 42,
+  "subcarrier_spacing_khz": 30,
+  "cyclic_prefix": "normal",
+  "n_size_grid": 52,
+  "n_start_grid": 10,
+  "bwp_start": 20,
+  "bwp_size": 24,
+  "n_frame": 1023,
+  "n_slot": 19,
+  "duplex_mode": "TDD",
+  "n_tx_antennas": 4,
+  "n_rx_antennas": 2
+}

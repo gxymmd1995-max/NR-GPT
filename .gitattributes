@@ -1,0 +1,6 @@
+# Markdown double spaces encode intentional hard line breaks.
+*.md whitespace=-blank-at-eol
+# Matplotlib-generated SVG paths contain valid trailing whitespace.
+*.svg -whitespace
+# Preserve protocol originals/translations byte-for-byte for SHA-256 verification.
+documentation/protocols/** -text
