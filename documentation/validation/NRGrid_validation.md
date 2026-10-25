@@ -6,7 +6,7 @@
 
 - Python 3.14.0 / Windows，NumPy 2.5.4，pytest 9.1.1。
 - MATLAB R2024a 24.1.0.2537033，5G Toolbox 24.1。
-- NRGrid 核心包含 38 项单元测试与 1 项 MATLAB 对比入口，配色模块另有 21 项单元测试，合计 60 项；全部通过，grid 模块源码行和分支覆盖率均为 100%。全项目现为 191 项测试（189 项单元测试、2 项 MATLAB 对比入口）。
+- NRGrid 核心包含 38 项单元测试与 1 项 MATLAB 对比入口，配色模块另有 21 项单元测试，合计 60 项；全部通过，grid 模块源码行和分支覆盖率均为 100%。本节保留网格/配色完成时的191项全项目基线；新增SRS及公共序列后最新回归325项，见 [NRSRS验证](NRSRS_validation.md)。
 - MATLAB 入口内部读取 18 个配置，共映射 2736 个 RE；这些不是 pytest 收集的 2736 项独立测试。
 
 ## 规范与 MATLAB 依据
@@ -51,7 +51,7 @@ MATLAB 独立创建 nrCarrierConfig、调用 nrResourceGrid，依据 CRB/BWP 原
 
 ```powershell
 matlab -batch "addpath('examples/grid'); export_NRGrid_reference;"
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python examples/grid/NRGrid_demo.py
 ```
 

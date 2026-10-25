@@ -1,6 +1,6 @@
 # NR-GPT：NR Release 15 Python 物理层仿真
 
-以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell 小区配置、NRGrid 单时隙资源网格和 ExampleLogger 日志诊断**，具体物理信道按计划逐步实现。
+以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell 小区配置、NRGrid 单时隙资源网格、NRSRS 探测参考信号和 ExampleLogger 日志诊断**。
 
 ## 快速开始
 
@@ -8,11 +8,13 @@
 python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[dev,plots]"
 .venv\Scripts\python examples/cell/NRCell_demo.py
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python examples/cell/plot_NRCell.py
 .venv\Scripts\python examples/cell/plot_NRCell_timing.py
 .venv\Scripts\python examples/grid/NRGrid_demo.py
 .venv\Scripts\python examples/grid/plot_NRGrid_channel_colors.py
+.venv\Scripts\python -X utf8 examples/srs/NRSRS_demo.py
+.venv\Scripts\python -X utf8 examples/srs/compare_NRSRS_reference.py
 ```
 
 `--require-matlab` 要求仓库中存在实际 MATLAB 生成的参考向量；测试本身不需要 MATLAB 许可证。重新生成向量需要本机 MATLAB 5G Toolbox。
@@ -53,10 +55,18 @@ tests/matlab/            MATLAB 独立参考对比测试
 src/diagnostics/         ExampleLogger.py 与同级类说明：日志、调用路径和变量快照
 src/grid/                NRGrid.py 与同级类说明：单时隙端口域网格
 examples/grid/           网格演示、NPZ/JSON、图片及 MATLAB 独立参考
+src/srs/                 NRSRS.py、NRSRS.md 与固定 R15 原表常量
+src/common/              NRCommon.py、NRCommon.md：公共Gold序列与SRS u/v
+examples/common/         公共序列示例、JSON/图片及真实MATLAB nrPRBS参考
+examples/srs/            SRS 序列/网格/梳齿/跳频图、频率CSV、MATLAB 实测与比较
 ```
 
 - [NRCell：变量、方法、公式与示例](src/cell/NRCell.md)
 - [NRGrid：坐标、映射、预留和冲突策略](src/grid/NRGrid.md)
+- [NRSRS：字段、序列、跳频和映射公式](src/srs/NRSRS.md)
+- [NRCommon：Gold伪随机序列、SRS的u/v获取](src/common/NRCommon.md)
+- [SRS 演示与 MATLAB 独立比对](examples/srs/README.md)
+- [SRS 实测验证报告](documentation/validation/NRSRS_validation.md)
 - [NRGrid 示例与独立验证](examples/grid/README.md)
 - [物理信道颜色与显示接口](src/grid/channel_colors.md)
 - [示例、生成文件及 MATLAB 数据格式](examples/cell/README.md)

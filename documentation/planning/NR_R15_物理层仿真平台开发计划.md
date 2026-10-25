@@ -2,7 +2,7 @@
 
 项目目录：`D:\doc\code\python\NR1024`  
 计划日期：2026-10-24  
-状态：NRCell、ExampleLogger 和 NRGrid 单时隙端口域网格已实现并验证；公共波形及具体物理信道尚未实现。见[NRCell 类文档](../../src/cell/NRCell.md)、[NRGrid 类文档](../../src/grid/NRGrid.md)和[覆盖矩阵](../feature_matrix.md)。
+状态：NRCell、ExampleLogger、NRGrid 单时隙端口域网格与 NRSRS 序列/资源映射已实现并验证。2026-10-25 按用户要求先实施 SRS，公共波形与其他具体信道继续按计划推进。见[NRCell 类文档](../../src/cell/NRCell.md)、[NRGrid 类文档](../../src/grid/NRGrid.md)、[NRSRS 类文档](../../src/srs/NRSRS.md)和[覆盖矩阵](../feature_matrix.md)。
 
 2026-10-24 补充约束：协议原文与译文统一放在 `documentation/protocols/`；项目设计和验证报告放在 `documentation/` 的其他子目录。类源码直接放在 `src/<模块>/`，类说明与源码同级；示例按照源码模块组织到 `examples/<模块>/`，生成的中间文件、MATLAB 参考数据和图片均与示例脚本同级。每个类必须有单元测试和详细 Markdown 说明，逐项解释字段、属性、函数及示例，并在适用时配图。规范表格、公式须标明原文版本与章节，具体物理信道必须与 MATLAB 独立比对。GitHub 目标为 `gxymmd1995-max/NR-GPT`；等待用户明确通知后才能提交或推送。
 
@@ -219,3 +219,5 @@ LDPC 和 Polar 是关键依赖，应尽早获取独立测试向量并验证译�
 6. 进入 SSB 与 PBCH，实现第一个端到端样例。
 
 当前 NRCell 已完成单元测试、MATLAB 载波/OFDM 时序比对及类文档。支持 TDD/FDD 元数据、收发天线数量、Tc/Ts、基于频域 RE 数的 2 次幂 FFT 选择及精确 CP 采样时序。NRGrid 已完成单时隙端口域数据/占用分离、BWP 坐标、映射/预留/提取和 MATLAB 轴对比；天线域预编码与实际波形模块仍待实施。最新完成情况见[覆盖矩阵](../feature_matrix.md)。
+
+NRSRS 已完成固定R15序列生成、64行带宽表、组/序列跳变、频率跳频、重复、候选时隙、NRGrid映射与频域展示，832组实际MATLAB独立参考通过。Gold生成与SRS u/v已抽取为NRCommon公共接口，SRS低PAPR基序列仍在本模块；完整公共调制/编码/OFDM仍待实现；波形、功控、调度和信道估计仍待实现。后续先根据用户检查结果完善SRS，再继续公共算法与其他信道。

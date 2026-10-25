@@ -12,4 +12,4 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: python -m pip install -e ".[dev]"
-      - run: python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-fail-under=100
+      - run: python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-fail-under=100

@@ -20,7 +20,7 @@
 .venv\Scripts\python examples/cell/plot_NRCell.py
 .venv\Scripts\python examples/cell/plot_NRCell_timing.py
 matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
 ```
 
 只有重新生成 MATLAB 参考时才需要 MATLAB 和 5G Toolbox。导出函数可选输入 `outputFile` 为其他目标文件路径；不传参数时使用上表的同级输出。函数使用 UTF-8 写 JSON，无返回值；无法打开目标文件时中止并报错。调用者应确保自定义输出的父目录存在。

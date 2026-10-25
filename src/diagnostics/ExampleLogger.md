@@ -6,7 +6,7 @@
 
 在 `with ExampleLogger(__file__) as log:` 中运行示例函数，即可记录当前线程的项目调用链、参数、出口值、耗时和异常。`log.dump_state(cell, "cell")` 输出该对象的字段、常量及全部只读属性。日志写在示例脚本同目录，文件名为示例名加 `.log`，每次运行覆盖旧文件。
 
-当前已接入五个 Python 示例：`NRCell_demo.py`、`plot_NRCell.py`、`plot_NRCell_timing.py`、[NRGrid_demo.py](../../examples/grid/NRGrid_demo.py) 和[信道色卡示例](../../examples/grid/plot_NRGrid_channel_colors.py)。MATLAB 导出脚本是独立的 MATLAB 入口，不由 Python profiler 追踪。
+当前已接入八个 Python 示例/比较入口：`NRCell_demo.py`、`plot_NRCell.py`、`plot_NRCell_timing.py`、[NRGrid_demo.py](../../examples/grid/NRGrid_demo.py)、[信道色卡示例](../../examples/grid/plot_NRGrid_channel_colors.py)、[NRSRS_demo.py](../../examples/srs/NRSRS_demo.py) 、[SRS比较脚本](../../examples/srs/compare_NRSRS_reference.py) 和 [NRCommon序列示例](../../examples/common/NRCommon_demo.py)。SRS示例输出小区/信号/网格的完整快照。MATLAB 导出脚本是独立的 MATLAB 入口，不由 Python profiler 追踪。
 
 默认终端级别为 INFO，显示 START、STATE、业务摘要和 FINISH；文件固定保存 DEBUG，额外包含 CALL、EXIT。设置 `NR_LOG_LEVEL=DEBUG` 可使终端也显示调用路径。日志使用 UTF-8，时间戳明确标记为 UTC。
 

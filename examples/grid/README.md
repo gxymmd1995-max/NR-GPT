@@ -23,7 +23,7 @@
 .venv\Scripts\python examples/grid/NRGrid_demo.py
 .venv\Scripts\python examples/grid/plot_NRGrid_channel_colors.py
 matlab -batch "addpath('examples/grid'); export_NRGrid_reference;"
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
 ```
 
 Linux/macOS 将虚拟环境解释器替换为 `.venv/bin/python`。只有重新生成 MATLAB 参考时需要 MATLAB/5G Toolbox。日志默认终端 INFO、文件 DEBUG；需要终端显示调用链可设置 `NR_LOG_LEVEL=DEBUG`，希望减少终端状态输出可设为 WARNING，文件仍保存完整详情。变量数组完整输出，日志量会比 NRCell 标量参数更大。

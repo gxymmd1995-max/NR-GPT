@@ -1,0 +1,160 @@
+{
+  "input": {
+    "cell": {
+      "n_cell_id": 42,
+      "subcarrier_spacing_khz": 30,
+      "cyclic_prefix": "normal",
+      "n_size_grid": 52,
+      "n_start_grid": 10,
+      "bwp_start": 20,
+      "bwp_size": 24,
+      "n_frame": 0,
+      "n_slot": 0,
+      "duplex_mode": "TDD",
+      "n_tx_antennas": 4,
+      "n_rx_antennas": 2
+    },
+    "n_ports": 4,
+    "n_symbols": 4,
+    "start_position": 5,
+    "c_srs": 7,
+    "b_srs": 1,
+    "b_hop": 0,
+    "k_tc": 4,
+    "comb_offset": 1,
+    "cyclic_shift": 7,
+    "frequency_shift": 10,
+    "frequency_position": 0,
+    "sequence_id": 42,
+    "group_seq_hopping": "groupHopping",
+    "repetition": 1,
+    "resource_type": "periodic",
+    "periodicity": 1,
+    "slot_offset": 0,
+    "enabled": true
+  },
+  "hopping_view_input": {
+    "cell": {
+      "n_cell_id": 42,
+      "subcarrier_spacing_khz": 30,
+      "cyclic_prefix": "normal",
+      "n_size_grid": 52,
+      "n_start_grid": 10,
+      "bwp_start": 20,
+      "bwp_size": 24,
+      "n_frame": 0,
+      "n_slot": 0,
+      "duplex_mode": "TDD",
+      "n_tx_antennas": 4,
+      "n_rx_antennas": 2
+    },
+    "n_ports": 4,
+    "n_symbols": 4,
+    "start_position": 5,
+    "c_srs": 7,
+    "b_srs": 1,
+    "b_hop": 0,
+    "k_tc": 4,
+    "comb_offset": 1,
+    "cyclic_shift": 7,
+    "frequency_shift": 10,
+    "frequency_position": 0,
+    "sequence_id": 42,
+    "group_seq_hopping": "groupHopping",
+    "repetition": 4,
+    "resource_type": "periodic",
+    "periodicity": 1,
+    "slot_offset": 0,
+    "enabled": true
+  },
+  "matlab_srs_config": {
+    "NumSRSPorts": 4,
+    "NumSRSSymbols": 4,
+    "SymbolStart": 8,
+    "CSRS": 7,
+    "BSRS": 1,
+    "BHop": 0,
+    "KTC": 4,
+    "KBarTC": 1,
+    "CyclicShift": 7,
+    "FrequencyStart": 10,
+    "NRRC": 0,
+    "NSRSID": 42,
+    "GroupSeqHopping": "groupHopping",
+    "Repetition": 1,
+    "ResourceType": "periodic",
+    "SRSPeriod": [
+      1,
+      0
+    ],
+    "SRSPositioning": false,
+    "FrequencyScalingFactor": 1,
+    "StartRBIndex": 0,
+    "EnableStartRBHopping": false,
+    "EnableEightPortTDM": false,
+    "CyclicShiftHopping": false,
+    "CombOffsetHopping": false,
+    "HoppingFinerGranularity": false,
+    "HoppingWithRepetition": false
+  },
+  "grid": {
+    "cell": {
+      "n_cell_id": 42,
+      "subcarrier_spacing_khz": 30,
+      "cyclic_prefix": "normal",
+      "n_size_grid": 52,
+      "n_start_grid": 10,
+      "bwp_start": 20,
+      "bwp_size": 24,
+      "n_frame": 0,
+      "n_slot": 0,
+      "duplex_mode": "TDD",
+      "n_tx_antennas": 4,
+      "n_rx_antennas": 2
+    },
+    "n_ports": 4,
+    "domain": "port",
+    "axis_order": [
+      "port",
+      "symbol",
+      "subcarrier"
+    ],
+    "shape": [
+      4,
+      14,
+      624
+    ],
+    "dtype": "complex128",
+    "total_re_count": 34944,
+    "occupied_re_count": 576,
+    "free_re_count": 34368
+  },
+  "sequence_shape": [
+    144,
+    4
+  ],
+  "sequence_parameters": {
+    "u": [
+      15,
+      1,
+      28,
+      25
+    ],
+    "v": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "alpha": [
+      3.665191429188092,
+      5.235987755982989,
+      0.5235987755982988,
+      2.0943951023931953
+    ]
+  },
+  "sequence_length": 36,
+  "mapped_re_count": 576,
+  "grid_energy_beta1": 144.0,
+  "permission_note": "This example assumes triggered/activated, uplink-permitted transmission; no TDD/DCI scheduler."
+}

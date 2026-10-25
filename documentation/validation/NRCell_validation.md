@@ -4,7 +4,7 @@
 
 ## 执行环境与结果
 
-本节保留 2026-10-24 的 NRCell/日志基线结果。2026-10-25 新增 NRGrid 与配色后，全量回归为 191 项测试（189 项单元测试、2 项 MATLAB 独立向量入口），三个模块行/分支覆盖率均为 100%；详见 [NRGrid 验证记录](NRGrid_validation.md)。下面的 131 项是原基线数量，不代表当前全项目数量。
+本节保留 2026-10-24 的 NRCell/日志基线结果。2026-10-25 新增 NRGrid 与配色后基线为191项；继续新增SRS后最新全量回归325项（320项单元测试、5项MATLAB独立向量入口），五模块行/分支覆盖率均为100%；见 [NRGrid验证记录](NRGrid_validation.md) 与 [NRSRS验证记录](NRSRS_validation.md)。下面的131项是原基线数量，不代表当前全项目数量。
 
 - Python 3.14.0，Windows；pytest 9.1.1，pytest-cov 7.1.0。
 - MATLAB R2024a：24.1.0.2537033；5G Toolbox 24.1。
@@ -55,7 +55,7 @@ FFT 策略为 max(128, next_power_of_two(12*NSizeGrid))，是平台约定。MATL
 
 ```powershell
 matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python -m doctest src/cell/NRCell.py
 .venv\Scripts\python examples/cell/NRCell_demo.py
 .venv\Scripts\python examples/cell/plot_NRCell.py
