@@ -9,7 +9,7 @@ description = "Traceable 3GPP NR Release 15 physical-layer simulation in Python"
 readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.11"
-dependencies = []
+dependencies = ["numpy>=1.25"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "pytest-cov>=5"]
@@ -22,6 +22,7 @@ namespaces = false
 [tool.setuptools.package-data]
 cell = ["NRCell.md"]
 diagnostics = ["ExampleLogger.md"]
+grid = ["NRGrid.md", "channel_colors.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

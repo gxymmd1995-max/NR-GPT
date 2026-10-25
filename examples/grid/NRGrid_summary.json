@@ -1,0 +1,32 @@
+{
+  "cell": {
+    "n_cell_id": 1,
+    "subcarrier_spacing_khz": 30,
+    "cyclic_prefix": "normal",
+    "n_size_grid": 6,
+    "n_start_grid": 10,
+    "bwp_start": 11,
+    "bwp_size": 4,
+    "n_frame": 0,
+    "n_slot": 0,
+    "duplex_mode": "TDD",
+    "n_tx_antennas": 4,
+    "n_rx_antennas": 1
+  },
+  "n_ports": 2,
+  "domain": "port",
+  "axis_order": [
+    "port",
+    "symbol",
+    "subcarrier"
+  ],
+  "shape": [
+    2,
+    14,
+    72
+  ],
+  "dtype": "complex128",
+  "total_re_count": 2016,
+  "occupied_re_count": 481,
+  "free_re_count": 1535
+}

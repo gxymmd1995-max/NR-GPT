@@ -1,0 +1,20 @@
+{
+  "FREE": "#F8FAFC",
+  "RESERVED": "#94A3B8",
+  "SSB": "#E69F00",
+  "PDCCH": "#0072B2",
+  "PDSCH": "#009E73",
+  "PUSCH": "#9467BD",
+  "PUCCH": "#D55E00",
+  "PRACH": "#56B4E9",
+  "SRS": "#8C564B",
+  "DMRS": "#F0E442",
+  "PTRS": "#E377C2",
+  "CSI_RS": "#17BECF",
+  "PSS": "#B8860B",
+  "SSS": "#BCBD22",
+  "PBCH": "#FF7F0E",
+  "STREAM_A": "#3B82F6",
+  "STREAM_B": "#10B981",
+  "ZERO": "#EF4444"
+}

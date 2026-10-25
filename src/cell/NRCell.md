@@ -8,7 +8,7 @@
 
 ## 1. 这个类做什么
 
-`NRCell` 保存小区物理标识、双工模式、物理收发天线分支数、一个 numerology 对应的载波网格、一个活动 BWP 及当前帧/时隙。它提供参数校验、资源坐标转换、FFT/采样率选择、逐符号 CP 和精确采样时序，以及 MATLAB 参数导出，供后续 NRGrid 和物理信道读取。
+`NRCell` 保存小区物理标识、双工模式、物理收发天线分支数、一个 numerology 对应的载波网格、一个活动 BWP 及当前帧/时隙。它提供参数校验、资源坐标转换、FFT/采样率选择、逐符号 CP 和精确采样时序，以及 MATLAB 参数导出，供 NRGrid 和后续物理信道读取。
 
 一个真实小区可以包含多个载波、方向与 BWP；当前类是它在链路仿真中的配置切片。它不产生资源网格或波形，也不执行调度、TDD 方向判定或 RF 带宽合法性检查。单元测试验证的是这些明确声明的功能。
 
@@ -21,7 +21,7 @@ flowchart LR
     C --> D[派生尺寸与 PCI 分解]
     C --> E[PRB ↔ CRB / Point A 频偏]
     C --> F[新时隙配置 / 字典 / MATLAB 参数]
-    D --> G[后续 NRGrid 和物理信道]
+    D --> G[NRGrid 和后续物理信道]
 ```
 
 ## 2. 初始化变量：每个字段的含义与示例
@@ -308,7 +308,7 @@ MATLAB 默认 FFT 采用其带宽占用率规则，可能不同于本项目的�
 
 显式 FFT 和采样率接口参见 [MathWorks 自定义 FFT/采样率说明](https://www.mathworks.com/help/5g/ug/use-custom-ofdm-sample-rate-and-custom-fft-size.html)。本项目没有额外重采样，不将参考 Ts 误当作所有配置的实际采样间隔。
 
-后续 NRGrid 计划采用端口/天线×符号×子载波的轴顺序，当前尚未实现。MATLAB 的子载波×符号×端口布局需要显式转换，不能直接当作 Python 网格布局。
+已实现的 [NRGrid](../grid/NRGrid.md) 采用逻辑端口×符号×子载波的轴顺序，目前只支持端口域。MATLAB 的子载波×符号×端口布局通过 to_matlab 显式转换，不能直接当作 Python 网格布局；端口到物理天线的预编码仍待后续实现。
 
 ## 8. 图解与运行方法
 
@@ -319,7 +319,7 @@ MATLAB 默认 FFT 采用其带宽占用率规则，可能不同于本项目的�
 ```powershell
 .venv\Scripts\python examples/cell/NRCell_demo.py
 .venv\Scripts\python examples/cell/plot_NRCell.py
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
 matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
 ```
 

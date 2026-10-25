@@ -1,6 +1,6 @@
 # NR-GPT：NR Release 15 Python 物理层仿真
 
-以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell 小区配置类**，其他物理信道按计划逐步实现。
+以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell 小区配置、NRGrid 单时隙资源网格和 ExampleLogger 日志诊断**，具体物理信道按计划逐步实现。
 
 ## 快速开始
 
@@ -8,9 +8,11 @@
 python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[dev,plots]"
 .venv\Scripts\python examples/cell/NRCell_demo.py
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python examples/cell/plot_NRCell.py
 .venv\Scripts\python examples/cell/plot_NRCell_timing.py
+.venv\Scripts\python examples/grid/NRGrid_demo.py
+.venv\Scripts\python examples/grid/plot_NRGrid_channel_colors.py
 ```
 
 `--require-matlab` 要求仓库中存在实际 MATLAB 生成的参考向量；测试本身不需要 MATLAB 许可证。重新生成向量需要本机 MATLAB 5G Toolbox。
@@ -49,9 +51,14 @@ examples/cell/
 tests/unit/              每个类的单元测试
 tests/matlab/            MATLAB 独立参考对比测试
 src/diagnostics/         ExampleLogger.py 与同级类说明：日志、调用路径和变量快照
+src/grid/                NRGrid.py 与同级类说明：单时隙端口域网格
+examples/grid/           网格演示、NPZ/JSON、图片及 MATLAB 独立参考
 ```
 
 - [NRCell：变量、方法、公式与示例](src/cell/NRCell.md)
+- [NRGrid：坐标、映射、预留和冲突策略](src/grid/NRGrid.md)
+- [NRGrid 示例与独立验证](examples/grid/README.md)
+- [物理信道颜色与显示接口](src/grid/channel_colors.md)
 - [示例、生成文件及 MATLAB 数据格式](examples/cell/README.md)
 - [工程架构与命名约定](documentation/architecture.md)
 - [开发计划](documentation/planning/NR_R15_物理层仿真平台开发计划.md)
@@ -71,6 +78,8 @@ NRCell 表示单方向、单 numerology 载波和一个活动 BWP 的配置切�
 
 支持 TDD/FDD 模式元数据、物理收发天线数、固定 Tc/Ts、逐符号 CP 与精确采样时序。FFT 根据每符号频域 RE 数（子载波数）取能容纳它的最小 2 的幂，并以 128 为下限；它是平台约定，不是协议强制值。Tc/Ts 固定，实际采样间隔由 FFT×SCS 决定，三者不能混用。
 
+NRGrid 采用 `[端口,符号,子载波]` 数组和独立标签记录资源占用；零值映射及预留均算已占用。它通过显式端口数管理局部逻辑端口，不把物理天线数量直接当作端口数量。数据固定 complex128，返回数组副本，当前仅承载一个时隙，不执行 OFDM 或具体物理信道算法。
+
 规范表、公式和代码均标明来源；新类需同时提供说明和单元测试，具体物理信道需增加 MATLAB 比对。当前 MATLAB 验证载波尺寸、FFT、采样率、完整子帧及当前时隙的逐符号时序；BWP 坐标、双工/天线元数据和状态转换由独立单元测试检查。
 
 ## 许可证
@@ -84,3 +93,5 @@ NRCell 表示单方向、单 numerology 载波和一个活动 BWP 的配置切�
 ## 示例日志
 
 直接运行三个 Python 示例会在 `examples/cell/` 同级生成 `NRCell_demo.log`、`plot_NRCell.log`、`plot_NRCell_timing.log`，记录函数调用路径、参数、出口值、耗时和完整 NRCell 变量快照（12 字段、8 常量、35 属性）。终端默认显示 INFO 摘要与变量，文件包含 DEBUG 调用详情；设置 `$env:NR_LOG_LEVEL = "DEBUG"` 可在终端同时查看调用链。日志 UTF-8、时间戳 UTC、每次运行覆盖，已被 Git 忽略。详见[日志类文档](src/diagnostics/ExampleLogger.md)。
+
+NRGrid 示例同样生成 `examples/grid/NRGrid_demo.log`，完整打印该演示网格的字段、常量和属性，数值数组另存 NPZ；目录说明见 [examples/grid/README.md](examples/grid/README.md)。

@@ -2,7 +2,7 @@
 
 项目目录：`D:\doc\code\python\NR1024`  
 计划日期：2026-10-24  
-状态：NRCell 已实现并验证，包含双工/天线元数据与 Tc/Ts、FFT/采样率及逐符号 CP 时序；NRGrid、公共波形及具体物理信道尚未实现。见[NRCell 类文档](../../src/cell/NRCell.md)和[覆盖矩阵](../feature_matrix.md)。
+状态：NRCell、ExampleLogger 和 NRGrid 单时隙端口域网格已实现并验证；公共波形及具体物理信道尚未实现。见[NRCell 类文档](../../src/cell/NRCell.md)、[NRGrid 类文档](../../src/grid/NRGrid.md)和[覆盖矩阵](../feature_matrix.md)。
 
 2026-10-24 补充约束：协议原文与译文统一放在 `documentation/protocols/`；项目设计和验证报告放在 `documentation/` 的其他子目录。类源码直接放在 `src/<模块>/`，类说明与源码同级；示例按照源码模块组织到 `examples/<模块>/`，生成的中间文件、MATLAB 参考数据和图片均与示例脚本同级。每个类必须有单元测试和详细 Markdown 说明，逐项解释字段、属性、函数及示例，并在适用时配图。规范表格、公式须标明原文版本与章节，具体物理信道必须与 MATLAB 独立比对。GitHub 目标为 `gxymmd1995-max/NR-GPT`；等待用户明确通知后才能提交或推送。
 
@@ -112,7 +112,7 @@ PBCH 归属 SSB；DM-RS 等参考信号跟随所属信道管理，公共序列�
 9. 核心默认使用 float64/complex128 保证参考实现精度，之后评估 float32/complex64 与 Numba 加速。
 10. 所有实验显式传入随机种子，保留中间数据导出能力。
 
-目标目录（只有 cell 及其测试和示例已实现，其他模块不提前创建空骨架）：
+目标目录（cell、grid、diagnostics 及其测试/示例已实现，其他模块不提前创建空骨架）：
 
 ```text
 NR1024/
@@ -214,8 +214,8 @@ LDPC 和 Polar 是关键依赖，应尽早获取独立测试向量并验证译�
 1. 已补齐官方 TS 38.211 V15.2.0，后续信道实现前继续核对整套 R15 候选基线。
 2. 已编写规范清单、覆盖矩阵及架构说明。
 3. 已创建 Python 包、依赖配置和基础测试结构。
-4. 已实现 `NRCell` 及基础坐标转换，下一步实现 `NRGrid`。
+4. 已实现 `NRCell`、`NRGrid` 及基础坐标、映射和资源冲突管理。
 5. 实现 Gold、基础调制解调、OFDM 与 AWGN，并通过基础回环。
 6. 进入 SSB 与 PBCH，实现第一个端到端样例。
 
-当前 NRCell 已完成单元测试、MATLAB 载波/OFDM 时序比对及类文档。支持 TDD/FDD 元数据、收发天线数量、Tc/Ts、基于频域 RE 数的 2 次幂 FFT 选择及精确 CP 采样时序。最新完成情况见[覆盖矩阵](../feature_matrix.md)。使用一个不可变 `NRCell` 管理载波与单一活动 BWP；`NRGrid` 及实际波形模块后续实施。
+当前 NRCell 已完成单元测试、MATLAB 载波/OFDM 时序比对及类文档。支持 TDD/FDD 元数据、收发天线数量、Tc/Ts、基于频域 RE 数的 2 次幂 FFT 选择及精确 CP 采样时序。NRGrid 已完成单时隙端口域数据/占用分离、BWP 坐标、映射/预留/提取和 MATLAB 轴对比；天线域预编码与实际波形模块仍待实施。最新完成情况见[覆盖矩阵](../feature_matrix.md)。

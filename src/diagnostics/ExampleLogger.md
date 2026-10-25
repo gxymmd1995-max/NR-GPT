@@ -6,7 +6,7 @@
 
 在 `with ExampleLogger(__file__) as log:` 中运行示例函数，即可记录当前线程的项目调用链、参数、出口值、耗时和异常。`log.dump_state(cell, "cell")` 输出该对象的字段、常量及全部只读属性。日志写在示例脚本同目录，文件名为示例名加 `.log`，每次运行覆盖旧文件。
 
-当前已接入三个 Python 示例：`NRCell_demo.py`、`plot_NRCell.py`、`plot_NRCell_timing.py`。MATLAB 导出脚本是独立的 MATLAB 入口，不由 Python profiler 追踪。
+当前已接入五个 Python 示例：`NRCell_demo.py`、`plot_NRCell.py`、`plot_NRCell_timing.py`、[NRGrid_demo.py](../../examples/grid/NRGrid_demo.py) 和[信道色卡示例](../../examples/grid/plot_NRGrid_channel_colors.py)。MATLAB 导出脚本是独立的 MATLAB 入口，不由 Python profiler 追踪。
 
 默认终端级别为 INFO，显示 START、STATE、业务摘要和 FINISH；文件固定保存 DEBUG，额外包含 CALL、EXIT。设置 `NR_LOG_LEVEL=DEBUG` 可使终端也显示调用路径。日志使用 UTF-8，时间戳明确标记为 UTC。
 
@@ -86,7 +86,7 @@ with ExampleLogger(Path("examples/cell/NRCell_demo.py")) as log:
     assert state["properties"]["n_fft"] == 1024
 ```
 
-三个 Python 示例已自行创建日志作用域，无需再包一层。直接执行：
+上述 Python 示例已自行创建日志作用域，无需再包一层。直接执行：
 
 ```powershell
 .venv\Scripts\python examples/cell/NRCell_demo.py
@@ -96,7 +96,7 @@ $env:NR_LOG_LEVEL = "DEBUG"
 Remove-Item Env:\NR_LOG_LEVEL
 ```
 
-默认日志文件名为 `NRCell_demo.log`、`plot_NRCell.log`、`plot_NRCell_timing.log`。这些是运行中间文件，已由 `.gitignore` 的 `*.log` 规则排除；不需要将日志文件提交到仓库。
+默认日志文件名为 `NRCell_demo.log`、`plot_NRCell.log`、`plot_NRCell_timing.log`、`NRGrid_demo.log` 和 `plot_NRGrid_channel_colors.log`。日志与各自示例同级。这些是运行中间文件，已由 `.gitignore` 的 `*.log` 规则排除；不需要将日志文件提交到仓库。
 
 ## 日志阅读示例
 
