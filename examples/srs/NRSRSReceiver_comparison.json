@@ -1,0 +1,325 @@
+{
+  "status": "passed",
+  "generated_at": "2026-10-26T12:44:47.783280+00:00",
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "receiver_case_count": 24,
+  "user_case_count": 32,
+  "codebook_matrix_count": 72,
+  "decision_or_delay_mismatches": 0,
+  "max_measurement_abs_errors": {
+    "snr_db": 5.24735810358834e-12,
+    "rssi": 5.684341886080802e-14,
+    "rssi_db": 3.552713678800501e-15,
+    "rsrp": 1.9617640845126516e-13,
+    "rsrp_db": 2.362554596402333e-12,
+    "rssi_per_rx": 1.7053025658242404e-13,
+    "rsrp_per_rx": 4.3404169147720495e-13
+  },
+  "max_cir_abs_error": 3.9971565875883324e-11,
+  "max_channel_abs_error": 8.1346907770041e-12,
+  "max_narrowband_noise_abs_error": 4.182695856336238e-13,
+  "hashes": {
+    "examples/srs/NRSRSReceiver_reference.json": "c4767c1e7cd67d766d0280bfb5061b85797ff2f803342eb1e144aafe40822f3b",
+    "examples/common/NRUplinkCodebook_reference.json": "f31876db5ac2f655002b1bd9555186088358180ea79761811b521b2b884f788f",
+    "src/srs/NRSRSReceiver.py": "d44baeb1376c8fb46b73e1c16605c491d78df8cdfb4125a5f33bc352cf431ecd",
+    "src/common/NRUplinkCodebook.py": "2e20cd9df78667c9786f87f9c2f7df408147f15969370a35a5bdb4d34a568255",
+    "src/common/_uplink_tables.py": "f6120a7bb964c81bfc8c90ad400809e24334e6eab9810edaf68582159b4d3cb3"
+  },
+  "note": "Python comparison of actual independent MATLAB vectors; full tests also check existing SRS vectors, LS condition, counts, signal and MI score.",
+  "cases": [
+    {
+      "case_id": 0,
+      "user": "UE0",
+      "ri": 1,
+      "tpmi": 0,
+      "delay_samples": 1,
+      "max_cir_abs_error": 1.2923995801840432e-11,
+      "max_channel_abs_error": 3.201590149927991e-12
+    },
+    {
+      "case_id": 1,
+      "user": "UE0",
+      "ri": 1,
+      "tpmi": 0,
+      "delay_samples": 2,
+      "max_cir_abs_error": 1.3558131079687765e-12,
+      "max_channel_abs_error": 1.8492852783040524e-12
+    },
+    {
+      "case_id": 2,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 3,
+      "max_cir_abs_error": 2.154617914091798e-11,
+      "max_channel_abs_error": 6.54797000194318e-12
+    },
+    {
+      "case_id": 3,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 4,
+      "max_cir_abs_error": 1.029293053177836e-12,
+      "max_channel_abs_error": 1.8790186046107962e-12
+    },
+    {
+      "case_id": 4,
+      "user": "UE0",
+      "ri": 4,
+      "tpmi": 0,
+      "delay_samples": 5,
+      "max_cir_abs_error": 1.4273371611442692e-11,
+      "max_channel_abs_error": 3.354444098356767e-12
+    },
+    {
+      "case_id": 5,
+      "user": "UE0",
+      "ri": 4,
+      "tpmi": 0,
+      "delay_samples": 6,
+      "max_cir_abs_error": 1.2279946610687348e-11,
+      "max_channel_abs_error": 5.398916385150358e-12
+    },
+    {
+      "case_id": 6,
+      "user": "UE0",
+      "ri": 1,
+      "tpmi": 0,
+      "delay_samples": 0,
+      "max_cir_abs_error": 1.6777165478288245e-11,
+      "max_channel_abs_error": 3.5622470451309633e-12
+    },
+    {
+      "case_id": 7,
+      "user": "UE0",
+      "ri": 1,
+      "tpmi": 0,
+      "delay_samples": 1,
+      "max_cir_abs_error": 6.52535686524202e-13,
+      "max_channel_abs_error": 1.4295124757422076e-12
+    },
+    {
+      "case_id": 8,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 2,
+      "max_cir_abs_error": 1.4091046742943259e-11,
+      "max_channel_abs_error": 3.770912653417104e-12
+    },
+    {
+      "case_id": 9,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 3,
+      "max_cir_abs_error": 1.321419070241569e-12,
+      "max_channel_abs_error": 2.4906792829375808e-12
+    },
+    {
+      "case_id": 10,
+      "user": "UE0",
+      "ri": 4,
+      "tpmi": 0,
+      "delay_samples": 4,
+      "max_cir_abs_error": 2.3993506796945336e-11,
+      "max_channel_abs_error": 5.820760147882922e-12
+    },
+    {
+      "case_id": 11,
+      "user": "UE0",
+      "ri": 4,
+      "tpmi": 0,
+      "delay_samples": 5,
+      "max_cir_abs_error": 1.948106011537272e-12,
+      "max_channel_abs_error": 2.463863039593294e-12
+    },
+    {
+      "case_id": 12,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 6,
+      "max_cir_abs_error": 1.81790466142398e-11,
+      "max_channel_abs_error": 3.5446108085357525e-12
+    },
+    {
+      "case_id": 12,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 0,
+      "max_cir_abs_error": 2.132422963091824e-11,
+      "max_channel_abs_error": 3.7767768428170756e-12
+    },
+    {
+      "case_id": 13,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 0,
+      "max_cir_abs_error": 3.9971565875883324e-11,
+      "max_channel_abs_error": 8.073790605664156e-12
+    },
+    {
+      "case_id": 13,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 1,
+      "max_cir_abs_error": 2.7564433590734356e-11,
+      "max_channel_abs_error": 5.34058945608181e-12
+    },
+    {
+      "case_id": 14,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 1,
+      "max_cir_abs_error": 3.167376747105191e-11,
+      "max_channel_abs_error": 6.9683943759039025e-12
+    },
+    {
+      "case_id": 14,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 2,
+      "max_cir_abs_error": 2.4286840680650762e-11,
+      "max_channel_abs_error": 5.375434673651956e-12
+    },
+    {
+      "case_id": 15,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 2,
+      "max_cir_abs_error": 2.1062192375683913e-11,
+      "max_channel_abs_error": 5.550085895376735e-12
+    },
+    {
+      "case_id": 15,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 3,
+      "max_cir_abs_error": 1.6038810110589532e-11,
+      "max_channel_abs_error": 3.859520547748373e-12
+    },
+    {
+      "case_id": 16,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 3,
+      "max_cir_abs_error": 1.4244036252190587e-11,
+      "max_channel_abs_error": 3.5324081142022864e-12
+    },
+    {
+      "case_id": 16,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 4,
+      "max_cir_abs_error": 1.5343561062693046e-11,
+      "max_channel_abs_error": 3.731875155607483e-12
+    },
+    {
+      "case_id": 17,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 4,
+      "max_cir_abs_error": 1.8100705375739624e-11,
+      "max_channel_abs_error": 4.1638475582989986e-12
+    },
+    {
+      "case_id": 17,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 5,
+      "max_cir_abs_error": 2.7596821169586912e-11,
+      "max_channel_abs_error": 6.3691866200679965e-12
+    },
+    {
+      "case_id": 18,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 5,
+      "max_cir_abs_error": 3.4487799504199727e-11,
+      "max_channel_abs_error": 8.1346907770041e-12
+    },
+    {
+      "case_id": 18,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 6,
+      "max_cir_abs_error": 2.2118443342062932e-11,
+      "max_channel_abs_error": 4.299362607846478e-12
+    },
+    {
+      "case_id": 19,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 6,
+      "max_cir_abs_error": 1.566266956558609e-11,
+      "max_channel_abs_error": 4.8591662903511684e-12
+    },
+    {
+      "case_id": 19,
+      "user": "UE1",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 0,
+      "max_cir_abs_error": 1.2249506276467691e-11,
+      "max_channel_abs_error": 5.400328685341954e-12
+    },
+    {
+      "case_id": 20,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 0,
+      "max_cir_abs_error": 1.6627239082724967e-11,
+      "max_channel_abs_error": 3.656896250053914e-12
+    },
+    {
+      "case_id": 21,
+      "user": "UE0",
+      "ri": 2,
+      "tpmi": 0,
+      "delay_samples": 1,
+      "max_cir_abs_error": 2.521243860851907e-12,
+      "max_channel_abs_error": 3.432250889415327e-12
+    },
+    {
+      "case_id": 22,
+      "user": "UE0",
+      "ri": 4,
+      "tpmi": 0,
+      "delay_samples": 2,
+      "max_cir_abs_error": 2.332226698201015e-11,
+      "max_channel_abs_error": 4.994161154494402e-12
+    },
+    {
+      "case_id": 23,
+      "user": "UE0",
+      "ri": 4,
+      "tpmi": 0,
+      "delay_samples": 3,
+      "max_cir_abs_error": 1.0140526547011453e-12,
+      "max_channel_abs_error": 2.423910498609203e-12
+    }
+  ]
+}

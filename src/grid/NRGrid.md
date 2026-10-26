@@ -81,25 +81,35 @@ flowchart LR
 
 **G1：单时隙维度与 RE 总数**。由 TS 38.211 V15.2.0 §4.3.2、§4.4.2、§4.4.4.1 推导，采用项目轴约定：
 
-$$K=12N_{grid}^{size},\quad L=N_{symb}^{slot},\quad shape=(P,L,K),\quad N_{RE}=PLK$$
+$$
+K=12N_{grid}^{size},\quad L=N_{symb}^{slot},\quad shape=(P,L,K),\quad N_{RE}=PLK
+$$
 
 P 为本实例端口数；它不是 NRCell 的发送天线数。完整规范资源网格的时域范围为子帧，本类只分配 L 个当前时隙符号。
 
 **G2：BWP 局部 PRB 转为载波局部子载波**。由 §4.4.4.3/§4.4.4.4/§4.4.5 推导：
 
-$$n_{CRB}=N_{BWP}^{start}+n_{PRB}$$
+$$
+n_{CRB}=N_{BWP}^{start}+n_{PRB}
+$$
 
-$$k_{grid}=12\left(N_{BWP}^{start}-N_{grid}^{start}+n_{PRB}\right)+s,\quad s\in\{0,\dots,11\}$$
+$$
+k_{grid}=12\left(N_{BWP}^{start}-N_{grid}^{start}+n_{PRB}\right)+s,\quad s\in\{0,\dots,11\}
+$$
 
 两个 start 都相对 CRB 0。不能把 BWP 起点误当成相对载波的 RB 偏移。例：载波 CRB 10 起、BWP CRB 20 起，PRB 0 的第一个子载波是载波局部 k=120，而不是 k=240。
 
 **G3：软件占用**。根据标签定义，与 RE 振幅无关，属于平台规则：
 
-$$occupied(p,l,k)=[owners(p,l,k)\ne ""],\quad N_{used}=\sum occupied,\quad N_{free}=N_{RE}-N_{used}$$
+$$
+occupied(p,l,k)=[owners(p,l,k)\ne ""],\quad N_{used}=\sum occupied,\quad N_{free}=N_{RE}-N_{used}
+$$
 
 **G4：MATLAB 列主序一维索引**。MATLAB 数组轴为 `[k,l,p]`，Python 使用 `[p,l,k]`；由 MATLAB `sub2ind` 布局推导：
 
-$$index_{MATLAB,1based}=k+Kl+KLp+1$$
+$$
+index_{MATLAB,1based}=k+Kl+KLp+1
+$$
 
 本类对外所有坐标从 0 开始。`to_matlab()` 返回 K×L×P 数组副本，P=1 时也保留三维；MATLAB 的 size 显示可能省略末尾单例维度，但 size(grid,3) 仍为 1。
 

@@ -147,65 +147,93 @@ cell = NRCell(n_cell_id=42, subcarrier_spacing_khz=30,
 
 **F1：SCS 与 numerology**，原文 §4.2 表 4.2-1：
 
-$$\Delta f = 15\times 2^\mu\;\mathrm{kHz}$$
+$$
+\Delta f = 15\times 2^\mu\;\mathrm{kHz}
+$$
 
 **F2：帧和时隙尺寸**，由原文 §4.3.1、§4.3.2 表 4.3.2-1/-2 推导：
 
-$$N_{slot}^{subframe}=2^\mu,\quad N_{slot}^{frame}=10\times 2^\mu,\quad \overline T_{slot}=\frac{0.01}{N_{slot}^{frame}}\;\mathrm{s}$$
+$$
+N_{slot}^{subframe}=2^\mu,\quad N_{slot}^{frame}=10\times 2^\mu,\quad \overline T_{slot}=\frac{0.01}{N_{slot}^{frame}}\;\mathrm{s}
+$$
 
 横线表示平均时长。精确 CP 和符号边界按 §5.3.1 计算，使用第 4.2 节数组与 `symbol_timing` 查询。
 
 **F3：资源尺寸与网格名义带宽**，由 §4.4.2、§4.4.4.1 与 F1 推导：
 
-$$N_{sc}=12N_{grid}^{size},\quad N_{sc,BWP}=12N_{BWP}^{size},\quad B_{grid}=N_{sc}\Delta f$$
+$$
+N_{sc}=12N_{grid}^{size},\quad N_{sc,BWP}=12N_{BWP}^{size},\quad B_{grid}=N_{sc}\Delta f
+$$
 
 最后一个公式的 Δf 使用 Hz。`occupied_bandwidth_hz` 不含 RF 信道保护带。
 
 **F4：BWP 到公共资源块**，原文 §4.4.4.4：
 
-$$n_{CRB}=n_{PRB}+N_{BWP}^{start}$$
+$$
+n_{CRB}=n_{PRB}+N_{BWP}^{start}
+$$
 
 **F5：BWP 包含约束**，将原文 §4.4.5 的两个约束写成等价区间形式：
 
-$$[N_{BWP}^{start},N_{BWP}^{start}+N_{BWP}^{size})\subseteq[N_{grid}^{start},N_{grid}^{start}+N_{grid}^{size}),\quad N_{BWP}^{size}>0$$
+$$
+[N_{BWP}^{start},N_{BWP}^{start}+N_{BWP}^{size})\subseteq[N_{grid}^{start},N_{grid}^{start}+N_{grid}^{size}),\quad N_{BWP}^{size}>0
+$$
 
 **F6：网格子载波相对 Point A 的频偏**，由 §4.4.2、§4.4.4.2/§4.4.4.3 推导：
 
-$$f_{offset}(k_{grid})=(12N_{grid}^{start}+k_{grid})\Delta f$$
+$$
+f_{offset}(k_{grid})=(12N_{grid}^{start}+k_{grid})\Delta f
+$$
 
 Point A 是 CRB 0 子载波 0 的中心；本类不存 Point A 的绝对频率，也不将它当作载波中心。
 
 **F7：PCI 分解**，原文 §7.4.2.1：
 
-$$N_{ID}^{cell}=3N_{ID}^{(1)}+N_{ID}^{(2)},\quad N_{ID}^{(1)}\in[0,335],\;N_{ID}^{(2)}\in[0,2]$$
+$$
+N_{ID}^{cell}=3N_{ID}^{(1)}+N_{ID}^{(2)},\quad N_{ID}^{(1)}\in[0,335],\;N_{ID}^{(2)}\in[0,2]
+$$
 
 **F8：时隙推进**，本项目算法，基于 §4.3.2 的编号关系与 TS 38.331 V15.2.1 §6.2.2 的 SFN 编号空间推导：
 
-$$q,r=\operatorname{divmod}(n_{slot}+offset,N_{slot}^{frame}),\quad SFN'=(SFN+q)\bmod1024,\quad n_{slot}'=r$$
+$$
+q,r=\operatorname{divmod}(n_{slot}+offset,N_{slot}^{frame}),\quad SFN'=(SFN+q)\bmod1024,\quad n_{slot}'=r
+$$
 
 **F9：固定时间单位**，原文 TS 38.211 V15.2.0 §4.1：
 
-$$T_c=\frac{1}{480000\times4096},\quad T_s=\frac{1}{15000\times2048},\quad\kappa=\frac{T_s}{T_c}=64$$
+$$
+T_c=\frac{1}{480000\times4096},\quad T_s=\frac{1}{15000\times2048},\quad\kappa=\frac{T_s}{T_c}=64
+$$
 
 **F10：FFT 点数选择**，平台规则；标准 §5.3.1 的连续时间表达式不强制这个离散 FFT 选择：
 
-$$N_{FFT}=\max\left(128,\;2^{\lceil\log_2(12N_{grid}^{size})\rceil}\right)$$
+$$
+N_{FFT}=\max\left(128,\;2^{\lceil\log_2(12N_{grid}^{size})\rceil}\right)
+$$
 
 128 下限保证 R15 普通 CP 长度为整数采样点。选择不计入 CRB 起点、时域符号数、BWP 宽度、天线数或保护带比例；本平台并未自动执行 RF 带宽/保护带约束校验。
 
 **F11：采样间隔与 Tc 换算**，由 §4.1/§5.3.1 推导，Δf 用 Hz，不进行额外重采样：
 
-$$F_s=N_{FFT}\Delta f,\quad T_{sample}=\frac1{F_s},\quad N_{Tc/sample}=\frac{1}{T_cF_s}$$
+$$
+F_s=N_{FFT}\Delta f,\quad T_{sample}=\frac1{F_s},\quad N_{Tc/sample}=\frac{1}{T_cF_s}
+$$
 
 **F12：有效部分和 CP 的 Tc 数**，原文 §5.3.1，l 为**子帧内**符号编号：
 
-$$N_u^\mu=2048\kappa\,2^{-\mu}$$
+$$
+N_u^\mu=2048\kappa\,2^{-\mu}
+$$
 
-$$N_{CP,l}^\mu=\begin{cases}512\kappa\,2^{-\mu}&\text{extended CP}\\144\kappa\,2^{-\mu}+16\kappa&\text{normal CP},\ l=0\text{ or }l=7\cdot2^\mu\\144\kappa\,2^{-\mu}&\text{other normal CP symbols}\end{cases}$$
+$$
+N_{CP,l}^\mu=\begin{cases}512\kappa\,2^{-\mu}&\text{extended CP}\\144\kappa\,2^{-\mu}+16\kappa&\text{normal CP},\ l=0\text{ or }l=7\cdot2^\mu\\144\kappa\,2^{-\mu}&\text{other normal CP symbols}\end{cases}
+$$
 
 **F13：逐符号采样数与起点**，由 §5.3.1 的长度和起点递推推导：
 
-$$N_{CP,l}^{sample}=\frac{N_{CP,l}^\mu}{N_{Tc/sample}},\quad N_{symbol,l}^{sample}=N_{FFT}+N_{CP,l}^{sample},\quad n_{start,l}=\sum_{i=0}^{l-1}N_{symbol,i}^{sample}$$
+$$
+N_{CP,l}^{sample}=\frac{N_{CP,l}^\mu}{N_{Tc/sample}},\quad N_{symbol,l}^{sample}=N_{FFT}+N_{CP,l}^{sample},\quad n_{start,l}=\sum_{i=0}^{l-1}N_{symbol,i}^{sample}
+$$
 
 在自动 FFT 和 R15 参数范围内，上述 Tc 数及采样数均为整数。一个子帧总计 1966080 Tc，逐符号点数之和为 Fs/1000；一个系统帧为其 10 倍。
 

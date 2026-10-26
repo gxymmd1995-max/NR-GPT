@@ -2,6 +2,8 @@
 
 `NRSRS` 使用 [NRCell](../cell/NRCell.md) 提供小区、帧内时隙、CP 和活动 BWP，产生真正的 SRS 复数序列及 RE 坐标，再映射到 [NRGrid](../grid/NRGrid.md)。源码为 [NRSRS.py](NRSRS.py)，导入方式 `from srs import NRSRS`。
 
+本类保留发送参考生成职责；已新增独立接收类 [NRSRSReceiver](NRSRSReceiver.md)，负责已OFDM解调采样的联合信道估计、宽/窄带噪声、每用户时延及上行RI/TPMI。
+
 固定基线为 **TS 38.211 V15.2.0 §5.2、§6.4.1.4**，RRC 参数范围为 **TS 38.331 V15.2.1 §6.3.2 SRS-Config / SRS-Resource / SRS-PeriodicityAndOffset**。SRS 是上行参考信号，不携带用户数据。其协议端口为 1000+i，网格轴为本地 i；端口数不从物理收发天线数推断。
 
 实现 1/2/4 端口，1/2/4 连续符号，comb 2/4，64 行全部带宽表、4 个带宽层级，组跳变/序列跳变、频率跳频与重复、周期/半持续/非周期资源的当前时隙合成。没有实现 OFDM 波形、信道传播/估计、闭环功控、DCI/MAC 解码、波束关系、资源集冲突优先级或 UE 射频能力检查。允许的 numerology 来自 NRCell；算法测试中的 numerology 不宣称适用于所有射频频段/设备。
@@ -137,101 +139,103 @@ Gold序列和SRS的u/v获取已移至公共类 [NRCommon](../common/NRCommon.md)
 
 **S1，§6.4.1.4.1/3：时间起点和序列长度。**
 
-\[
+$$
 l_0=N_{symb}^{slot}-1-l_{offset},\qquad M=m_{SRS,b}\,12/K_{TC}.
-\]
+$$
 
 **S2，§6.4.1.4.2：端口循环移位。** 令 P=n_ports，i=p_i-1000。
 
-\[
+$$
 n_{cs,i}=(n_{cs}+n_{cs,max}i/P)\bmod n_{cs,max},\quad
 \alpha_i=2\pi n_{cs,i}/n_{cs,max},\quad n_{cs,max}=8\;(K=2),12\;(K=4).
-\]
+$$
 
 **S3，§5.2.2、§5.2.2.1/2：基序列及循环移位。** M=12/24 时取对应原表 φ。M≥36 时 N_ZC 为严格小于 M 的最大质数：
 
-\[
+$$
 r_i(n,l')=e^{j\alpha_i n}\bar r_{u,v}(n),\quad
 \bar r_{u,v}(n)=
 \begin{cases}e^{j\varphi_u(n)\pi/4},&M=12,24\\
 e^{-j\pi q m(m+1)/N_{ZC}},\ m=n\bmod N_{ZC},&M\ge36
 \end{cases}
-\]
-\[
+$$
+
+$$
 \bar q=N_{ZC}(u+1)/31,\quad q=\lfloor\bar q+1/2\rfloor+v(-1)^{\lfloor2\bar q\rfloor}.
-\]
+$$
 
 SRS 的原表 m_b 都是 4 的倍数，所以本类不产生 6/18/30 点序列。实现先对整数 ZC 相位模 2π，再取指数；与原式代数等价，但与 MATLAB 直接计算大相位存在可测的浮点舍入差。
 
 **S4，§5.2.1：Gold PRBS。** x1(0)=1，其余前31位为0；x2 的前31位按 c_init=sequence_id 的低位先装载；Nc=1600。
 
-\[
+$$
 x_1(n+31)=x_1(n+3)\oplus x_1(n),\quad
 x_2(n+31)=x_2(n+3)\oplus x_2(n+2)\oplus x_2(n+1)\oplus x_2(n),
 \quad c(n)=x_1(n+1600)\oplus x_2(n+1600).
-\]
+$$
 
 **S5，§6.4.1.4.2：组/序列跳变。** 令 t=n_slot*N_symb_slot+l0+l'，此处使用帧内 slot；每帧重新以 sequence_id 初始化 PRBS。
 
-\[
+$$
 u=(f_{gh}+n_{ID}^{SRS})\bmod30,\quad
 f_{gh}=\begin{cases}\sum_{m=0}^7 c(8t+m)2^m\bmod30,&groupHopping\\0,&其他\end{cases}
-\]
-\[
+$$
+
+$$
 v=\begin{cases}c(t),&sequenceHopping\ 且\ M\ge72\\0,&其他\end{cases}.
-\]
+$$
 
 **S6，§6.4.1.4.3/4：候选时隙和传输计数。** 令 a=n_frame*N_slots_frame+n_slot，T/Toffset 单位为 slot：
 
-\[
+$$
 (a-T_{offset})\bmod T=0,\quad
 n_{SRS}=\begin{cases}\lfloor l'/R\rfloor,&aperiodic\\
 ((a-T_{offset})/T)(N_{symb}^{SRS}/R)+\lfloor l'/R\rfloor,&periodic/semi\text{-}persistent.
 \end{cases}
-\]
+$$
 
 SFN 从1023回到0时使用回绕后的 NRCell 帧号；本类不额外保存无限递增帧计数。
 
 **S7，§6.4.1.4.3：频率位置。** 无跳频或 b≤b_hop 时 n_b=⌊4n_RRC/m_b⌋ mod N_b。否则：
 
-\[
+$$
 n_b=(F_b(n_{SRS})+\lfloor4n_{RRC}/m_b\rfloor)\bmod N_b.
-\]
+$$
 
 在 F_b 的乘积中强制 N_bhop=1。令 D=∏从 b_hop 到 b-1 的 N，z=(n_SRS mod(D*N_b))/D；以下 D/z 是为排版引入的本文符号：
 
-\[
+$$
 F_b=\begin{cases}(N_b/2)\lfloor z\rfloor+\lfloor z/2\rfloor,&N_b为偶数\\
 \lfloor N_b/2\rfloor\lfloor n_{SRS}/D\rfloor,&N_b为奇数.\end{cases}
-\]
+$$
 
 **S8，§6.4.1.4.3：每端口起点和特殊 comb 偏移。** 当 P=4、基础 n_cs≥n_cs,max/2 且 i=1/3 时，k_TC,i=(comb_offset+K_TC/2) mod K_TC；其他端口 k_TC,i=comb_offset。
 
-\[
+$$
 k_{0,i}(l')=12n_{shift}+k_{TC,i}+\sum_{b=0}^{B_{SRS}}K_{TC}M_b n_b(l').
-\]
+$$
 
 **S9，§6.4.1.4.3：RE 映射与幅度。**
 
-\[
+$$
 k=k_{0,i}+K_{TC}n,\quad l=l_0+l',\quad a_{k,l}^{(i)}=\beta_{SRS}r_i(n,l')/\sqrt{P}.
-\]
+$$
 
 generate 输出 r；map_to_grid 输出 a。beta 默认1，外部可用其表示功控给定的线性幅度；未实现 TS 38.213 闭环功控计算。beta=0 时 RE 仍标为占用。
 
 **S10，项目坐标推导，依据 §4.4.4.1/3/4/5 与 §6.4.1.4.3。**
 
-\[
+$$
 k_{BWP,low}=12(bwp\_start-n\_start\_grid),\quad
 CRB=n\_start\_grid+\lfloor k/12\rfloor.
-\]
+$$
 
 **S11，项目绘图/CSV 频率推导，依据 §4.4.4.2 与 §5.3.1。** Δf 为 Hz；Point A 频偏使用 NRCell.subcarrier_offset_hz。这里 carrier center 指 §5.3.1 的 OFDM 居中参考 k=N_grid_size*12/2，不是最低/最高子载波中心的几何平均：
 
-\[
+$$
 f_{carrier\ center}=(k-N_{grid}^{size}12/2)\Delta f,\quad
 f_{PointA}=(12N_{grid}^{start}+k)\Delta f.
-\]
+$$
 
 这是相对频率，不是绝对 RF 频率，不假定某个中心频点。梳齿间隔为 K_TC*Δf，不能把每个空梳齿当作 SRS 复数序列点。
 

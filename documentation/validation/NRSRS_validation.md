@@ -47,7 +47,7 @@ MATLAB 载波输入采用 NFrame 与**帧内 NSlot**，与 NRCell.to_matlab_conf
 ## 本地测试与演示
 
 ```powershell
-.venv\Scripts\python -X utf8 -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -X utf8 -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov=channel --cov-branch --cov-report=term-missing --cov-fail-under=100
 ```
 
 **325项通过**：320项单元测试（原189+SRS109+NRCommon22），5项 MATLAB 独立向量入口（NRCell、NRGrid、NRSRS、Gold比特和公共u/v）。cell/grid/diagnostics/srs/common 共712条可执行语句、212个分支全部覆盖，行/分支覆盖率100%。MATLAB入口循环全部配置；832不是pytest入口数。
@@ -57,3 +57,7 @@ SRS 单元测试另外核对手算 C=3/B=1 的跳频排列 0→2→1→3、端�
 [示例](../../examples/srs/README.md) 已实际运行，保留同级 JSON/NPZ/CSV、PNG/SVG与忽略的日志；图像已逐张检查。allocation 显示 R=1 的时隙内跳频，hopping 显示 R=4 的时隙间跳频，输入分别记录。频率CSV区分相对 OFDM 居中参考和相对 Point A，后者直接使用 NRCell.subcarrier_offset_hz。
 
 当前覆盖合成序列与频域映射，没有验证 OFDM 时域波形、实际RF功率、信道估计性能、波束/天线预编码、TDD/DCI/MAC许可流程或链路性能；这些功能尚未实现。
+
+2026-10-26补充：本报告保留发送/公共序列阶段基线；新增SRS接收与上行码本后，最新全项目372项测试、行/分支覆盖率100%，见 [SRS接收验证](NRSRSReceiver_validation.md)。
+
+2026-10-26时域补充：最新全项目419项测试通过（含实际OFDM/channel参考与SRS时域集成），行/分支覆盖率100%；上文保留对应阶段基线，见[OFDM/channel验证](NROFDM_validation.md)。

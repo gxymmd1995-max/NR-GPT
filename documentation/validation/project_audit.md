@@ -49,4 +49,17 @@
 
 ## 公共序列重构（2026-10-25）
 
+最新接收端回归见下方2026-10-26记录；本节保留当时325项基线。
+
 Gold生成和SRS的u/v获取已移至src/common/NRCommon.py，补齐同级类文档、示例与22项单元测试。新增20组实际MATLAB nrPRBS比特及公共u/v独立入口，原有832组SRS向量继续通过；最新全项目325项测试、五模块行/分支覆盖率100%。SRS比较报告同时保存NRCommon源码哈希，原协议文件未修改。详细记录见 [NRCommon验证](NRCommon_validation.md)。
+
+## SRS接收与上行码本（2026-10-26）
+
+新增NRSRSReceiver、NRUplinkCodebook及同级类文档/单元测试。MATLAB实际导出24组接收输入（32用户结果）与72个R15码本矩阵，接收指标、RI/TPMI、首径/最强径及完整CIR/H比较通过；保留原始向量、比较脚本/报告、3用户示例、JSON/NPZ/PNG/SVG及忽略的日志。全项目372项测试、923条语句/302个分支全部覆盖。已明确频域输入、静默RE噪声定义、有限因果FIR和时延参考、工程RI策略等边界。原协议文件未修改，本次变更未提交/推送。见 [接收验证报告](NRSRSReceiver_validation.md)。
+
+## OFDM/相位/common与时域channel（2026-10-26）
+
+新增NROFDM、NRPhaseRotation、NRChannel及同级文档/单元测试，统一common与channel职责。28组真实OFDM/相位、84组解调、24组channel向量通过，并新增完整SRS时域集成。全项目419项通过，1059条语句/342个分支100%覆盖；新增示例、原始参考、数值报告和SHA256，图像已检查。协议原文和授权条款未修改；未提交/推送。完整边界见[OFDM/channel验证](NROFDM_validation.md)。
+
+
+2026-10-26补充：信道加噪统一为snr_db，取消直接指定噪声功率。每UE增加归一化RSSI、SRS-RSRP及dB/每Rx功率，SNR以分离后的RSRP和实测宽带噪声计算。RSSI为每SRS符号首末子载波闭区间的带宽总功率（跨符号/Rx平均），RSRP为实际SRS RE平均功率；此为项目工程定义，不冒称R15标准UL测量。实际MATLAB R2024a/5G Toolbox24.1重新导出信道24例和SRS接收24例/32UE；全套422项通过（412单元、9 MATLAB入口、1集成），1070语句/342分支均100%覆盖。示例和类文档同步更新，尚未创建提交。

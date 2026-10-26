@@ -1,6 +1,6 @@
 # NR-GPT：NR Release 15 Python 物理层仿真
 
-以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell 小区配置、NRGrid 单时隙资源网格、NRSRS 探测参考信号和 ExampleLogger 日志诊断**。
+以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell、NRGrid、SRS收发、OFDM/逐符号相位、TA/噪声/CFO、公共序列、上行RI/TPMI码本及日志诊断**。
 
 ## 快速开始
 
@@ -8,13 +8,17 @@
 python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[dev,plots]"
 .venv\Scripts\python examples/cell/NRCell_demo.py
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov=channel --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python examples/cell/plot_NRCell.py
 .venv\Scripts\python examples/cell/plot_NRCell_timing.py
 .venv\Scripts\python examples/grid/NRGrid_demo.py
 .venv\Scripts\python examples/grid/plot_NRGrid_channel_colors.py
 .venv\Scripts\python -X utf8 examples/srs/NRSRS_demo.py
 .venv\Scripts\python -X utf8 examples/srs/compare_NRSRS_reference.py
+.venv\Scripts\python -X utf8 examples/srs/NRSRSReceiver_demo.py
+.venv\Scripts\python -X utf8 examples/srs/compare_NRSRSReceiver_reference.py
+.venv\Scripts\python -X utf8 examples/common/NROFDM_demo.py
+.venv\Scripts\python -X utf8 examples/channel/NRChannel_demo.py
 ```
 
 `--require-matlab` 要求仓库中存在实际 MATLAB 生成的参考向量；测试本身不需要 MATLAB 许可证。重新生成向量需要本机 MATLAB 5G Toolbox。
@@ -56,8 +60,10 @@ src/diagnostics/         ExampleLogger.py 与同级类说明：日志、调用�
 src/grid/                NRGrid.py 与同级类说明：单时隙端口域网格
 examples/grid/           网格演示、NPZ/JSON、图片及 MATLAB 独立参考
 src/srs/                 NRSRS.py、NRSRS.md 与固定 R15 原表常量
-src/common/              NRCommon.py、NRCommon.md：公共Gold序列与SRS u/v
-examples/common/         公共序列示例、JSON/图片及真实MATLAB nrPRBS参考
+src/common/              公共Gold/u/v、上行码本、NROFDM、NRPhaseRotation及同级文档
+examples/common/         序列/OFDM/相位示例、JSON/NPZ/图片及真实MATLAB参考
+src/channel/             NRChannel.py / NRChannel.md：TA、AWGN、CFO
+examples/channel/        SRS时域信道链路、波形/测量/图片及MATLAB参考
 examples/srs/            SRS 序列/网格/梳齿/跳频图、频率CSV、MATLAB 实测与比较
 ```
 
@@ -65,6 +71,13 @@ examples/srs/            SRS 序列/网格/梳齿/跳频图、频率CSV、MATLAB
 - [NRGrid：坐标、映射、预留和冲突策略](src/grid/NRGrid.md)
 - [NRSRS：字段、序列、跳频和映射公式](src/srs/NRSRS.md)
 - [NRCommon：Gold伪随机序列、SRS的u/v获取](src/common/NRCommon.md)
+- [NRSRSReceiver：信道、噪声、用户时延、上行RI/TPMI](src/srs/NRSRSReceiver.md)
+- [NRUplinkCodebook：R15标准矩阵与上行选择策略](src/common/NRUplinkCodebook.md)
+- [SRS接收端独立验证](documentation/validation/NRSRSReceiver_validation.md)
+- [NROFDM：调制、解调、CP和缩放](src/common/NROFDM.md)
+- [NRPhaseRotation：每符号载波/FFT窗口/定时相位](src/common/NRPhaseRotation.md)
+- [NRChannel：TA、AWGN和连续CFO](src/channel/NRChannel.md)
+- [时域SRS链路示例](examples/channel/README.md)
 - [SRS 演示与 MATLAB 独立比对](examples/srs/README.md)
 - [SRS 实测验证报告](documentation/validation/NRSRS_validation.md)
 - [NRGrid 示例与独立验证](examples/grid/README.md)
@@ -105,3 +118,6 @@ NRGrid 采用 `[端口,符号,子载波]` 数组和独立标签记录资源占�
 直接运行三个 Python 示例会在 `examples/cell/` 同级生成 `NRCell_demo.log`、`plot_NRCell.log`、`plot_NRCell_timing.log`，记录函数调用路径、参数、出口值、耗时和完整 NRCell 变量快照（12 字段、8 常量、35 属性）。终端默认显示 INFO 摘要与变量，文件包含 DEBUG 调用详情；设置 `$env:NR_LOG_LEVEL = "DEBUG"` 可在终端同时查看调用链。日志 UTF-8、时间戳 UTC、每次运行覆盖，已被 Git 忽略。详见[日志类文档](src/diagnostics/ExampleLogger.md)。
 
 NRGrid 示例同样生成 `examples/grid/NRGrid_demo.log`，完整打印该演示网格的字段、常量和属性，数值数组另存 NPZ；目录说明见 [examples/grid/README.md](examples/grid/README.md)。
+
+
+2026-10-26测量接口更新：NRChannel仅通过`snr_db`添加噪声；NRSRSReceiver输出每UE的SNR、RSSI和SRS-RSRP（项目工程指标，归一化功率与dB）。[信道参数](src/channel/NRChannel.md)、[接收指标口径](src/srs/NRSRSReceiver.md)。

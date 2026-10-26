@@ -4,3 +4,16 @@
 *.svg -whitespace
 # Preserve protocol originals/translations byte-for-byte for SHA-256 verification.
 documentation/protocols/** -text
+
+# Comparison reports hash the exact reference and implementation bytes.
+examples/channel/NRChannel_reference.json -text whitespace=cr-at-eol
+examples/common/NROFDM_reference.json -text whitespace=cr-at-eol
+examples/common/NRUplinkCodebook_reference.json -text whitespace=cr-at-eol
+examples/srs/NRSRSReceiver_reference.json -text whitespace=cr-at-eol
+src/channel/NRChannel.py -text whitespace=cr-at-eol
+src/common/NROFDM.py -text whitespace=cr-at-eol
+src/common/NRPhaseRotation.py -text whitespace=cr-at-eol
+src/common/NRUplinkCodebook.py -text whitespace=cr-at-eol
+src/common/_uplink_tables.py -text whitespace=cr-at-eol
+src/common/_validation.py -text whitespace=cr-at-eol
+src/srs/NRSRSReceiver.py -text whitespace=cr-at-eol

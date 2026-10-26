@@ -12,6 +12,8 @@ NRSRS 位于 `src/srs/NRSRS.py`，以不可变 NRCell 为输入，负责固定 R
 
 ## 命名与入口
 
+接收端位于 `src/srs/NRSRSReceiver.py`：使用NRGrid生成已知参考，联合拟合频域采样到有限因果FIR，输出多用户信道/噪声/时延。接收输入轴为[Rx,L,K]，与发送端[P,L,K]的物理含义分开。`src/common/NRUplinkCodebook.py`提供固定R15 PUSCH矩阵与RI/TPMI搜索；接收算法保持独立，不把调度/CFO/时域OFDM放入NRCell。详细边界、噪声mask、时延窗口和归一化均在对应同级类文档说明。
+
 以下是工程命名约定表，不是协议原表。类、类文件和与该类相关的文件均保留准确类名及大小写；模块目录、变量和方法使用小写或 snake_case。
 
 | 用途 | 当前路径或名称 |
@@ -46,6 +48,9 @@ flowchart BT
     C[NRCell 配置] --> G[NRGrid 单时隙端口域网格]
     C --> R[NRSRS 序列与资源位置]
     R --> G
+    G --> X[NRSRSReceiver 频域采样联合估计]
+    C --> X
+    B[NRUplinkCodebook R15码本] --> X
     C --> H[SSB / PDSCH / PDCCH / 上行信道 后续实现]
     G --> H
     A[公共算法 / 编码 / OFDM 后续实现] --> H
@@ -60,10 +65,27 @@ NRCell 根据载波频域 RE 数选择至少 128 的最小 2 的幂 FFT，并计
 
 ## 新类的交付要求
 
-诊断系统位于 `src/diagnostics/ExampleLogger.py`，类说明与源码同级，单元测试为 `tests/unit/test_ExampleLogger.py`。八个 Python 示例/比较入口（cell 三个、grid 两个、srs 两个、common 一个）使用 with 作用域启用当前线程的项目调用跟踪，在同级 `.log` 文件中保存 DEBUG 详情；小区/网格/SRS示例另通过 dump_state 输出具名对象状态，色卡示例输出颜色表。诊断层依赖标准库，不改变物理层算法，也不把 logger 写入不可变配置。日志属于运行中间文件，由 `*.log` 忽略。
+诊断系统位于 `src/diagnostics/ExampleLogger.py`，类说明与源码同级，单元测试为 `tests/unit/test_ExampleLogger.py`。十三个 Python 示例/比较入口（cell 三个、grid 两个、srs 四个、common 三个、channel 一个）使用 with 作用域启用当前线程的项目调用跟踪，在同级 `.log` 文件中保存 DEBUG 详情；小区/网格/SRS示例另通过 dump_state 输出具名对象状态，色卡示例输出颜色表。诊断层依赖标准库，不改变物理层算法，也不把 logger 写入不可变配置。日志属于运行中间文件，由 `*.log` 忽略。
 
 信道配色集中于 `src/grid/channel_colors.py`，通过只读色表、channel_color 和 encode_owners 统一显示。颜色是项目可视化规则，不属于 3GPP 协议参数；不影响网格数据和占用状态，不意味着尚未实现的物理信道已可运行。
 
 每个新类同时提交实现、单元测试与独立 Markdown 文档，说明每个字段/属性/方法并提供示例。每个协议参数表标原文章节与原表号；每个公式标版本和章节，推导式注明推导来源。具体物理信道还必须提交 MATLAB 生成脚本、带环境信息的独立输出及 Python 对比测试。
 
 NRCommon的两个静态公共接口分别负责通用31bit Gold序列/片段和专用SRS u/v规则。公共层不依赖具体信号类；SRS保留alpha、带宽/跳频、RE映射。类文档与源码同级，示例和真实nrPRBS参考位于examples/common/。
+
+时域边界：src/common/NROFDM.py提供单slot CP-OFDM；NRPhaseRotation.py负责§5.4逐符号载频补偿与FFT窗口/时移相位；src/channel/NRChannel.py负责TA、复AWGN和连续CFO。波形轴为[分支,样点]，与MATLAB[样点,分支]转置；SRS接收机仍接收已解调网格，由examples/channel/NRChannel_demo.py串联完整已知CFO校正链路。所有对应类MD/测试/示例和实际参考同时提供。
+
+
+## Markdown公式排版约定
+
+项目开发文档的块级公式统一使用独占行的`$$`作为开始和结束，公式块前后留空行；不使用`\[`、`\]`作为Markdown公式分隔符。后者在部分预览器中会被处理成普通方括号，导致LaTeX命令直接显示。公式不能放在代码围栏中，否则将按源码展示。
+
+示例（M1是本文自编号排版示例，不是协议原公式号）：
+
+```markdown
+$$
+F_s = N_{\mathrm{FFT}}\Delta f. \tag{M1}
+$$
+```
+
+公式仍须按项目要求标明规范版本、章节或说明是工程推导。2026-10-26已扫描全项目文档，9份类文档统一块级分隔符，并补齐协议译文6处公式块后的空行。使用KaTeX 0.16.22检查全部282个块级公式及3085个行内公式，均通过语法解析。译文SHA256随排版修改同步更新。此次只修改排版，无需重新生成MATLAB数值参考。查看时请使用支持数学公式的Markdown预览器。

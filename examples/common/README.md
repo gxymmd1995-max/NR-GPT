@@ -1,5 +1,33 @@
 # NRCommon 序列示例
 
+## OFDM和逐符号相位
+
+[NROFDM](../../src/common/NROFDM.md)进行单时隙OFDM调制/解调，[NRPhaseRotation](../../src/common/NRPhaseRotation.md)提供R15逐符号载频补偿和提前FFT窗口/定时相位因子。TA/噪声/CFO在 [channel示例](../channel/README.md)。
+
+```powershell
+.venv\Scripts\python -X utf8 examples/common/NROFDM_demo.py
+.venv\Scripts\python -X utf8 examples/common/compare_NROFDM_reference.py
+```
+
+| 产物 | 用途（项目说明表） |
+|---|---|
+| [NROFDM_demo.py](NROFDM_demo.py) | main(log)生成60kHz slot1双分支网格、波形、CP和相位，记录全部类变量并画图 |
+| [NROFDM_summary.json](NROFDM_summary.json) | cell、carrier_frequency_hz、cp_fraction、每符号角度/phasor实虚部/CP、实际slot长度、FFT缩放和恢复误差 |
+| [NROFDM_data.npz](NROFDM_data.npz) | grid/recovered_grid:[2,14,288]；waveform:[2,7672]；symbol_phasors:[14] |
+| [NROFDM_overview.png](NROFDM_overview.png) / [SVG](NROFDM_overview.svg) | 波形、逐符号相位、CP和星座恢复；60kHz slot1长度249.739583µs |
+| [export_NROFDM_reference.m](export_NROFDM_reference.m) | 真实nrOFDMModulate/nrOFDMDemodulate/nrOFDMInfo，显式Nfft和Windowing0；outputFile可选 |
+| [NROFDM_reference.json](NROFDM_reference.json) | 28组调制/相位、84组解调全向量，含确定性非OFDM扰动接收输入及CP比例0/0.5/1，MATLAB/Toolbox/UTC/固定基线 |
+| [compare_NROFDM_reference.py](compare_NROFDM_reference.py) | compare(log)验证全部OFDM、相位、扰动解调及channel向量，成功才保存报告 |
+| [NROFDM_comparison.json](NROFDM_comparison.json) | Python比较报告：最大误差、组数、逐组波形误差、源码/参考SHA256；不是MATLAB原始输出 |
+
+```powershell
+& 'E:\Program Files\MATLAB\R2024a\bin\matlab.exe' -batch "addpath('examples/common'); export_NROFDM_reference;"
+```
+
+复数grid向量按Python[P,L,K]C-order恢复，波形按[P,T]C-order恢复，对应MATLAB[K,L,P]/[T,P]的列优先展平。显式载频和CP窗口参数避免依赖MATLAB默认FFT、加窗和CP比例；当前仅R15 numerology，不使用480/960kHz扩展。
+
+新增 [NRUplinkCodebook](../../src/common/NRUplinkCodebook.md)提供上行RI/TPMI的72个R15标准矩阵与评分搜索。独立脚本 [export_NRUplinkCodebook_reference.m](export_NRUplinkCodebook_reference.m)生成 [真实矩阵参考](NRUplinkCodebook_reference.json)，使用nrPUSCHCodebook并将其输出非共轭转置；7种端口/层数组合，共72个矩阵，MATLAB R2024a 5G Toolbox环境记录在JSON中。接收演示和选择对比位于 [SRS接收示例](../srs/README.md)。
+
 ```powershell
 .venv\Scripts\python -X utf8 examples/common/NRCommon_demo.py
 .venv\Scripts\python -X utf8 -m pytest tests/unit/test_NRCommon.py tests/matlab/test_NRCommon_matlab.py --require-matlab

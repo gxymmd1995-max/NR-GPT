@@ -11,7 +11,7 @@ R15 38.211 英文文件于 2026-10-24 从 [ETSI 官方地址](https://www.etsi.o
 |---|---|---|
 | [ts_138104v150200p.pdf](protocols/ts_138104v150200p.pdf) | R15 协议原文 | `3225e4316c46aa26d4ebace011c622f57cd8ab93eda52c4baaf0999b2f4e81d7` |
 | [ts_138211v150200p.pdf](protocols/ts_138211v150200p.pdf) | R15 协议原文 | `23b3a028b2c6dbee5d295ba9f75cfe8a87fb310cf689f47e00b71fb03bb70243` |
-| [ts_138211v150200p_zh.md](protocols/ts_138211v150200p_zh.md) | 非官方辅助译文，以英文原文为准 | `70866c043bd5a1fd7a754658721fec1a7b2c86c47e258a55542064c65bf21a7f` |
+| [ts_138211v150200p_zh.md](protocols/ts_138211v150200p_zh.md) | 非官方辅助译文，以英文原文为准 | `2110d2064fbdd4f6a4ba9e660f4ec921c2c92ce15747d6119adcbd1aa431ddbf` |
 | [ts_138212v150200p.pdf](protocols/ts_138212v150200p.pdf) | R15 协议原文 | `b2f9c54df56682b52487221e607d511feb15b646ccb67e4746830d863f18d63b` |
 | [ts_138212v150200p_zh.md](protocols/ts_138212v150200p_zh.md) | 非官方辅助译文，以英文原文为准 | `29df06d5690b2fc6326354dbe35b732bffae34e9f98ee1a9554741dee082e9fd` |
 | [ts_138213v150300p.pdf](protocols/ts_138213v150300p.pdf) | R15 协议原文 | `54c71c047e6c7782f2d72447e4aedceac9a6588c753ede774f83adf7061a9ae0` |
@@ -74,4 +74,11 @@ R15 38.211 英文文件于 2026-10-24 从 [ETSI 官方地址](https://www.etsi.o
 
 ## NRCommon公共序列索引
 
+OFDM/相位与TA新增追溯（2026-10-26）：NROFDM依据TS38.211 V15.2.0 §5.3.1（英文PDF页19–20）和§5.4（英文PDF页21–22），NRPhaseRotation使用§5.4子帧参考有效起点相位；公式O1–O4/P1–P3为项目自编号。NRChannel的TA换算依据TS38.213 V15.3.0 §4.2（英文PDF页11–12），公式C1–C5为项目编号；CFO/AWGN为工程模型，无协议原表。见[OFDM/channel验证](validation/NROFDM_validation.md)。
+
+2026-10-26新增上行码本与SRS接收端：码本固定TS38.211 V15.2.0 §6.3.1.5正文及原表6.3.1.5-1/-3/-4/-5/-7、原文印作6.3.1.5.4-6的三层表（英文PDF页25–28）。共72个1/2/4端口矩阵，保留原表归一化；真实nrPUSCHCodebook独立验证。接收端使用同版本SRS参考，LS/噪声/时延/RI搜索为项目算法，公式R1–R8/U1–U2为自编号。详细参数及验证见 [NRSRSReceiver](../src/srs/NRSRSReceiver.md)、[NRUplinkCodebook](../src/common/NRUplinkCodebook.md)、[接收验证](validation/NRSRSReceiver_validation.md)。
+
 Gold生成器位于src/common/NRCommon.py，依据TS38.211 V15.2.0 §5.2.1（Nc=1600、31级寄存器、低位装载）；SRS u/v依据同版本§6.4.1.4.2及38.331 V15.2.1 §6.3.2的10bit sequenceId。类文档C1–C5为项目自编号，没有新引入后续Release。Gold比特独立参考为真实MATLAB nrPRBS，u/v复用现有nrSRS实测；见 [NRCommon验证](validation/NRCommon_validation.md)。
+
+
+2026-10-26公式排版修复：TS38.211中英译文仅补齐6处公式块与后文之间的空行，公式、正文、编号和协议PDF内容不变；上表译文SHA256已同步更新。

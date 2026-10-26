@@ -24,8 +24,9 @@ cell = ["NRCell.md"]
 diagnostics = ["ExampleLogger.md"]
 grid = ["NRGrid.md", "channel_colors.md"]
 
-srs = ["NRSRS.md"]
-common = ["NRCommon.md"]
+srs = ["NRSRS.md", "NRSRSReceiver.md"]
+common = ["NRCommon.md", "NRUplinkCodebook.md", "NRPhaseRotation.md", "NROFDM.md"]
+channel = ["NRChannel.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

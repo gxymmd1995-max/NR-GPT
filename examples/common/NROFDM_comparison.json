@@ -1,0 +1,141 @@
+{
+  "status": "passed",
+  "generated_at": "2026-10-26T12:44:46.000166+00:00",
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "ofdm_case_count": 28,
+  "demod_case_count": 84,
+  "channel_case_count": 24,
+  "max_wave_abs_error": 1.047737854419755e-09,
+  "max_demod_abs_error": 4.179620470178497e-09,
+  "max_symbol_phase_error_rad": 3.725290298461914e-09,
+  "max_channel_abs_error": 8.881784197001252e-16,
+  "hashes": {
+    "examples/common/NROFDM_reference.json": "4f3d9e5e5224284601aae149d5597bf24790e9c73ad0d5560aee3e831eafb800",
+    "examples/channel/NRChannel_reference.json": "f14d1a06558f838065621260108aa95bc875c892e324d237af26190e745fc4e9",
+    "src/common/NROFDM.py": "23fcd9f54a98631a7df172561e535f88ee2b6742f1b61b0956b3daac0aabfd7a",
+    "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
+    "src/channel/NRChannel.py": "97f74be107977f8008e50c7fe953e0916f7f2b9a224dca18637082ddad1a8d74",
+    "src/common/_validation.py": "63a690ea4c777b877610cccde82b2e0c4605a4d9f1b5e651680e0f173aedc875"
+  },
+  "note": "Python comparison of actual MATLAB references; no PRNG sequence equality assumed. Native MATLAB channel models, 5G Toolbox OFDM.",
+  "cases": [
+    {
+      "case_id": 0,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 1,
+      "wave_max_abs_error": 3.4924596474362904e-10
+    },
+    {
+      "case_id": 2,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 3,
+      "wave_max_abs_error": 3.4924596474362904e-10
+    },
+    {
+      "case_id": 4,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 5,
+      "wave_max_abs_error": 1.7462297752557006e-10
+    },
+    {
+      "case_id": 6,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 7,
+      "wave_max_abs_error": 3.4924596635666727e-10
+    },
+    {
+      "case_id": 8,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 9,
+      "wave_max_abs_error": 2.1827876420474506e-11
+    },
+    {
+      "case_id": 10,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 11,
+      "wave_max_abs_error": 1.7462299029677872e-10
+    },
+    {
+      "case_id": 12,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 13,
+      "wave_max_abs_error": 4.36557509199894e-11
+    },
+    {
+      "case_id": 14,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 15,
+      "wave_max_abs_error": 8.731149415297341e-11
+    },
+    {
+      "case_id": 16,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 17,
+      "wave_max_abs_error": 2.1827872608968806e-11
+    },
+    {
+      "case_id": 18,
+      "wave_max_abs_error": 1.514782153580212e-17
+    },
+    {
+      "case_id": 19,
+      "wave_max_abs_error": 4.365574539724862e-11
+    },
+    {
+      "case_id": 20,
+      "wave_max_abs_error": 1.4821483875836085e-17
+    },
+    {
+      "case_id": 21,
+      "wave_max_abs_error": 8.73114927217304e-11
+    },
+    {
+      "case_id": 22,
+      "wave_max_abs_error": 1.4821483875836085e-17
+    },
+    {
+      "case_id": 23,
+      "wave_max_abs_error": 1.7462298588204685e-10
+    },
+    {
+      "case_id": 24,
+      "wave_max_abs_error": 3.02093825525182e-17
+    },
+    {
+      "case_id": 25,
+      "wave_max_abs_error": 1.047737854419755e-09
+    },
+    {
+      "case_id": 26,
+      "wave_max_abs_error": 3.02093825525182e-17
+    },
+    {
+      "case_id": 27,
+      "wave_max_abs_error": 5.238690114083843e-10
+    }
+  ]
+}

@@ -12,26 +12,27 @@ Gold序列是确定性的二进制序列。它通过两个31级线性反馈移�
 
 **C1，38.211 V15.2.0 §5.2.1：初始状态。** x1(0)=1、x1(1..30)=0。种子低位先放入x2：
 
-\[
+$$
 x_2(i)=(c_{init}\gg i)\mathbin{\&}1,\quad i=0,\ldots,30.
-\]
+$$
 
 例如c_init=42，其最低六位按低位在前为 `[0,1,0,1,0,1]`，剩余位为0。31指寄存器级数，输出可以有任意指定长度。
 
 **C2，同版本同节：逐位递推。** ⊕是异或，等价于二进制加法模2：
 
-\[
+$$
 x_1(n+31)=x_1(n+3)\oplus x_1(n),
-\]
-\[
+$$
+
+$$
 x_2(n+31)=x_2(n+3)\oplus x_2(n+2)\oplus x_2(n+1)\oplus x_2(n).
-\]
+$$
 
 **C3，同版本同节：丢弃前Nc=1600位，再异或。**
 
-\[
+$$
 c(n)=x_1(n+1600)\oplus x_2(n+1600).
-\]
+$$
 
 本接口的offset从这个c(0)开始计数。例如offset=17表示返回c(17)，对应x1/x2的1617位置；不是把Nc改为17。
 
@@ -41,21 +42,21 @@ u是低PAPR基序列组号，范围0..29；v是组内基序列编号0或1。它�
 
 **C4，38.211 V15.2.0 §6.4.1.4.2：SRS组号。** 令t=n_slot*N_symbols_slot+symbol_start+l'，其中n_slot是帧内时隙，l'从0开始。
 
-\[
+$$
 u=(f_{gh}+n_{ID}^{SRS})\bmod30,
 \quad f_{gh}=\begin{cases}
 (\sum_{m=0}^{7}c(8t+m)2^m)\bmod30,&groupHopping\\
 0,&其他.
 \end{cases}
-\]
+$$
 
 groupHopping使用8个Gold比特按**低位在前**组成整数，再模30；v=0。neither模式下u=sequence_id mod30、v=0。
 
 **C5，同版本同节：SRS组内序列号。**
 
-\[
+$$
 v=\begin{cases}c(t),&sequenceHopping且M\ge72\\0,&其他.\end{cases}
-\]
+$$
 
 sequenceHopping时u固定为sequence_id mod30，只有长度M≥72才使用c(t)选择v；短序列仍取v=0。两种跳变模式互斥。Gold初始化种子为sequence_id，每帧重新初始化，所以u/v使用帧内slot，不累计SFN；这与SRS频率跳频计数n_SRS是两个不同概念。
 

@@ -14,7 +14,11 @@ Gold生成器和SRS u/v已移至 [NRCommon.py](../../src/common/NRCommon.py)，N
 新增22项公共类单元测试和2项MATLAB入口；全项目325项通过（320项单元、5项MATLAB入口），712条语句和212个分支全部覆盖，行/分支覆盖率100%。
 
 ```powershell
-.venv\Scripts\python -X utf8 -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -X utf8 -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov=channel --cov-branch --cov-report=term-missing --cov-fail-under=100
 ```
 
 [示例](../../examples/common/README.md)已运行，保存同级Gold/u/v JSON、PNG/SVG和忽略的调用日志。u图与v图分别来自两种互斥配置。SRS比较报告同步重算并保存NRSRS/NRCommon两个源码哈希。该公共类目前覆盖这两个接口，其他公共调制、编码和OFDM功能待实现。远端提交和 CI 状态以 GitHub 实际记录为准。
+
+2026-10-26补充：本报告保留发送/公共序列阶段基线；新增SRS接收与上行码本后，最新全项目372项测试、行/分支覆盖率100%，见 [SRS接收验证](NRSRSReceiver_validation.md)。
+
+2026-10-26时域补充：最新全项目419项测试通过（含实际OFDM/channel参考与SRS时域集成），行/分支覆盖率100%；上文保留对应阶段基线，见[OFDM/channel验证](NROFDM_validation.md)。

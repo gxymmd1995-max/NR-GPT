@@ -51,7 +51,7 @@ MATLAB 独立创建 nrCarrierConfig、调用 nrResourceGrid，依据 CRB/BWP 原
 
 ```powershell
 matlab -batch "addpath('examples/grid'); export_NRGrid_reference;"
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov=channel --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python examples/grid/NRGrid_demo.py
 ```
 
@@ -60,3 +60,7 @@ matlab -batch "addpath('examples/grid'); export_NRGrid_reference;"
 ## 信道配色验证
 
 统一色表为 18 个已知绘图类别分配互不相同的 HEX 颜色，物理信道和参考信号使用固定颜色，未知类别使用灰色，FREE 使用近白。21 项测试检查唯一性、只读色表、别名与 UE 后缀、类别排序、数组不变性及非法输入。真实运行色卡和网格示例并检查 PNG/SVG；JSON 与源色表一致。颜色属于软件展示功能，不重新生成或伪造 MATLAB 信道向量。见[配色说明](../../src/grid/channel_colors.md)。
+
+2026-10-26补充：本报告保留发送/公共序列阶段基线；新增SRS接收与上行码本后，最新全项目372项测试、行/分支覆盖率100%，见 [SRS接收验证](NRSRSReceiver_validation.md)。
+
+2026-10-26时域补充：最新全项目419项测试通过（含实际OFDM/channel参考与SRS时域集成），行/分支覆盖率100%；上文保留对应阶段基线，见[OFDM/channel验证](NROFDM_validation.md)。

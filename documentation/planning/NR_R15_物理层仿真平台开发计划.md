@@ -81,7 +81,7 @@ Release 15 不是单一版本号。每份规范必须固定具体版本，形成
 | SRS | 序列、comb、循环移位、端口、跳频及资源映射 | 上行信道探测与估计结果 |
 | coding | CRC、Polar、LDPC、短块编码、速率匹配/恢复 | 供 PBCH/DCI/DL-SCH/UL-SCH/UCI 复用 |
 | waveform | OFDM 调制解调、CP、采样率与波形元数据 | 处理逐符号 CP 长度、FFT 归一化和载频相位约定 |
-| channel_models | 理想信道、AWGN、衰落、射频损伤 | 独立随机数生成器、噪声功率及信道真值 |
+| channel | 理想信道、AWGN、衰落、射频损伤 | 独立随机数生成器、噪声功率及信道真值 |
 | receiver | 同步、信道估计、插值、均衡、噪声估计 | 支持理想与实际算法切换 |
 | simulation | 场景执行、SNR 扫描、结果汇总、复现实验 | 配置、种子、代码版本、统计区间及结果文件 |
 
@@ -133,7 +133,7 @@ NR1024/
 │   ├── waveform/
 │   ├── channels/       # ssb/pdcch/pdsch/pusch/pucch/prach/srs
 │   ├── reference_signals/
-│   ├── channel_models/
+│   ├── channel/
 │   ├── receiver/
 │   └── simulation/
 ├── configs/
@@ -221,3 +221,7 @@ LDPC 和 Polar 是关键依赖，应尽早获取独立测试向量并验证译�
 当前 NRCell 已完成单元测试、MATLAB 载波/OFDM 时序比对及类文档。支持 TDD/FDD 元数据、收发天线数量、Tc/Ts、基于频域 RE 数的 2 次幂 FFT 选择及精确 CP 采样时序。NRGrid 已完成单时隙端口域数据/占用分离、BWP 坐标、映射/预留/提取和 MATLAB 轴对比；天线域预编码与实际波形模块仍待实施。最新完成情况见[覆盖矩阵](../feature_matrix.md)。
 
 NRSRS 已完成固定R15序列生成、64行带宽表、组/序列跳变、频率跳频、重复、候选时隙、NRGrid映射与频域展示，832组实际MATLAB独立参考通过。Gold生成与SRS u/v已抽取为NRCommon公共接口，SRS低PAPR基序列仍在本模块；完整公共调制/编码/OFDM仍待实现；波形、功控、调度和信道估计仍待实现。后续先根据用户检查结果完善SRS，再继续公共算法与其他信道。
+
+2026-10-26：按用户要求实现频域SRS接收、联合FIR估计、宽/窄带噪声、每用户首径/最强径/平均/RMS时延与上行RI/TPMI。新增NRUplinkCodebook固定R15矩阵；时域OFDM、完整同步、功控和调度仍待实施。24组MATLAB接收/32用户结果、72码本矩阵及全项目372项测试通过，详见[接收验证](../validation/NRSRSReceiver_validation.md)。
+
+2026-10-26补充：OFDM调制/解调和逐OFDM符号相位集中在common/NROFDM、NRPhaseRotation；TA、复AWGN和连续CFO集中在channel/NRChannel。原规划channel_models目录按用户要求统一为channel。时域SRS链路与419项完整测试通过；盲同步、TAG生效/TA_offset和分数时延滤波待实现，详见[OFDM/channel验证](../validation/NROFDM_validation.md)。

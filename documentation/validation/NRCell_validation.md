@@ -55,7 +55,7 @@ FFT 策略为 max(128, next_power_of_two(12*NSizeGrid))，是平台约定。MATL
 
 ```powershell
 matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
-.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov-branch --cov-report=term-missing --cov-fail-under=100
+.venv\Scripts\python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov=channel --cov-branch --cov-report=term-missing --cov-fail-under=100
 .venv\Scripts\python -m doctest src/cell/NRCell.py
 .venv\Scripts\python examples/cell/NRCell_demo.py
 .venv\Scripts\python examples/cell/plot_NRCell.py
@@ -71,3 +71,7 @@ matlab -batch "addpath('examples/cell'); export_NRCell_reference;"
 ## 示例日志验证
 
 三个 Python 示例实际运行生成同级 .log 文件，包含调用路径、参数、出口值、耗时和完整状态快照。ExampleLogger 的 15 项单元测试验证输出隔离、原 profiler 恢复、异常传播、文件覆盖、全部字段/属性输出及回调分支。日志仅为工程诊断，不重新生成或替代 MATLAB 参考向量。详见 [ExampleLogger 类说明](../../src/diagnostics/ExampleLogger.md)。
+
+2026-10-26补充：本报告保留发送/公共序列阶段基线；新增SRS接收与上行码本后，最新全项目372项测试、行/分支覆盖率100%，见 [SRS接收验证](NRSRSReceiver_validation.md)。
+
+2026-10-26时域补充：最新全项目419项测试通过（含实际OFDM/channel参考与SRS时域集成），行/分支覆盖率100%；上文保留对应阶段基线，见[OFDM/channel验证](NROFDM_validation.md)。
