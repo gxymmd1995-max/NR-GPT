@@ -11,7 +11,7 @@ R15 38.211 英文文件于 2026-10-24 从 [ETSI 官方地址](https://www.etsi.o
 |---|---|---|
 | [ts_138104v150200p.pdf](protocols/ts_138104v150200p.pdf) | R15 协议原文 | `3225e4316c46aa26d4ebace011c622f57cd8ab93eda52c4baaf0999b2f4e81d7` |
 | [ts_138211v150200p.pdf](protocols/ts_138211v150200p.pdf) | R15 协议原文 | `23b3a028b2c6dbee5d295ba9f75cfe8a87fb310cf689f47e00b71fb03bb70243` |
-| [ts_138211v150200p_zh.md](protocols/ts_138211v150200p_zh.md) | 非官方辅助译文，以英文原文为准 | `2110d2064fbdd4f6a4ba9e660f4ec921c2c92ce15747d6119adcbd1aa431ddbf` |
+| [ts_138211v150200p_zh.md](protocols/ts_138211v150200p_zh.md) | 非官方辅助译文，以英文原文为准 | `900833ef4a634f617b3c8cb721c02a3f3fc85f470c7b7671e519ef77e96c9e0c` |
 | [ts_138212v150200p.pdf](protocols/ts_138212v150200p.pdf) | R15 协议原文 | `b2f9c54df56682b52487221e607d511feb15b646ccb67e4746830d863f18d63b` |
 | [ts_138212v150200p_zh.md](protocols/ts_138212v150200p_zh.md) | 非官方辅助译文，以英文原文为准 | `29df06d5690b2fc6326354dbe35b732bffae34e9f98ee1a9554741dee082e9fd` |
 | [ts_138213v150300p.pdf](protocols/ts_138213v150300p.pdf) | R15 协议原文 | `54c71c047e6c7782f2d72447e4aedceac9a6588c753ede774f83adf7061a9ae0` |
@@ -70,7 +70,7 @@ R15 38.211 英文文件于 2026-10-24 从 [ETSI 官方地址](https://www.etsi.o
 | 10bit sequenceId、周期集合和参数范围 | TS 38.331 V15.2.1 | §6.3.2 SRS-Config ASN.1及字段说明；英文PDF页210–213 |
 | 载波局部/BWP/CRB转换、相对频率 | TS 38.211 V15.2.0 | §4.4.4.1/2/3/4、§4.4.5、§5.3.1的项目推导 |
 
-所有原表数值逐项核对英文PDF，文件及SHA256未修改。具体实现/公式见 [NRSRS.md](../src/srs/NRSRS.md)，独立实测见 [NRSRS验证](validation/NRSRS_validation.md)。
+所有原表数值逐项核对英文PDF；英文协议PDF未修改。译文后续排版和辅助说明的修改及SHA256更新记录见文末。具体实现/公式见 [NRSRS.md](../src/srs/NRSRS.md)，独立实测见 [NRSRS验证](validation/NRSRS_validation.md)。
 
 ## NRCommon公共序列索引
 
@@ -82,3 +82,6 @@ Gold生成器位于src/common/NRCommon.py，依据TS38.211 V15.2.0 §5.2.1（Nc=
 
 
 2026-10-26公式排版修复：TS38.211中英译文仅补齐6处公式块与后文之间的空行，公式、正文、编号和协议PDF内容不变；上表译文SHA256已同步更新。
+
+
+2026-10-27公式变量辅助说明：译文原有223个块级公式内容保持不变；在公式后及含行内公式的小节添加明确标注的项目辅助说明链接。详细变量表位于[公式变量阅读指南](formula_reference.md)，不放入protocols目录。译文SHA256已随注释更新，英文协议PDF不变。

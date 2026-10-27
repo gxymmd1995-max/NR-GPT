@@ -33,3 +33,6 @@ TA和传播延迟采用有限窗口补零，不绕回；CP比例0.5使末符号F
 
 
 加噪仅通过`NRChannel.add_awgn(waveform, snr_db=20, seed=42)`：按每支路整段波形（含静默样点）平均功率计算预期噪声方差，移除直接指定噪声功率的接口。示例JSON记录目标snr_db、派生每Rx时域噪声、接收机每UE SNR/RSSI/RSRP；功率均为归一化值，dB不是dBm。细节见[NRChannel](../../src/channel/NRChannel.md)与[NRSRSReceiver](../../src/srs/NRSRSReceiver.md)。
+
+
+变量单位与数组维度请对照[公式变量阅读指南](../../documentation/formula_reference.md#implementation)及所链接类文档的逐式变量表。图/JSON中的[P,L,K]为发送端口/slot符号/载波子载波，[Rx,T]为接收支路/时域样点；T依实际CP计算，不把平均slot时长代入取整。

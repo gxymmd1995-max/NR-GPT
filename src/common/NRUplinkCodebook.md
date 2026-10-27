@@ -1,5 +1,8 @@
 # NRUplinkCodebook：上行 RI/TPMI 码本搜索
 
+公式使用的标量、数组、单位和运算符总约定见[公式变量阅读指南](../../documentation/formula_reference.md#conventions)。下列辅助变量表不替代规范参数表；式号沿用本文自编号，协议版本/章节见各式原说明。
+
+
 [NRUplinkCodebook.py](NRUplinkCodebook.py)提供R15 PUSCH标准码本矩阵及基于信道估计的RI/TPMI搜索，导入方式 `from common import NRUplinkCodebook`。没有实例状态，使用静态方法。SRS接收机通过这个类推荐后续上行发送的层数RI和矩阵编号TPMI；这些建议还需调度器依据UE能力、配置及DCI规则采用。
 
 固定 **TS38.211 V15.2.0 §6.3.1.5**，只支持1/2/4端口、关闭变换预编码。尚未实现完整PUSCH调制链。矩阵是规范定义；互信息评分、等总功率比较、平分规则、噪声下限是项目接收机策略，不冒充标准规定的唯一RI/TPMI选择算法。
@@ -64,9 +67,30 @@ $$
 \rho=P_{UE}/\max(\sigma^2,10^{-12}).\tag{U1}
 $$
 
+**变量说明（项目辅助表，范围以本式上下文为准）**
+
+| 符号/代码变量 | 含义与作用 | 取值范围/约束 | 单位 | 维度/类型 |
+|---|---|---|---|---|
+| $W$、$\widetilde W$ | R15原表预编码矩阵与评分用归一化矩阵 | W来自对应RI/TPMI；归一化矩阵Frobenius范数1 | 无量纲复系数 | [Tx,r] |
+| $H_k$ | 频点k的信道矩阵 | 任意有限复数 | 归一化接收/发送幅度比 | [Rx,Tx]；接口[F,Rx,Tx] |
+| $G_k$ | 等总发送功率归一化后的有效层信道 | 任意有限复数 | 幅度比 | [Rx,r] |
+| $\rho$、$P_{UE}$、$\sigma^2$ | 功噪比系数、UE总发射功率、每Rx噪声功率 | rho≥0；P≥0；sigma²≥0；分母下限1e-12 | 无量纲、归一化功率、归一化功率/RE | 各一实标量 |
+| $k,Tx,Rx,r$ | 频点、发送端口数、接收支路数、候选层数 | 0≤k<F；Tx=1/2/4；Rx≥1；1≤r≤min(Tx,Rx) | 索引/计数 | 各一整数标量 |
+
 $$
 J(r,t)=\frac1F\sum_k\sum_i\log_2(1+\rho\max(\lambda_i(G_k^HG_k),0)).\tag{U2}
 $$
+
+**变量说明（项目辅助表，范围以本式上下文为准）**
+
+| 符号/代码变量 | 含义与作用 | 取值范围/约束 | 单位 | 维度/类型 |
+|---|---|---|---|---|
+| $J(r,t)$ | 候选RI=r、TPMI=t的平均互信息评分 | 非负实数；不是实际编码吞吐率 | bit/s/Hz | 每候选实标量 |
+| $F$、$k$ | 参与评分的已探测频点数与其索引 | F≥1；k=0..F-1 | 频点计数、索引 | 各一整数标量 |
+| $r,t$ | 候选层数RI与码本编号TPMI | r≤min(Tx,Rx)；t范围见本文件原表追溯清单 | 计数、标识 | 各一整数标量 |
+| $\lambda_i(G_k^HG_k)$ | 有效信道Gram矩阵的第i个特征值 | 理论≥0；浮点负误差用max截0 | 归一化幅度增益平方 | [r]实数组 |
+| $i$、$G_k^H$ | 特征值索引与共轭转置 | i=0..r-1；G的转置维度[r,Rx] | 索引、无量纲矩阵 | 整数标量、复矩阵 |
+| $\rho$ | U1的发送总功率/每Rx噪声 | ≥0；不再按r额外除一次 | 无量纲 | 实标量 |
 
 搜索最大J；差异不超过1e-10时保持较低RI/TPMI。评分时的归一化与`matrix`返回的标准矩阵分开，不能把原表中部分端口激活时较小的范数误当成矩阵转录错误。默认假设接收噪声白化/各Rx使用相同标量噪声；没有接入完整空间干扰协方差或MU-PUSCH干扰/调度模型。
 
@@ -84,3 +108,8 @@ assert limited["ri"] <= 2
 ```
 
 单元测试为 [test_NRUplinkCodebook.py](../../tests/unit/test_NRUplinkCodebook.py)。真实独立脚本 [export_NRUplinkCodebook_reference.m](../../examples/common/export_NRUplinkCodebook_reference.m)使用R2024a 5G Toolbox，72个矩阵逐元素误差容限1e-15；接收机24组实测还独立验证RI/TPMI选择，见 [接收验证报告](../../documentation/validation/NRSRSReceiver_validation.md)。
+
+
+## NRUplinkCodebook矩阵核对例
+
+F=144、Rx=4、Tx=2、候选RI=2时：channel为[144,4,2]，单频H为[4,2]，W为[2,2]，有效G为[4,2]，Gram矩阵GᴴG为[2,2]，每频点最多2个非负特征值。评分跨144频点平均，不再跨2层取平均。

@@ -67,6 +67,7 @@ examples/channel/        SRS时域信道链路、波形/测量/图片及MATLAB�
 examples/srs/            SRS 序列/网格/梳齿/跳频图、频率CSV、MATLAB 实测与比较
 ```
 
+- [公式变量阅读指南：含义、范围、单位、维度与协议章节](documentation/formula_reference.md)
 - [NRCell：变量、方法、公式与示例](src/cell/NRCell.md)
 - [NRGrid：坐标、映射、预留和冲突策略](src/grid/NRGrid.md)
 - [NRSRS：字段、序列、跳频和映射公式](src/srs/NRSRS.md)

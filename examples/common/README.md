@@ -48,3 +48,6 @@
 ```
 
 参考比特必须来自实际MATLAB运行。SRS的u/v继续使用 [NRSRS_reference.json](../srs/NRSRS_reference.json) 中nrSRS返回的SeqGroup/NSeq，避免重构公共层时替换或伪造既有参考。非活跃case的u/v不作为发送参考比较。
+
+
+变量单位与数组维度请对照[公式变量阅读指南](../../documentation/formula_reference.md#implementation)及所链接类文档的逐式变量表。图/JSON中的[P,L,K]为发送端口/slot符号/载波子载波，[Rx,T]为接收支路/时域样点；T依实际CP计算，不把平均slot时长代入取整。

@@ -1,5 +1,8 @@
 # NRGrid：单时隙频域资源网格
 
+公式使用的标量、数组、单位和运算符总约定见[公式变量阅读指南](../../documentation/formula_reference.md#conventions)。下列辅助变量表不替代规范参数表；式号沿用本文自编号，协议版本/章节见各式原说明。
+
+
 源码：[NRGrid.py](NRGrid.py)；单元测试：[test_NRGrid.py](../../tests/unit/test_NRGrid.py)；MATLAB 对比：[test_NRGrid_matlab.py](../../tests/matlab/test_NRGrid_matlab.py)。
 
 规范基线为 **3GPP TS 38.211 V15.2.0 Release 15**。以下 § 均指该版本的原文章节，除非另有说明。协议原文位于 [documentation/protocols/](../../documentation/protocols/ts_138211v150200p.pdf)。
@@ -85,6 +88,16 @@ $$
 K=12N_{grid}^{size},\quad L=N_{symb}^{slot},\quad shape=(P,L,K),\quad N_{RE}=PLK
 $$
 
+**变量说明（项目辅助表，范围以本式上下文为准）**
+
+| 符号/代码变量 | 含义与作用 | 取值范围/约束 | 单位 | 维度/类型 |
+|---|---|---|---|---|
+| $K$、$N_{grid}^{size}$ | 载波子载波数与载波RB数 | K=12*RB，RB=1..275 | 子载波计数、RB | 各一整数标量 |
+| $L$、$N_{symb}^{slot}$ | 当前slot符号数 | normal=14；extended=12 | 符号计数 | 整数标量 |
+| $P$ | 本NRGrid逻辑端口数，独立于物理天线数 | 正整数，n_ports | 端口计数 | 整数标量 |
+| $shape$ | Python数据与标签的轴顺序 | [端口,时隙符号,载波局部子载波] | 轴长度 | 3元素元组 |
+| $N_{RE}$ | 包括逻辑端口轴的元素总数 | P*L*K；单端口时才是纯时频RE数 | 元素计数 | 整数标量 |
+
 P 为本实例端口数；它不是 NRCell 的发送天线数。完整规范资源网格的时域范围为子帧，本类只分配 L 个当前时隙符号。
 
 **G2：BWP 局部 PRB 转为载波局部子载波**。由 §4.4.4.3/§4.4.4.4/§4.4.5 推导：
@@ -93,9 +106,25 @@ $$
 n_{CRB}=N_{BWP}^{start}+n_{PRB}
 $$
 
+**变量说明（项目辅助表，范围以本式上下文为准）**
+
+| 符号/代码变量 | 含义与作用 | 取值范围/约束 | 单位 | 维度/类型 |
+|---|---|---|---|---|
+| $n_{CRB}$ | CRB 0为原点的资源块号 | BWP实际覆盖的CRB集合 | RB索引 | 整数标量 |
+| $N_{BWP}^{start}$ | BWP起始CRB | 不小于载波起点，满足包含约束 | RB | 整数标量 |
+| $n_{PRB}$ | BWP局部PRB号 | 0..bwp_size-1 | RB索引 | 整数标量 |
+
 $$
 k_{grid}=12\left(N_{BWP}^{start}-N_{grid}^{start}+n_{PRB}\right)+s,\quad s\in\{0,\dots,11\}
 $$
+
+**变量说明（项目辅助表，范围以本式上下文为准）**
+
+| 符号/代码变量 | 含义与作用 | 取值范围/约束 | 单位 | 维度/类型 |
+|---|---|---|---|---|
+| $k_{grid}$ | 载波局部子载波坐标 | 0..K-1 | 子载波索引 | 整数标量 |
+| $N_{BWP}^{start}$、$N_{grid}^{start}$ | BWP/载波相对CRB 0的起点 | 均为非负且BWP包含于载波 | RB | 各一整数标量 |
+| $n_{PRB}$、$s$ | BWP内RB号与RB内子载波号 | 0..bwp_size-1；0..11 | RB索引、子载波索引 | 各一整数标量 |
 
 两个 start 都相对 CRB 0。不能把 BWP 起点误当成相对载波的 RB 偏移。例：载波 CRB 10 起、BWP CRB 20 起，PRB 0 的第一个子载波是载波局部 k=120，而不是 k=240。
 
@@ -105,11 +134,28 @@ $$
 occupied(p,l,k)=[owners(p,l,k)\ne ""],\quad N_{used}=\sum occupied,\quad N_{free}=N_{RE}-N_{used}
 $$
 
+**变量说明（项目辅助表，范围以本式上下文为准）**
+
+| 符号/代码变量 | 含义与作用 | 取值范围/约束 | 单位 | 维度/类型 |
+|---|---|---|---|---|
+| $p,l,k$ | 端口、slot符号、载波子载波坐标 | 0≤p<P；0≤l<L；0≤k<K | 索引 | 三个整数标量 |
+| $owners$ | 资源所有者标签，空字符串代表未分配 | U64字符串；最多64字符 | 无量纲标签 | [P,L,K] |
+| $occupied$ | 对应元素是否分配；与数值幅度无关 | False/True | 布尔值 | [P,L,K] |
+| $N_{used}$、$N_{free}$、$N_{RE}$ | 已占用、空闲、全部元素数 | 0..PLK且used+free=RE | 元素计数 | 各一整数标量 |
+
 **G4：MATLAB 列主序一维索引**。MATLAB 数组轴为 `[k,l,p]`，Python 使用 `[p,l,k]`；由 MATLAB `sub2ind` 布局推导：
 
 $$
 index_{MATLAB,1based}=k+Kl+KLp+1
 $$
+
+**变量说明（项目辅助表，范围以本式上下文为准）**
+
+| 符号/代码变量 | 含义与作用 | 取值范围/约束 | 单位 | 维度/类型 |
+|---|---|---|---|---|
+| $k,l,p$ | Python零基坐标，顺序为端口/符号/频率 | 0≤k<K；0≤l<L；0≤p<P | 索引 | 各一整数标量 |
+| $K,L,P$ | 频率、符号、端口轴长度 | K=12*RB；L=12/14；P≥1 | 计数 | 各一整数标量 |
+| $index_{MATLAB,1based}$ | MATLAB [K,L,P]列主序线性地址 | 1..KLP；末尾+1仅转换起始基数 | 元素索引 | 整数标量 |
 
 本类对外所有坐标从 0 开始。`to_matlab()` 返回 K×L×P 数组副本，P=1 时也保留三维；MATLAB 的 size 显示可能省略末尾单例维度，但 size(grid,3) 仍为 1。
 
@@ -201,3 +247,8 @@ matlab -batch "addpath('examples/grid'); export_NRGrid_reference;"
 绘图统一使用同目录的 [channel_colors](channel_colors.md) 模块，SSB/PDCCH/PDSCH/PUSCH/PUCCH/PRACH/SRS 采用不同固定颜色，参考信号也有独立色卡。调用 `channel_color("PDSCH")` 获取颜色，或 `encode_owners(grid.owners)` 生成离散绘图数据及图例。
 
 标签如 `PDSCH:UE0`、`PDSCH:UE1` 保留各自占用名称，但使用相同 PDSCH 颜色。未知非空标签显示灰色而非空闲色。配色只决定显示，不改变 map/reserve/clear 的行为，也不表示相应信道算法已经实现。
+
+
+## NRGrid坐标与维度核对例
+
+24 RB、normal CP、2逻辑端口得到[P,L,K]=[2,14,288]，共8064个数组元素。Python坐标[p,l,k]=[1,2,3]的MATLAB一基线性地址为3+288*2+288*14*1+1=4612；这不是接收天线轴。

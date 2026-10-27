@@ -86,3 +86,18 @@ with np.load("examples/srs/NRSRS_data.npz") as values:
 
 
 接收示例增加每UE SNR、RSSI/RSRP及dB值，JSON还保留每Rx功率、RSSI测量带宽。概览图和日志显示三项指标。噪声统一调用NRChannel按SNR生成：本频域示例逐PRB平铺Rx/RE，配置12 dB（PRB12..15为0 dB）以演示有色噪声；每PRB目标SNR是整块RE平均口径，接收机用户SNR是实际SRS RE上的用户分离功率口径。[指标定义](../../src/srs/NRSRSReceiver.md)。
+
+
+### 循环移位诊断图中的公式变量（项目辅助说明）
+
+图中公式`origin=(-Nfft/Ktc * cs / cs_max) mod (Nfft/Ktc)`、`peak=(origin+delay) mod (Nfft/Ktc)`是项目IFFT诊断推导，依据TS38.211 V15.2.0 §6.4.1.4.2循环移位和§5.3.1傅里叶关系，不是规范原公式编号。
+
+| 变量 | 作用 | 范围/单位 | 维度 |
+|---|---|---|---|
+| `Nfft`、`Ktc` | 小区FFT长度、当前同组SRS的comb间隔 | Nfft为2的幂；Ktc2/4；Nfft/Ktc为相关图周期，单位NRCell采样点 | 两个整数标量 |
+| `cs`、`cs_max` | 当前端口循环移位号与可用移位数量 | cs=0..cs_max-1；cs_max为comb2的8或comb4的12；均无量纲 | 每端口标量 |
+| `origin` | 未去循环移位前该端口相关窗原点 | [0,Nfft/Ktc)，NRCell采样点；可能不是整数，图上按连续位置标记 | 每端口实标量 |
+| `delay`、`peak` | 真实残余时延与循环周期内理论峰位置 | delay单位sample，正为延迟；peak落同一周期内 | 每用户/端口标量 |
+| `D` | 接收机因果tap窗宽度 | n_delay_taps正整数；当前demo为8，sample | 整数标量 |
+
+例如Nfft512、comb2、cs=2、cs_max8时origin=192采样点，delay=6时理论peak=198。相关窗仅在相同根/comb/资源组内比较；不同根或comb的用户使用独立图组。分离后的CIR则已经去掉用户循环移位，以delay为相对横坐标。完整符号约定见[公式变量阅读指南](../../documentation/formula_reference.md)。

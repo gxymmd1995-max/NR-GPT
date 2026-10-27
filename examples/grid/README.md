@@ -88,3 +88,6 @@ with np.load(folder / "NRGrid_data.npz", allow_pickle=False) as saved:
 参考中复数分量按 1/16 和 1/32 构造，可精确表示；对比容差为 0。原始参考由 MATLAB 生成，不用 Python 输出替代。标签管理属于测试程序独立添加的功能，不声称 MATLAB nrResourceGrid 自带标签或冲突策略。
 
 ![NRGrid 占用图](NRGrid_overview.png)
+
+
+变量单位与数组维度请对照[公式变量阅读指南](../../documentation/formula_reference.md#implementation)及所链接类文档的逐式变量表。图/JSON中的[P,L,K]为发送端口/slot符号/载波子载波，[Rx,T]为接收支路/时域样点；T依实际CP计算，不把平均slot时长代入取整。
