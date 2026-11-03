@@ -31,17 +31,19 @@ NR1024/
 ├── src/                            # 类源码及对应类文档，同目录同名
 │   ├── cell/                       # NRCell.py/.md：小区、网格尺寸、FFT、CP时序
 │   ├── grid/                       # NRGrid.py/.md；channel_colors.py/.md
-│   ├── common/                     # NRCommon、NROFDM、NRPhaseRotation、NRUplinkCodebook
-│   │                               # _validation.py：输入校验；_uplink_tables.py：上行码本
+│   ├── common/                     # NRCommon、NROFDM、NRPhaseRotation、NRUplinkCodebook、NRUCICode及编解码类
+│   │                               # _validation.py：校验；_uplink_tables.py：码本；_low_papr_tables.py：共享12点相位表
 │   ├── channel/                    # NRChannel.py/.md：样点TA、CFO、按SNR加噪
+│   ├── pucch/                      # NRPUCCH0/1/2/3/4资源、Transmitter、Receiver及同级文档
 │   ├── srs/                        # NRSRS.py/.md、NRSRSReceiver.py/.md
 │   │                               # _tables.py：SRS协议参数表
-│   └── diagnostics/                # ExampleLogger.py/.md：示例调用链与状态日志
+│   └── diagnostics/                # ExampleLogger、NRPlotConfig、NRStagePlotter及同级文档
 ├── examples/                       # 示例、MATLAB参考及产物；按源码模块对应
 │   ├── cell/
 │   ├── grid/
 │   ├── common/
 │   ├── channel/
+│   ├── pucch/
 │   └── srs/
 │       # 各目录README.md：脚本和产物索引
 │       # <类名>_demo.py、plot_*.py：运行与绘图示例
@@ -53,7 +55,7 @@ NR1024/
 ├── tests/                          # 测试文件按类名平铺，不按源码模块再分目录
 │   ├── unit/test_<类名>.py          # 单元测试，另含颜色等辅助功能测试
 │   ├── matlab/test_<类名>_matlab.py  # 独立MATLAB参考比较
-│   ├── integration/test_SRS_waveform_chain.py
+│   ├── integration/                # test_SRS_waveform_chain.py、test_PUCCH0_waveform_chain.py
 │   └── conftest.py                 # 测试选项与公共配置
 └── documentation/
     ├── architecture.md             # 总体设计、边界与坐标约定
@@ -92,3 +94,13 @@ NR1024/
 - 检查改动先看 `git status --short`、`git diff --stat`，再定向查看相关文件的diff。首次读取未跟踪文件同样遵守范围限制；不要为了审查少量改动而重读全部源码、文档或产物。
 - 独立搜索可合并调用并分别限定输出；有依赖的读取按结果逐步展开。相同状态不重复查询，无新变化不重复运行已通过的检查。新增改动或发现问题后，按影响范围补做必要验证。
 - 耗时脚本将详细结果保存在项目约定位置，对话只返回摘要和文件路径。任务结束或需要压缩上下文时，记录已完成工作、关键结论、待办与必要文件位置，避免下一轮重新扫描。
+
+PUCCH F1定位：`src/pucch/NRPUCCH1.py/.md`、`NRPUCCH1Transmitter.py/.md`、`NRPUCCH1Receiver.py/.md`；示例与MATLAB参考在`examples/pucch/`，类单测在`tests/unit/test_NRPUCCH1*.py`，MATLAB入口为`tests/matlab/test_NRPUCCH1_matlab.py`。
+
+PUCCH F2定位：`src/pucch/NRPUCCH2.py/.md`、`NRPUCCH2Transmitter.py/.md`、`NRPUCCH2Receiver.py/.md`；共享小块码`src/common/NRSmallBlockCode.py/.md`及原表`_small_block_tables.py`。示例和真实MATLAB向量在`examples/pucch/`；按类名查`tests/unit/`和`tests/matlab/test_NRPUCCH2_matlab.py`。
+
+信道编码入口：src/common/NRPolarCode、NRLDPCCode、NRRMCode及各自.md；固定R15表_coding_tables.json；tests/unit/test_同类名.py；examples/common/export_NRChannelCodes_reference.m与compare_NRChannelCodes_reference.py；tests/matlab/test_NRChannelCodes_matlab.py。
+
+完整UCI/F3定位：src/common/NRUCICode.py/.md；src/pucch/NRPUCCH3.py/.md及对应Transmitter/Receiver。F2长UCI示例NRPUCCH2_Polar_demo.py，F3示例NRPUCCH3_demo.py；实际MATLAB参考在examples/common/NRUCICode_*及examples/pucch/NRPUCCH3_*；最新验证documentation/validation/NRPUCCH3_validation.md。
+
+F4定位：src/pucch/NRPUCCH4.py/.md及对应Transmitter/Receiver；examples/pucch/NRPUCCH4_demo.py、export_NRPUCCH4_reference.m、compare_NRPUCCH4_reference.py；tests/unit/test_NRPUCCH4*.py、tests/matlab/test_NRPUCCH4_matlab.py；验证documentation/validation/NRPUCCH4_validation.md。

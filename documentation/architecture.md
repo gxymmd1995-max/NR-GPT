@@ -92,3 +92,25 @@ $$
 
 
 2026-10-27变量说明约定：每个公式须给出符号的含义、协议/代码范围、单位和维度，并注明求和/平均的轴。上方排版示例中Fs是采样率（sample/s，正实标量）、Nfft是FFT长度（sample，正整数标量）、Delta_f是SCS（Hz，正实标量）；当前代码范围Nfft128..4096且2的幂、SCS为15000/30000/60000/120000/240000。新建[公式变量阅读指南](formula_reference.md)说明全部公共约定，具体类文档就近列出变量表，协议译文用显式辅助注释跳转到同版R15分组表。
+
+
+## PUCCH Format 0时域收发（2026-10-27）
+
+src/pucch下NRPUCCH0保存单slot、单RB资源和标准UCI移位映射；NRPUCCH0Transmitter组合NRGrid和公共NROFDM生成[1,T]单端口波形；空间映射与NRChannel在时域作用后，NRPUCCH0Receiver接收[Rx,T]，按显式已知同步参数补偿、OFDM解调，再对合法UCI序列做逐Rx/符号非相干相关和DTX。原始网格只用于发送和演示，接收不旁路信道。
+
+Gold与PUCCH参数在NRCommon，12点相位表移到common/_low_papr_tables.py，SRS保留原导入别名，数值未变。每种未来PUCCH格式使用独立类，复用共用算法与时域信道；当前不添加声称支持其他格式的空实现。DTX背景噪声按活动参考的SNR生成，不提供直接噪声功率接口。详细边界、矩阵轴与R15/Toolbox适配见[模块示例](../examples/pucch/README.md)。
+
+
+## 可关闭的阶段可视化
+
+NRPlotConfig与NRStagePlotter放在src/diagnostics，图片直接显示，不提供图像文件输出路径。收发类通过plot_config字段或共享plotter控制显示；NROFDM的可选plotter只读取实际变换中间结果，关闭时不收集额外快照。完整示例对时域TA、空间映射、传播、CFO及噪声逐步记录，与发送/接收阶段统一分页显示；labels和轴注明采样点、slot符号、FFT数组号、归一化功率或rad。绘图不能改变数组、候选或判决，数组快照只供显示。数值JSON/NPZ与旧有图片产物独立，原有图片不删除，新绘图不更新或新建图片文件。
+
+PUCCH F0多用户演示：各NRPUCCH0Transmitter独立产生波形，经各自复增益后在时域叠加，NRChannel按混合信号SNR加噪；同一接收波形进入多个NRPUCCH0Receiver。发送前validate_cyclic_shift_group检查全部UCI候选移位互斥；接收机逐用户相关，非联合估计。资源、同步与检测边界见[案例说明](../examples/pucch/README.md#三用户循环移位复用)。
+
+PUCCH F1使用独立NRPUCCH1资源及收发类，复用现有Common序列、NROFDM和NRChannel；DMRS与数据相对符号交替，按跳和类型分别OCC。接收假设每跳平坦且近似不随时间变化，先DMRS估计再MRC。接口详见[src文档](../src/pucch/NRPUCCH1.md)。
+
+PUCCH F2复用NRSmallBlockCode（3～11位）、Gold、NRGrid、NROFDM及NRChannel；每RB每符号4DMRS/8数据RE，接收按每符号每RB估计平坦增益，MRC后形成解扰软分数并ML译码。类接口见[资源文档](../src/pucch/NRPUCCH2.md)。
+
+PUCCH2/3共享NRUCICode编码链，NRSmallBlockCode处理A≤11，NRPolarCode.transform与UCI外层处理A≥12。LDPC仍独立服务后续数据信道。F3数据按每符号单位化DFT预编码；接收在频域MRC后单位化IDFT，再调制软解映射及公共译码。detected表示信号检测，crc_ok单独表示CRC状态。
+
+F4新增独立资源/收发类，复用F3单RB几何和DMRS基础序列，共享NRUCICode/NROFDM/NRChannel。调制数据每符号仅12/SF点，先OCC块复制成12点再DFT；接收在IDFT后共轭OCC分块平均。DMRS按OCC索引配置独立循环移位，不能与数据OCC混用。

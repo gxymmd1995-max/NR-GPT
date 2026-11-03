@@ -1,0 +1,128 @@
+{
+  "status": "passed",
+  "case_count": 15,
+  "cases": [
+    {
+      "A": 3,
+      "E": 16,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": null
+    },
+    {
+      "A": 7,
+      "E": 96,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": null
+    },
+    {
+      "A": 11,
+      "E": 64,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": null
+    },
+    {
+      "A": 12,
+      "E": 48,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 12,
+      "E": 64,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 12,
+      "E": 256,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 19,
+      "E": 512,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 20,
+      "E": 64,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 20,
+      "E": 128,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 32,
+      "E": 96,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 100,
+      "E": 240,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 100,
+      "E": 300,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 360,
+      "E": 1088,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 1013,
+      "E": 2304,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    },
+    {
+      "A": 1706,
+      "E": 4096,
+      "encoded_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true
+    }
+  ],
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "hashes": {
+    "examples/common/NRUCICode_reference.json": "d5fce5aa3c8aebf15c568862132ed72d6202f7f3e6e4deb71b6bb0b018ac9cdd",
+    "examples/common/export_NRUCICode_reference.m": "935c4b28dc50bcf747377b0ecc991d074f31ac216a3c111f541981e056c24b9f",
+    "examples/common/compare_NRUCICode_reference.py": "b39c9ef8b0f92779d1bb47527d0c0e8f51801f42b8e2ed7651765153d89510c0",
+    "src/common/NRUCICode.py": "bb6e113cf1abe96fc56cc45b04c976f79144a6fabe77845d0d8e959bd52fd223",
+    "src/common/NRPolarCode.py": "4ebb5dbf5a6dcf19c6a6b68ecad3014844d6b6bdc999581c4474f6974445403f",
+    "src/common/NRSmallBlockCode.py": "a0eceeb98487509246f5796aeeb955ff34631ab85458a1d919cce8f1de4d5662",
+    "src/common/_small_block_tables.py": "8b3276126d1b6f5495e012a957e249328b82591b566bb304fc8120367dc9f2e8",
+    "src/common/_coding_tables.json": "65dabf3a328d827618d9a53521fadd7392b2d3ef3d5252f1b188a8cbee774a46"
+  }
+}

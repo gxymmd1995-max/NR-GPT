@@ -1,0 +1,690 @@
+{
+  "status": "passed",
+  "generated_at": "2026-10-27T14:24:27.858807+00:00",
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "sequence_case_count": 960,
+  "waveform_case_count": 40,
+  "max_sequence_abs_error": 9.734573243839407e-15,
+  "max_tx_waveform_abs_error": 4.7875910609039364e-11,
+  "max_received_waveform_abs_error": 4.787591002623692e-11,
+  "max_detection_metric_abs_error": 6.661338147750939e-16,
+  "max_correlation_symbol_abs_error": 1.3025291118801305e-09,
+  "sequence_adapter": "R15 6.3.2.2.2 uses fixed14*slot. nrPUCCH0 CP=normal for sequence only, actual carrier CP for OFDM/indices; default Toolbox symbols also retained.",
+  "toolbox_default_sequence_difference_count": 161,
+  "max_toolbox_default_sequence_difference": 2.0000000000000004,
+  "index_mismatch_count": 0,
+  "decision_mismatch_count": 0,
+  "toolbox_uci_mismatch_count": 0,
+  "hashes": {
+    "examples/pucch/NRPUCCH0_reference.json": "934f3a8eb603532c179c649886ea1aac8b6a64fbbaa1c5234db8ad7272f8826c",
+    "examples/pucch/export_NRPUCCH0_reference.m": "ef16b8e1df8a96a6dd4498e330c0ce2c052f03990c8b01eb2a093e154e99f06c",
+    "examples/pucch/compare_NRPUCCH0_reference.py": "13bca92da22b8ac38a4f1b985eaf0890a4f627297c7c01f82e8bbcfa4b98f61a",
+    "src/pucch/NRPUCCH0.py": "8ee1ceb9c272e73b9375f23c8a05a3fd8cc1f53ee542767b36273bba77af0b1b",
+    "src/pucch/NRPUCCH0Transmitter.py": "f0a3c1ed8f7f7412bc739c0c495e41da817de0de0e53a41d288f78356a7423de",
+    "src/pucch/NRPUCCH0Receiver.py": "8781a4e984f0dd4ed97df3587b398c4a814bfad14e7c4a7caee8af8d1c3bf7e6",
+    "src/common/NRCommon.py": "f337310818d7757019b90d991c7f5211970519fec4fb32fec42eb3f71977b2d1",
+    "src/common/_low_papr_tables.py": "7192ff7af7dc31f1f647e1d47a09228fd0f3922e4c40bf095b8bb1fa29fc06a9",
+    "src/common/NROFDM.py": "bc718b62fc2a8b766212f53cc808042775e3472529bda54573d3f5d462f4a282",
+    "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
+    "src/channel/NRChannel.py": "97f74be107977f8008e50c7fe953e0916f7f2b9a224dca18637082ddad1a8d74",
+    "src/diagnostics/NRPlotConfig.py": "9196bce8463518d0ab750301e3c72120fb207ab83250e41ac2d8b8210d6e8adf",
+    "src/diagnostics/NRStagePlotter.py": "c1f22834e58afba522d5c871ddc20e0dec07aa84e30d7f518a4263116784aec8"
+  },
+  "note": "Python comparison of actual independent MATLAB references. Native MATLAB receiver metric and Toolbox UCI bits both retained.",
+  "cases": [
+    {
+      "case": 0,
+      "harq_ack": [
+        0
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9994578863490371,
+      "toolbox_bits": [
+        0,
+        []
+      ],
+      "toolbox_metric": 0.9997446278841091
+    },
+    {
+      "case": 1,
+      "harq_ack": [
+        0
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9996490920044119,
+      "toolbox_bits": [
+        0,
+        0
+      ],
+      "toolbox_metric": 0.9997932476739846
+    },
+    {
+      "case": 2,
+      "harq_ack": [
+        0
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.999692539486239,
+      "toolbox_bits": [
+        0,
+        1
+      ],
+      "toolbox_metric": 0.9998413151373653
+    },
+    {
+      "case": 3,
+      "harq_ack": [
+        1
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9993925342942342,
+      "toolbox_bits": [
+        1,
+        []
+      ],
+      "toolbox_metric": 0.9997467870195298
+    },
+    {
+      "case": 4,
+      "harq_ack": [
+        1
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9996251948996563,
+      "toolbox_bits": [
+        1,
+        0
+      ],
+      "toolbox_metric": 0.9997836359410196
+    },
+    {
+      "case": 5,
+      "harq_ack": [
+        1
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9996840888371464,
+      "toolbox_bits": [
+        1,
+        1
+      ],
+      "toolbox_metric": 0.9998531957983383
+    },
+    {
+      "case": 6,
+      "harq_ack": [
+        0,
+        0
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9996877457538481,
+      "toolbox_bits": [
+        [
+          0,
+          0
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9998463328954823
+    },
+    {
+      "case": 7,
+      "harq_ack": [
+        0,
+        0
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9993556791712475,
+      "toolbox_bits": [
+        [
+          0,
+          0
+        ],
+        0
+      ],
+      "toolbox_metric": 0.9997195444561516
+    },
+    {
+      "case": 8,
+      "harq_ack": [
+        0,
+        0
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9996675260813752,
+      "toolbox_bits": [
+        [
+          0,
+          0
+        ],
+        1
+      ],
+      "toolbox_metric": 0.9998234026115809
+    },
+    {
+      "case": 9,
+      "harq_ack": [
+        0,
+        1
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9996620858538047,
+      "toolbox_bits": [
+        [
+          0,
+          1
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9997784110791638
+    },
+    {
+      "case": 10,
+      "harq_ack": [
+        0,
+        1
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.999582419222221,
+      "toolbox_bits": [
+        [
+          0,
+          1
+        ],
+        0
+      ],
+      "toolbox_metric": 0.9997643018783631
+    },
+    {
+      "case": 11,
+      "harq_ack": [
+        0,
+        1
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9994498648336085,
+      "toolbox_bits": [
+        [
+          0,
+          1
+        ],
+        1
+      ],
+      "toolbox_metric": 0.9997509166533673
+    },
+    {
+      "case": 12,
+      "harq_ack": [
+        1,
+        0
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9996086793129572,
+      "toolbox_bits": [
+        [
+          1,
+          0
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9997613095714979
+    },
+    {
+      "case": 13,
+      "harq_ack": [
+        1,
+        0
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9996950247975394,
+      "toolbox_bits": [
+        [
+          1,
+          0
+        ],
+        0
+      ],
+      "toolbox_metric": 0.9998425600513272
+    },
+    {
+      "case": 14,
+      "harq_ack": [
+        1,
+        0
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.999463375829852,
+      "toolbox_bits": [
+        [
+          1,
+          0
+        ],
+        1
+      ],
+      "toolbox_metric": 0.9997666098732947
+    },
+    {
+      "case": 15,
+      "harq_ack": [
+        1,
+        1
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9994828808532812,
+      "toolbox_bits": [
+        [
+          1,
+          1
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9997287711758281
+    },
+    {
+      "case": 16,
+      "harq_ack": [
+        1,
+        1
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9997739659891683,
+      "toolbox_bits": [
+        [
+          1,
+          1
+        ],
+        0
+      ],
+      "toolbox_metric": 0.9998998617199717
+    },
+    {
+      "case": 17,
+      "harq_ack": [
+        1,
+        1
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9996652918722325,
+      "toolbox_bits": [
+        [
+          1,
+          1
+        ],
+        1
+      ],
+      "toolbox_metric": 0.9998190252563466
+    },
+    {
+      "case": 18,
+      "harq_ack": null,
+      "sr": 0,
+      "detected": false,
+      "metric": 0.0,
+      "toolbox_bits": [
+        [],
+        0
+      ],
+      "toolbox_metric": 0
+    },
+    {
+      "case": 19,
+      "harq_ack": [],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9996529661210495,
+      "toolbox_bits": [
+        [],
+        1
+      ],
+      "toolbox_metric": 0.9998347397316965
+    },
+    {
+      "case": 20,
+      "harq_ack": [
+        0
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9986826155397119,
+      "toolbox_bits": [
+        0,
+        []
+      ],
+      "toolbox_metric": 0.9993633735851799
+    },
+    {
+      "case": 21,
+      "harq_ack": [
+        0
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9992959368485758,
+      "toolbox_bits": [
+        0,
+        0
+      ],
+      "toolbox_metric": 0.9996308065110545
+    },
+    {
+      "case": 22,
+      "harq_ack": [
+        0
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9993948329051091,
+      "toolbox_bits": [
+        0,
+        1
+      ],
+      "toolbox_metric": 0.999644223410707
+    },
+    {
+      "case": 23,
+      "harq_ack": [
+        1
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9994849737605648,
+      "toolbox_bits": [
+        1,
+        []
+      ],
+      "toolbox_metric": 0.9997529862576878
+    },
+    {
+      "case": 24,
+      "harq_ack": [
+        1
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9993117675574513,
+      "toolbox_bits": [
+        1,
+        0
+      ],
+      "toolbox_metric": 0.999647095520207
+    },
+    {
+      "case": 25,
+      "harq_ack": [
+        1
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9991582256610344,
+      "toolbox_bits": [
+        1,
+        1
+      ],
+      "toolbox_metric": 0.9995758963937049
+    },
+    {
+      "case": 26,
+      "harq_ack": [
+        0,
+        0
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9992921908750269,
+      "toolbox_bits": [
+        [
+          0,
+          0
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9996301501578277
+    },
+    {
+      "case": 27,
+      "harq_ack": [
+        0,
+        0
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9991346690295009,
+      "toolbox_bits": [
+        [
+          0,
+          0
+        ],
+        0
+      ],
+      "toolbox_metric": 0.9995525511857475
+    },
+    {
+      "case": 28,
+      "harq_ack": [
+        0,
+        0
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9994018199842107,
+      "toolbox_bits": [
+        [
+          0,
+          0
+        ],
+        1
+      ],
+      "toolbox_metric": 0.999708112440327
+    },
+    {
+      "case": 29,
+      "harq_ack": [
+        0,
+        1
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9989087064915533,
+      "toolbox_bits": [
+        [
+          0,
+          1
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9994761391944171
+    },
+    {
+      "case": 30,
+      "harq_ack": [
+        0,
+        1
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9993905189045825,
+      "toolbox_bits": [
+        [
+          0,
+          1
+        ],
+        0
+      ],
+      "toolbox_metric": 0.9996395411594311
+    },
+    {
+      "case": 31,
+      "harq_ack": [
+        0,
+        1
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9992657023180034,
+      "toolbox_bits": [
+        [
+          0,
+          1
+        ],
+        1
+      ],
+      "toolbox_metric": 0.9996308756124215
+    },
+    {
+      "case": 32,
+      "harq_ack": [
+        1,
+        0
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.999249570102005,
+      "toolbox_bits": [
+        [
+          1,
+          0
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9995962222694853
+    },
+    {
+      "case": 33,
+      "harq_ack": [
+        1,
+        0
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9991798287773218,
+      "toolbox_bits": [
+        [
+          1,
+          0
+        ],
+        0
+      ],
+      "toolbox_metric": 0.9996342648122303
+    },
+    {
+      "case": 34,
+      "harq_ack": [
+        1,
+        0
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9992397157322204,
+      "toolbox_bits": [
+        [
+          1,
+          0
+        ],
+        1
+      ],
+      "toolbox_metric": 0.9996147854522315
+    },
+    {
+      "case": 35,
+      "harq_ack": [
+        1,
+        1
+      ],
+      "sr": null,
+      "detected": true,
+      "metric": 0.9991899483289156,
+      "toolbox_bits": [
+        [
+          1,
+          1
+        ],
+        []
+      ],
+      "toolbox_metric": 0.9996129399040284
+    },
+    {
+      "case": 36,
+      "harq_ack": [
+        1,
+        1
+      ],
+      "sr": 0,
+      "detected": true,
+      "metric": 0.9992595304042612,
+      "toolbox_bits": [
+        [
+          1,
+          1
+        ],
+        0
+      ],
+      "toolbox_metric": 0.999638049964646
+    },
+    {
+      "case": 37,
+      "harq_ack": [
+        1,
+        1
+      ],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.999144477533684,
+      "toolbox_bits": [
+        [
+          1,
+          1
+        ],
+        1
+      ],
+      "toolbox_metric": 0.9996133266951319
+    },
+    {
+      "case": 38,
+      "harq_ack": null,
+      "sr": 0,
+      "detected": false,
+      "metric": 0.0,
+      "toolbox_bits": [
+        [],
+        0
+      ],
+      "toolbox_metric": 0
+    },
+    {
+      "case": 39,
+      "harq_ack": [],
+      "sr": 1,
+      "detected": true,
+      "metric": 0.9992019704736941,
+      "toolbox_bits": [
+        [],
+        1
+      ],
+      "toolbox_metric": 0.9995964541973793
+    }
+  ]
+}

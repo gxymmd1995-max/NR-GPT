@@ -131,3 +131,8 @@ np.testing.assert_allclose(recovered, grid, atol=1e-12)
 ## NROFDM功率与轴核对例
 
 24 RB、Nfft512时，频域[K]=[288]嵌入512点FFT谱。两个端口输入[2,14,288]，输出为[2,T]，T由本slot的逐符号CP之和决定；不是固定用Fs乘平均slot时长。若时域噪声方差为1e-6，解调后每RE噪声方差期望为512e-6=0.000512。
+
+
+## 可选实际中间结果绘图
+
+modulate(grid,*,plotter=None)与demodulate(waveform,cp_fraction=1,*,plotter=None)支持传NRStagePlotter。仅plotter.config.enabled为True时保留额外中间快照；原计算和返回数组不变，默认关闭。modulate记录相位参数、旋转网格、居中频谱、有效IFFT输出、加CP波形；demodulate记录选定FFT窗、居中FFT谱、裁剪载波、提前窗补偿网格和逆NR相位网格。调用不会保存图片，由上层plotter.show显示。具体阶段名和坐标见[收集器](../diagnostics/NRStagePlotter.md)。

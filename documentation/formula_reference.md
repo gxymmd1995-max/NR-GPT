@@ -37,9 +37,10 @@
 | NRUplinkCodebook | [U1/U2](../src/common/NRUplinkCodebook.md)：矩阵形状、功率归一化和互信息评分 |
 | NROFDM/NRPhaseRotation | [O1–O4](../src/common/NROFDM.md)、[P1–P3](../src/common/NRPhaseRotation.md)：复波形、CP、FFT与相位 |
 | NRChannel | [C1–C5](../src/channel/NRChannel.md)：样点TA、命令换算、CFO和SNR加噪 |
+| PUCCH Format0 | [资源与循环移位](../src/pucch/NRPUCCH0.md)、[OFDM发射](../src/pucch/NRPUCCH0Transmitter.md)、[候选相关接收](../src/pucch/NRPUCCH0Receiver.md)：每式变量范围、单位与维度 |
 | NRSRSReceiver | [R1–R8、M1–M3](../src/srs/NRSRSReceiver.md)：联合LS、噪声、时延、RI/TPMI和功率测量 |
 
-同名C1等只在各自类文档中编号，并非跨文档共用式号。协议尚未实现的PDSCH/PDCCH/PUCCH/PRACH等，下文解释其原文变量，不宣称已有Python类或MATLAB验证。
+同名C1等只在各自类文档中编号，并非跨文档共用式号。协议尚未实现的PDSCH/PDCCH/PUCCH格式1–4/PRACH等，下文解释其原文变量，不宣称已有Python类或MATLAB验证。
 
 ## 协议原文公式的分组变量表
 
@@ -467,3 +468,11 @@ CSI-RS的rho是密度，PUSCH矩阵rho是端口数，码本评分rho是功噪比
 | 选码本 | 已探测频点H[F,4,2]、候选W[2,r] | G[F,4,r] | 收缩发送端口轴2；F只取实际探测频点，不直接使用全部K |
 
 此例的576是具体SRS配置下的观测RE并集数；用户RE重叠时，不能把两用户各自576相加为1152。同一UE内端口复用RE也不会增加不同观测行数。维度满足仅是必要条件，A仍须列满秩且条件数不超过门限。
+
+PUCCH F1公式与变量：资源生成F1-1见[NRPUCCH1](../src/pucch/NRPUCCH1.md)，工程接收F1-RX-1见[NRPUCCH1Receiver](../src/pucch/NRPUCCH1Receiver.md)。其中给出所有索引、集合、单位与数组维度；均为文档自编号。
+
+F2参考：序列/DMRS初始化F2-1见[NRPUCCH2](../src/pucch/NRPUCCH2.md)，接收MRC公式F2-RX-1见[接收机](../src/pucch/NRPUCCH2Receiver.md)，编码/速率匹配SB-1见[NRSmallBlockCode](../src/common/NRSmallBlockCode.md)。均为文档自编号，附变量范围、单位、维度。
+
+新增公式与完整变量表：UCI-1见[NRUCICode](../src/common/NRUCICode.md)；F3-1见[NRPUCCH3](../src/pucch/NRPUCCH3.md)；F3-RX-1见[NRPUCCH3Receiver](../src/pucch/NRPUCCH3Receiver.md)。均为文档自编号，标明固定版本章节、索引、单位和维度。
+
+F4扩频/解扩公式F4-1及完整变量范围、单位、维度见[NRPUCCH4](../src/pucch/NRPUCCH4.md)；接收输入输出及信道假设见[NRPUCCH4Receiver](../src/pucch/NRPUCCH4Receiver.md)。OCC和DMRS映射表明确标注固定版本原表号。

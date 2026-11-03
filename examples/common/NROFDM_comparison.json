@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "generated_at": "2026-10-26T12:44:46.000166+00:00",
+  "generated_at": "2026-10-27T13:56:59.345375+00:00",
   "matlab_version": "24.1.0.2537033 (R2024a)",
   "toolbox": {
     "Name": "5G Toolbox",
@@ -18,7 +18,7 @@
   "hashes": {
     "examples/common/NROFDM_reference.json": "4f3d9e5e5224284601aae149d5597bf24790e9c73ad0d5560aee3e831eafb800",
     "examples/channel/NRChannel_reference.json": "f14d1a06558f838065621260108aa95bc875c892e324d237af26190e745fc4e9",
-    "src/common/NROFDM.py": "23fcd9f54a98631a7df172561e535f88ee2b6742f1b61b0956b3daac0aabfd7a",
+    "src/common/NROFDM.py": "bc718b62fc2a8b766212f53cc808042775e3472529bda54573d3f5d462f4a282",
     "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
     "src/channel/NRChannel.py": "97f74be107977f8008e50c7fe953e0916f7f2b9a224dca18637082ddad1a8d74",
     "src/common/_validation.py": "63a690ea4c777b877610cccde82b2e0c4605a4d9f1b5e651680e0f173aedc875"

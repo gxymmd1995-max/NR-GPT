@@ -87,7 +87,7 @@ print(srs.sequence_parameters())         # 每符号 u/v、每端口 alpha
 | `is_candidate_slot` | 仅周期条件；非周期始终 True，因为实际目标时隙由调用者确定 |
 | `is_active` | enabled 且候选时隙；半持续资源只有调用者传入 enabled=True 才视为已激活 |
 
-没有隐藏的可变缓存、随机种子或 logger 成员。`_tables.py` 中的 `PHI_12`、`PHI_24`、`BANDWIDTH_TABLE` 是不可变元组，索引分别为 `[u][n]` 和 `[c_srs][2*b:2*b+2]`。数值逐项对照英文 PDF；不从 MATLAB 输出生成 Python 表。
+没有隐藏的可变缓存、随机种子或 logger 成员。`_tables.py` 中的 `PHI_12`（由common/_low_papr_tables.py导入的共享别名）、`PHI_24`、`BANDWIDTH_TABLE` 是不可变元组，索引分别为 `[u][n]` 和 `[c_srs][2*b:2*b+2]`。数值逐项对照英文 PDF；不从 MATLAB 输出生成 Python 表。
 
 ## 方法、参数、返回和失败行为
 
@@ -124,7 +124,7 @@ Gold序列和SRS的u/v获取已移至公共类 [NRCommon](../common/NRCommon.md)
 
 | 内容 | 原文章节 / 原表 | 代码数据 |
 |---|---|---|
-| 12 点 φ(n)，30 组 | §5.2.2.2，表 5.2.2.2-2 | `_tables.py: PHI_12` |
+| 12 点 φ(n)，30 组 | §5.2.2.2，表 5.2.2.2-2 | `common/_low_papr_tables.py: PHI_12`，srs/_tables.py保留别名 |
 | 24 点 φ(n)，30 组 | §5.2.2.2，表 5.2.2.2-4 | `_tables.py: PHI_24` |
 | 64 行×4 层级的 m_b/N_b | §6.4.1.4.3，表 6.4.1.4.3-1 | `_tables.py: BANDWIDTH_TABLE` |
 | 端口、时域符号/起点 | §6.4.1.4.1，无独立表号 | n_ports/n_symbols/start_position |

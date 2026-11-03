@@ -6,7 +6,7 @@
 
 在 `with ExampleLogger(__file__) as log:` 中运行示例函数，即可记录当前线程的项目调用链、参数、出口值、耗时和异常。`log.dump_state(cell, "cell")` 输出该对象的字段、常量及全部只读属性。日志写在示例脚本同目录，文件名为示例名加 `.log`，每次运行覆盖旧文件。
 
-当前已接入十三个 Python 示例/比较入口：`NRCell_demo.py`、`plot_NRCell.py`、`plot_NRCell_timing.py`、[NRGrid_demo.py](../../examples/grid/NRGrid_demo.py)、[信道色卡示例](../../examples/grid/plot_NRGrid_channel_colors.py)、[NRSRS_demo.py](../../examples/srs/NRSRS_demo.py) 、[SRS比较脚本](../../examples/srs/compare_NRSRS_reference.py) 和 [NRCommon序列示例](../../examples/common/NRCommon_demo.py)、[SRS接收示例](../../examples/srs/NRSRSReceiver_demo.py) 和 [接收比较脚本](../../examples/srs/compare_NRSRSReceiver_reference.py)、[OFDM示例](../../examples/common/NROFDM_demo.py)、[OFDM/channel比较](../../examples/common/compare_NROFDM_reference.py) 和 [channel链路](../../examples/channel/NRChannel_demo.py)。SRS示例输出小区/信号/网格的完整快照。MATLAB 导出脚本是独立的 MATLAB 入口，不由 Python profiler 追踪。
+当前已接入十七个 Python 示例/比较入口：`NRCell_demo.py`、`plot_NRCell.py`、`plot_NRCell_timing.py`、[NRGrid_demo.py](../../examples/grid/NRGrid_demo.py)、[信道色卡示例](../../examples/grid/plot_NRGrid_channel_colors.py)、[NRSRS_demo.py](../../examples/srs/NRSRS_demo.py) 、[SRS比较脚本](../../examples/srs/compare_NRSRS_reference.py) 和 [NRCommon序列示例](../../examples/common/NRCommon_demo.py)、[SRS接收示例](../../examples/srs/NRSRSReceiver_demo.py) 和 [接收比较脚本](../../examples/srs/compare_NRSRSReceiver_reference.py)、[OFDM示例](../../examples/common/NROFDM_demo.py)、[OFDM/channel比较](../../examples/common/compare_NROFDM_reference.py) 和 [channel链路](../../examples/channel/NRChannel_demo.py)、[PUCCH F0链路](../../examples/pucch/NRPUCCH0_demo.py)、[PUCCH F0比较](../../examples/pucch/compare_NRPUCCH0_reference.py)、[PUCCH多用户示例](../../examples/pucch/NRPUCCH0_multiuser_demo.py)、[多用户比较](../../examples/pucch/compare_NRPUCCH0_multiuser_reference.py)。SRS示例输出小区/信号/网格的完整快照。MATLAB 导出脚本是独立的 MATLAB 入口，不由 Python profiler 追踪。
 
 默认终端级别为 INFO，显示 START、STATE、业务摘要和 FINISH；文件固定保存 DEBUG，额外包含 CALL、EXIT。设置 `NR_LOG_LEVEL=DEBUG` 可使终端也显示调用路径。日志使用 UTF-8，时间戳明确标记为 UTC。
 
@@ -129,3 +129,6 @@ STATE 中的省略号只出现在这段说明示意里，实际数组完整输�
 elapsed_ms 是包含子调用和日志开销的总耗时，不是排除子调用后的净耗时。实现依据：[Python sys.setprofile](https://docs.python.org/3/library/sys.html#sys.setprofile)、[Python logging](https://docs.python.org/3/library/logging.html)。这里没有引入第三方依赖，也没有创建新的协议规范要求。
 
 测试覆盖：完整成员快照、调用链及参数、终端级别、覆盖旧文件、异常传播、原 profiler 恢复、handler 关闭、root logger 隔离、非法参数、不可写目录、repr 失败、属性求值失败、代码范围过滤与生成构造器定位。CPython 在 profile 回调内抑制递归 trace，因此除了真实运行测试，还直接注入 call/return 事件检查回调状态机，并让覆盖率工具观测这些分支。
+
+
+PUCCH F0新增两个日志入口：examples/pucch/NRPUCCH0_demo.py和compare_NRPUCCH0_reference.py，同样记录类状态、函数路径和判决摘要，日志保存在同目录且不提交Git。

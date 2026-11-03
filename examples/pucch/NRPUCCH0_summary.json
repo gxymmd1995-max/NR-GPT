@@ -1,0 +1,300 @@
+{
+  "resource": {
+    "cell": {
+      "n_cell_id": 17,
+      "subcarrier_spacing_khz": 30,
+      "cyclic_prefix": "normal",
+      "n_size_grid": 24,
+      "n_start_grid": 10,
+      "bwp_start": 12,
+      "bwp_size": 20,
+      "n_frame": 0,
+      "n_slot": 0,
+      "duplex_mode": "TDD",
+      "n_tx_antennas": 1,
+      "n_rx_antennas": 2
+    },
+    "prb": 1,
+    "start_symbol": 10,
+    "n_symbols": 2,
+    "initial_cyclic_shift": 5,
+    "hopping_id": 731,
+    "group_hopping": "enable",
+    "second_hop_prb": 17,
+    "antenna_port": 2000
+  },
+  "carrier_frequency_hz": 3500000123,
+  "channel": {
+    "snr_db": -5.0,
+    "ta_samples": 2,
+    "path_delay_samples": 5,
+    "net_delay_samples": 3,
+    "frequency_offset_hz": 731,
+    "initial_phase_rad": 0.23,
+    "rx_gain_real": [
+      1.0,
+      0.0
+    ],
+    "rx_gain_imag": [
+      0.0,
+      0.6
+    ]
+  },
+  "plotting": {
+    "enabled": true,
+    "stages": [
+      "case0.*"
+    ],
+    "max_points": 2000,
+    "saved_images": false,
+    "displayed_stages": [
+      "case0.tx.uci_shift",
+      "case0.tx.base_sequence",
+      "case0.tx.cyclic_shift",
+      "case0.tx.alpha",
+      "case0.tx.mapped_grid",
+      "case0.tx.symbol_phase",
+      "case0.tx.phase_compensated_grid",
+      "case0.tx.fft_spectrum",
+      "case0.tx.ifft_useful",
+      "case0.tx.cp_waveform",
+      "case0.channel.ta",
+      "case0.channel.spatial",
+      "case0.channel.path_delay",
+      "case0.channel.cfo",
+      "case0.channel.noise",
+      "case0.channel.received",
+      "case0.rx.input_waveform",
+      "case0.rx.cfo_corrected",
+      "case0.rx.timing_corrected",
+      "case0.rx.fft_windows",
+      "case0.rx.fft_spectrum",
+      "case0.rx.cropped_grid",
+      "case0.rx.window_corrected_grid",
+      "case0.rx.phase_corrected_grid",
+      "case0.rx.extracted_symbols",
+      "case0.rx.correlated_constellation",
+      "case0.rx.candidate_metrics",
+      "case0.rx.decision"
+    ]
+  },
+  "seed": 20261027,
+  "cases": [
+    {
+      "detected": true,
+      "status": "detected",
+      "harq_ack": [
+        1
+      ],
+      "sr": null,
+      "m_cs": 6,
+      "metric": 0.9907060775023462,
+      "detection_threshold": 0.42,
+      "candidates": [
+        {
+          "harq_ack": [
+            0
+          ],
+          "sr": null,
+          "m_cs": 0,
+          "metric": 0.000945366680134866
+        },
+        {
+          "harq_ack": [
+            1
+          ],
+          "sr": null,
+          "m_cs": 6,
+          "metric": 0.9907060775023462
+        }
+      ],
+      "resource_power": 0.46323947635847845,
+      "synchronization": "explicit known-parameter correction; no blind synchronization",
+      "plot_stages": [
+        "case0.tx.uci_shift",
+        "case0.tx.base_sequence",
+        "case0.tx.cyclic_shift",
+        "case0.tx.alpha",
+        "case0.tx.mapped_grid",
+        "case0.tx.symbol_phase",
+        "case0.tx.phase_compensated_grid",
+        "case0.tx.fft_spectrum",
+        "case0.tx.ifft_useful",
+        "case0.tx.cp_waveform",
+        "case0.channel.ta",
+        "case0.channel.spatial",
+        "case0.channel.path_delay",
+        "case0.channel.cfo",
+        "case0.channel.noise",
+        "case0.channel.received",
+        "case0.rx.input_waveform",
+        "case0.rx.cfo_corrected",
+        "case0.rx.timing_corrected",
+        "case0.rx.fft_windows",
+        "case0.rx.fft_spectrum",
+        "case0.rx.cropped_grid",
+        "case0.rx.window_corrected_grid",
+        "case0.rx.phase_corrected_grid",
+        "case0.rx.extracted_symbols",
+        "case0.rx.correlated_constellation",
+        "case0.rx.candidate_metrics",
+        "case0.rx.decision"
+      ],
+      "label": "HARQ1",
+      "sent_harq_ack": [
+        1
+      ],
+      "sent_sr": null,
+      "active": true,
+      "noise_reference": "own active waveform"
+    },
+    {
+      "detected": true,
+      "status": "detected",
+      "harq_ack": [
+        1,
+        0
+      ],
+      "sr": 1,
+      "m_cs": 10,
+      "metric": 0.990998748376917,
+      "detection_threshold": 0.42,
+      "candidates": [
+        {
+          "harq_ack": [
+            0,
+            0
+          ],
+          "sr": 0,
+          "m_cs": 0,
+          "metric": 0.0009716407619554361
+        },
+        {
+          "harq_ack": [
+            0,
+            0
+          ],
+          "sr": 1,
+          "m_cs": 1,
+          "metric": 0.0014400347512348267
+        },
+        {
+          "harq_ack": [
+            0,
+            1
+          ],
+          "sr": 0,
+          "m_cs": 3,
+          "metric": 0.0006315791468023208
+        },
+        {
+          "harq_ack": [
+            0,
+            1
+          ],
+          "sr": 1,
+          "m_cs": 4,
+          "metric": 0.0005250518389725915
+        },
+        {
+          "harq_ack": [
+            1,
+            0
+          ],
+          "sr": 0,
+          "m_cs": 9,
+          "metric": 0.0006881234447638152
+        },
+        {
+          "harq_ack": [
+            1,
+            0
+          ],
+          "sr": 1,
+          "m_cs": 10,
+          "metric": 0.990998748376917
+        },
+        {
+          "harq_ack": [
+            1,
+            1
+          ],
+          "sr": 0,
+          "m_cs": 6,
+          "metric": 0.000866431013890479
+        },
+        {
+          "harq_ack": [
+            1,
+            1
+          ],
+          "sr": 1,
+          "m_cs": 7,
+          "metric": 0.000691227775794181
+        }
+      ],
+      "resource_power": 0.45994236825889895,
+      "synchronization": "explicit known-parameter correction; no blind synchronization",
+      "plot_stages": [],
+      "label": "HARQ2+SR",
+      "sent_harq_ack": [
+        1,
+        0
+      ],
+      "sent_sr": 1,
+      "active": true,
+      "noise_reference": "own active waveform"
+    },
+    {
+      "detected": true,
+      "status": "detected",
+      "harq_ack": [],
+      "sr": 1,
+      "m_cs": 0,
+      "metric": 0.9897740352454631,
+      "detection_threshold": 0.42,
+      "candidates": [
+        {
+          "harq_ack": [],
+          "sr": 1,
+          "m_cs": 0,
+          "metric": 0.9897740352454631
+        }
+      ],
+      "resource_power": 0.45278202779767146,
+      "synchronization": "explicit known-parameter correction; no blind synchronization",
+      "plot_stages": [],
+      "label": "positive SR",
+      "sent_harq_ack": [],
+      "sent_sr": 1,
+      "active": true,
+      "noise_reference": "own active waveform"
+    },
+    {
+      "detected": false,
+      "status": "dtx",
+      "harq_ack": null,
+      "sr": 0,
+      "m_cs": null,
+      "metric": 0.09351685298715556,
+      "detection_threshold": 0.42,
+      "candidates": [
+        {
+          "harq_ack": [],
+          "sr": 1,
+          "m_cs": 0,
+          "metric": 0.09351685298715556
+        }
+      ],
+      "resource_power": 0.005307074581118312,
+      "synchronization": "explicit known-parameter correction; no blind synchronization",
+      "plot_stages": [],
+      "label": "negative SR",
+      "sent_harq_ack": [],
+      "sent_sr": 0,
+      "active": false,
+      "noise_reference": "first active waveform for DTX background"
+    }
+  ],
+  "note": "Known synchronization; no blind CFO/timing. DTX uses noise calibrated from an active waveform; no direct noise-power API."
+}

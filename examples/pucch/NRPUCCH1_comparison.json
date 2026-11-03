@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "case_count": 68,
+  "max_abs_error": 9.766186892276451e-15,
+  "decision_mismatches": 0,
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "hashes": {
+    "examples/pucch/NRPUCCH1_reference.json": "e3e6cb9f0c208821dc8c06e6b0cb6125c17743470eff17fea5ee7e9f71f7a038",
+    "examples/pucch/compare_NRPUCCH1_reference.py": "f1104f12f6db682aadd6d95028c942b2e0f6333d4f9690173045b03d6964c036",
+    "examples/pucch/export_NRPUCCH1_reference.m": "bef95a25c1e3ac9f895c559eec04434c23f88600b0f1b818b566f9e53921b438",
+    "src/pucch/NRPUCCH1.py": "f032e71abe99409b24da1987f224012b274cd3ad1cc68dc4f079590b24ea798b",
+    "src/pucch/NRPUCCH1Transmitter.py": "3512f62b6a45d9971ffb30600a895a975931703eacebf0a71358d3115dc9ff50",
+    "src/pucch/NRPUCCH1Receiver.py": "938aff784d812c75b12e7da0a9743253d12fd2a0fce2b0dc11fbc4ccf454c08c"
+  }
+}

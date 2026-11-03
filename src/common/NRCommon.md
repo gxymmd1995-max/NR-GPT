@@ -1,11 +1,11 @@
-# NRCommon：公共 Gold 序列与 SRS 的 u、v
+# NRCommon：Gold、低PAPR短序列与SRS/PUCCH跳变参数
 
 公式使用的标量、数组、单位和运算符总约定见[公式变量阅读指南](../../documentation/formula_reference.md#conventions)。下列辅助变量表不替代规范参数表；式号沿用本文自编号，协议版本/章节见各式原说明。
 
 
 [NRCommon.py](NRCommon.py) 放置可复用的序列算法。通过 `from common import NRCommon` 导入；NRSRS.sequence_parameters 调用公共接口取得 u/v，然后在 SRS 类内计算端口循环移位 alpha。公共层不依赖 NRSRS 或 NRGrid，也不保存随机状态、小区实例或日志对象。
 
-目前包含两个静态方法：通用31bit Gold生成器，以及**专用于SRS**的u/v选择。后续PUSCH、PUCCH等信道可复用 Gold生成器，但不能直接套用SRS的u/v规则。当前尚未实现完整调制、编码、OFDM等NRCommon功能。
+目前包含四个静态方法：通用31bit Gold生成器、SRS专用u/v、12点低PAPR序列、PUCCH F0逐符号跳变参数。SRS与PUCCH使用各自规范的寻址/种子规则，不能互相代用；OFDM由独立NROFDM类提供。
 
 固定规范：**TS 38.211 V15.2.0 §5.2.1、§6.4.1.4.2**；SRS ID范围依据 **TS 38.331 V15.2.1 §6.3.2 SRS-Resource.sequenceId（10bit）**。下文 C1–C5 均为本文自编号，不是规范原公式号。接口表为项目说明表，不是协议原表。
 
@@ -190,3 +190,48 @@ print(bits[:16], uv["u"], uv["v"])
 ## NRCommon计数核对例
 
 normal CP、帧内slot=2、SRS起始slot符号=10、SRS局部符号l_prime=1时，Gold寻址的符号号t=2*14+10+1=39。组跳变读取c(312)..c(319)共8个bit，序列跳变读取c(39)一个bit；两者读取位置不同。
+
+
+## PUCCH公共函数：字段、坐标与返回值
+
+新增方法仍为无实例状态的静态函数，固定TS38.211 V15.2.0 §5.2.2.2表5.2.2.2-2与§6.3.2.2.1/2；不引入新Release功能。
+
+### low_papr_sequence_12(group,cyclic_shift=0)
+
+| 参数/结果 | 含义、范围、单位与维度 | 示例 |
+|---|---|---|
+| group | 基序列组u，Python int 0..29，无量纲标量 | 17 |
+| cyclic_shift | 最终mod12循环移位，Python int 0..11，无量纲标量 | 6对应逐点pi rad |
+| 返回值 | 新complex128[12]，单点模长1，不乘发送beta | `NRCommon.low_papr_sequence_12(17,6)` |
+
+PHI_12表统一位于`common/_low_papr_tables.py`，SRS的`_tables.py`保留导入别名，避免两个信道维护不同副本。相位系数为-3/-1/1/3，乘pi/4，再加2*pi*cyclic_shift*n/12取复指数；n=0..11。整数类型/范围校验遵循现有_integer；不依赖MATLAB输出生成表。
+
+### pucch_sequence_parameters(...)
+
+| 参数 | 含义、范围与单位 | 示例 |
+|---|---|---|
+| hopping_id | Python int 0..1023，PUCCH hoppingId，不等于RNTI | 731 |
+| n_slot | 帧内slot号，normal0..159、extended0..39；实际mu边界还由NRCell检查 | 3 |
+| symbol_start | 正向slot符号号，0..symbols_per_slot-n_symbols | 10 |
+| n_symbols | 当前F0资源符号数量，Python int1/2 | 2 |
+| initial_cyclic_shift=0 | m0，Python int0..11，移位号 | 5 |
+| m_cs=0 | 已从UCI表获得的移位偏移，Python int0..11 | 10 |
+| group_hopping='neither' | 'neither'/'enable'/'disable'，最后一项仅计算协议原始v供诊断，F0资源接口拒绝该模式 | 'enable' |
+| frequency_hopping=False | 严格bool，True要求2符号，第二符号n_hop=1 | True |
+| symbols_per_slot=14 | Python int12/14，用于资源边界校验；不改变R15固定14*slot的Gold寻址 | 12 |
+
+返回字典每项新数组[n_symbols]：u为0..29组号、v为0/1原始组内号、hop为0/1跳段号、n_cs为0..255的8bit值、cyclic_shift为0..11最终移位，均int64；alpha为float64，单位rad/序列点。短序列仅v=0有定义，不能用返回的v=1去假造12点第二基序列。
+
+**PC1，本文自编号**：按同版本§6.3.2.2.1，enable模式用种子floor(hopping_id/30)，在8*(2*n_slot+hop)起读取8bit（低位在前），fgh为该整数mod30，u=(fgh+hopping_id)mod30，v=0。neither时u=hopping_id mod30、v=0。disable按原文以种子32*floor(ID/30)+ID mod30读取c(2*slot+hop)得到v；本函数提供原始参数计算，NRPUCCH0不接受该配置。
+
+**PC2，本文自编号**：按同版本§6.3.2.2.2，循环移位使用不同种子hopping_id，在8*(14*n_slot+symbol_start+l_prime)起读取8bit，n_cs=sum(c_i*2**i)，最终shift=(initial_cyclic_shift+m_cs+n_cs)mod12，alpha=2*pi*shift/12。i为bit号0..7，l_prime为资源内符号号0..n_symbols-1；种子/索引均无量纲，alpha单位rad/点。extended CP仍使用14寻址，资源边界检查才使用12。
+
+```python
+from common import NRCommon
+p=NRCommon.pucch_sequence_parameters(731,3,10,2,5,10,'enable',True)
+assert p['u'].shape==p['alpha'].shape==(2,)
+x=NRCommon.low_papr_sequence_12(int(p['u'][0]),int(p['cyclic_shift'][0]))
+assert x.shape==(12,)
+```
+
+[专门单测](../../tests/unit/test_NRCommon_pucch.py)验证30组×12种循环移位的能量/正交性、Gold种子及扩展CP固定14坐标；[真实PUCCH参考](../../examples/pucch/README.md)覆盖960组序列/坐标，间接独立验证组合计算。SRS原有832组独立参考仍通过。

@@ -51,3 +51,7 @@
 
 
 变量单位与数组维度请对照[公式变量阅读指南](../../documentation/formula_reference.md#implementation)及所链接类文档的逐式变量表。图/JSON中的[P,L,K]为发送端口/slot符号/载波子载波，[Rx,T]为接收支路/时域样点；T依实际CP计算，不把平均slot时长代入取整。
+
+信道编码：运行python examples/common/compare_NRChannelCodes_reference.py。NRChannelCodes_reference.json由同目录export_NRChannelCodes_reference.m实际生成；Polar/LDPC调用5G Toolbox，经典RM使用独立MATLAB多项式求值。compare(write_report=True)写比较摘要，False不写；不保存图像。
+
+完整UCI参考：export_NRUCICode_reference.m实际调用nrUCIEncode生成NRUCICode_reference.json；运行compare_NRUCICode_reference.py逐位对比并译码，compare(write_report=True)默认写比较报告。覆盖15组小块/Polar/CRC/PC/打孔/缩短/重复/分段；不把LDPC用于PUCCH。

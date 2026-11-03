@@ -1,6 +1,6 @@
 # NR-GPT：NR Release 15 Python 物理层仿真
 
-以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell、NRGrid、SRS收发、OFDM/逐符号相位、TA/噪声/CFO、公共序列、上行RI/TPMI码本及日志诊断**。
+以 3GPP R15 为基线的链路级仿真平台。当前已实现 **NRCell、NRGrid、SRS收发、PUCCH F0时域收发、OFDM/逐符号相位、TA/噪声/CFO、公共序列、上行RI/TPMI码本及日志诊断**。
 
 ## 快速开始
 
@@ -60,7 +60,8 @@ src/diagnostics/         ExampleLogger.py 与同级类说明：日志、调用�
 src/grid/                NRGrid.py 与同级类说明：单时隙端口域网格
 examples/grid/           网格演示、NPZ/JSON、图片及 MATLAB 独立参考
 src/srs/                 NRSRS.py、NRSRS.md 与固定 R15 原表常量
-src/common/              公共Gold/u/v、上行码本、NROFDM、NRPhaseRotation及同级文档
+src/common/              公共Gold/低PAPR/u/v、上行码本、NROFDM、NRPhaseRotation及同级文档
+src/pucch/               PUCCH F0资源/发射机/接收机及同级类文档
 examples/common/         序列/OFDM/相位示例、JSON/NPZ/图片及真实MATLAB参考
 src/channel/             NRChannel.py / NRChannel.md：TA、AWGN、CFO
 examples/channel/        SRS时域信道链路、波形/测量/图片及MATLAB参考
@@ -122,3 +123,21 @@ NRGrid 示例同样生成 `examples/grid/NRGrid_demo.log`，完整打印该演�
 
 
 2026-10-26测量接口更新：NRChannel仅通过`snr_db`添加噪声；NRSRSReceiver输出每UE的SNR、RSSI和SRS-RSRP（项目工程指标，归一化功率与dB）。[信道参数](src/channel/NRChannel.md)、[接收指标口径](src/srs/NRSRSReceiver.md)。
+
+
+PUCCH Format 0已实现HARQ-ACK/SR→OFDM→时域TA/CFO/SNR信道→相关接收与DTX，运行入口[examples/pucch](examples/pucch/README.md)。[资源](src/pucch/NRPUCCH0.md)、[发射机](src/pucch/NRPUCCH0Transmitter.md)、[接收机](src/pucch/NRPUCCH0Receiver.md)；960组序列/坐标及40组时域用例已与真实MATLAB独立比对。扩展CP的固定R15寻址适配见[验证报告](documentation/validation/NRPUCCH0_validation.md)，其余PUCCH格式尚未实现。
+
+
+PUCCH阶段绘图使用[NRPlotConfig](src/diagnostics/NRPlotConfig.md)的enabled/stages字段，默认示例直接显示case0全部28阶段、5个分页图窗；不保存图片。发送序列、OFDM内部、时域信道、接收补偿及候选判决均可按阶段名筛选，详见[运行与显示说明](examples/pucch/README.md)。
+
+PUCCH F0新增[三UE循环移位复用示例](examples/pucch/NRPUCCH0_multiuser_demo.py)：共用时频资源，经独立增益、时域叠加和SNR噪声后逐用户接收；含UE静默DTX案例。[分配说明](examples/pucch/README.md#三用户循环移位复用)与[实际MATLAB验证](documentation/validation/NRPUCCH0_multiuser_validation.md)。
+
+PUCCH Format 1已增加[完整时域收发示例](examples/pucch/NRPUCCH1_demo.py)及[验证报告](documentation/validation/NRPUCCH1_validation.md)，支持1/2bit、DMRS、时域OCC、slot内跳频和DMRS辅助接收。
+
+PUCCH F2首版支持3～11位UCI小块编码、速率匹配、加扰QPSK、DMRS、1/2符号、连续1～16RB及slot内跳频。见[时域示例](examples/pucch/NRPUCCH2_demo.py)和[MATLAB验证](documentation/validation/NRPUCCH2_validation.md)。12位以上Polar尚未实现，接口明确拒绝。
+
+Common新增[Polar母码](src/common/NRPolarCode.md)、[NR LDPC码块](src/common/NRLDPCCode.md)、[经典RM](src/common/NRRMCode.md)及对应解码；CRC和完整信道速率匹配边界见类文档。
+
+当前PUCCH2/3均接入[公共UCI编码链](src/common/NRUCICode.md)，包含小块码与Polar CRC/PC/速率匹配/分段；新增[F3示例](examples/pucch/NRPUCCH3_demo.py)和[F2长UCI示例](examples/pucch/NRPUCCH2_Polar_demo.py)。当前验证见[报告](documentation/validation/NRPUCCH3_validation.md)。早期“F2仅3～11位”的限制已解除，实际长度仍受资源和码率约束。
+
+PUCCH Format4已实现：固定1RB，SF2/4全部OCC、QPSK/π/2-BPSK、完整时域收发、小块/Polar及CRC。见[示例](examples/pucch/NRPUCCH4_demo.py)、[资源文档](src/pucch/NRPUCCH4.md)、[MATLAB验证](documentation/validation/NRPUCCH4_validation.md)。

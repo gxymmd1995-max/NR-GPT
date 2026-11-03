@@ -1,0 +1,30 @@
+{
+  "status": "passed",
+  "case_count": 56,
+  "max_abs_error": 1.5700924586837752e-16,
+  "coding_bit_errors": 0,
+  "decision_mismatches": 0,
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "hashes": {
+    "examples/pucch/NRPUCCH2_reference.json": "b7a5882a9a6b045fae70c349ee7e5ed3937ff133b826e37c37250602cb1ec52e",
+    "examples/pucch/export_NRPUCCH2_reference.m": "5ccb442f510b65aca73f3f4b531d059b92c844c1f93145ed94aad7febbd71765",
+    "examples/pucch/compare_NRPUCCH2_reference.py": "53ce25cafef6cf76b05e57a7d61771701ddad12652e887643cab18883585b708",
+    "src/pucch/NRPUCCH2.py": "c194e25c76c8a9138287f752d7d5cbafcce50934e40861a7bbcc87b904932541",
+    "src/pucch/NRPUCCH2Transmitter.py": "edd3c1826955dc9d2654cff5ca623df05e20bad27e8387bec14f9fad0a35fd90",
+    "src/pucch/NRPUCCH2Receiver.py": "9a9179bbb6093c7d5e39d44a2719e90135f4d20b6d1bdba4c9a445d78ff71929",
+    "src/common/NRSmallBlockCode.py": "a0eceeb98487509246f5796aeeb955ff34631ab85458a1d919cce8f1de4d5662",
+    "src/common/_small_block_tables.py": "8b3276126d1b6f5495e012a957e249328b82591b566bb304fc8120367dc9f2e8",
+    "src/common/NRCommon.py": "f337310818d7757019b90d991c7f5211970519fec4fb32fec42eb3f71977b2d1",
+    "src/common/NROFDM.py": "bc718b62fc2a8b766212f53cc808042775e3472529bda54573d3f5d462f4a282",
+    "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
+    "src/common/NRUCICode.py": "bb6e113cf1abe96fc56cc45b04c976f79144a6fabe77845d0d8e959bd52fd223",
+    "src/common/NRPolarCode.py": "4ebb5dbf5a6dcf19c6a6b68ecad3014844d6b6bdc999581c4474f6974445403f",
+    "src/common/_coding_tables.json": "65dabf3a328d827618d9a53521fadd7392b2d3ef3d5252f1b188a8cbee774a46"
+  }
+}

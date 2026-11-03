@@ -1,0 +1,473 @@
+{
+  "status": "passed",
+  "generated_at": "2026-10-27T14:24:28.350251+00:00",
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "case_count": 12,
+  "user_result_count": 36,
+  "decision_mismatch_count": 0,
+  "max_mixed_abs_error": 2.2084448919134744e-10,
+  "max_received_abs_error": 2.2084449829334023e-10,
+  "max_correlation_abs_error": 3.781867581393566e-09,
+  "max_metric_abs_error": 5.551115123125783e-16,
+  "hashes": {
+    "examples/pucch/NRPUCCH0_multiuser_reference.json": "dfdc957f9fb809f5654bdc4a8079401f9626a937cc077c42e18a027523d1f803",
+    "examples/pucch/export_NRPUCCH0_multiuser_reference.m": "95b3c2c36080349aee90f5590e4701f548860c8d791684e7a7d881496ce74728",
+    "examples/pucch/compare_NRPUCCH0_multiuser_reference.py": "d1a5a74a6d8f56a528cd889a931f20d67d779e172fc411dfdfc6b2cfa1e6813d",
+    "src/pucch/NRPUCCH0.py": "8ee1ceb9c272e73b9375f23c8a05a3fd8cc1f53ee542767b36273bba77af0b1b",
+    "src/pucch/NRPUCCH0Transmitter.py": "f0a3c1ed8f7f7412bc739c0c495e41da817de0de0e53a41d288f78356a7423de",
+    "src/pucch/NRPUCCH0Receiver.py": "8781a4e984f0dd4ed97df3587b398c4a814bfad14e7c4a7caee8af8d1c3bf7e6",
+    "src/common/NRCommon.py": "f337310818d7757019b90d991c7f5211970519fec4fb32fec42eb3f71977b2d1",
+    "src/common/_low_papr_tables.py": "7192ff7af7dc31f1f647e1d47a09228fd0f3922e4c40bf095b8bb1fa29fc06a9",
+    "src/common/NROFDM.py": "bc718b62fc2a8b766212f53cc808042775e3472529bda54573d3f5d462f4a282",
+    "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
+    "src/channel/NRChannel.py": "97f74be107977f8008e50c7fe953e0916f7f2b9a224dca18637082ddad1a8d74"
+  },
+  "cases": [
+    {
+      "case": 0,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.376424453180005,
+      "candidate_shift_set": [
+        0,
+        6
+      ]
+    },
+    {
+      "case": 0,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.3191730622051358,
+      "candidate_shift_set": [
+        2,
+        8
+      ]
+    },
+    {
+      "case": 0,
+      "uid": "UE2",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.2752375278555307,
+      "candidate_shift_set": [
+        4,
+        10
+      ]
+    },
+    {
+      "case": 1,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.3832710676770819,
+      "candidate_shift_set": [
+        0,
+        6
+      ]
+    },
+    {
+      "case": 1,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.30113583397555466,
+      "candidate_shift_set": [
+        2,
+        8
+      ]
+    },
+    {
+      "case": 1,
+      "uid": "UE2",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.3024882629599792,
+      "candidate_shift_set": [
+        4,
+        10
+      ]
+    },
+    {
+      "case": 2,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.5630382873887703,
+      "candidate_shift_set": [
+        0,
+        6
+      ]
+    },
+    {
+      "case": 2,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.4340038072222492,
+      "candidate_shift_set": [
+        2,
+        8
+      ]
+    },
+    {
+      "case": 2,
+      "uid": "UE2",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0004185683302285226,
+      "candidate_shift_set": [
+        4,
+        10
+      ]
+    },
+    {
+      "case": 3,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.5252349826607667,
+      "candidate_shift_set": [
+        0,
+        6
+      ]
+    },
+    {
+      "case": 3,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.4318928611937025,
+      "candidate_shift_set": [
+        2,
+        8
+      ]
+    },
+    {
+      "case": 3,
+      "uid": "UE2",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.008810618564616474,
+      "candidate_shift_set": [
+        4,
+        10
+      ]
+    },
+    {
+      "case": 4,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.5443975064060684,
+      "candidate_shift_set": [
+        0,
+        6
+      ]
+    },
+    {
+      "case": 4,
+      "uid": "UE1",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0007962934302856866,
+      "candidate_shift_set": [
+        2,
+        8
+      ]
+    },
+    {
+      "case": 4,
+      "uid": "UE2",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.44649881614540815,
+      "candidate_shift_set": [
+        4,
+        10
+      ]
+    },
+    {
+      "case": 5,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.5819262025171948,
+      "candidate_shift_set": [
+        0,
+        6
+      ]
+    },
+    {
+      "case": 5,
+      "uid": "UE1",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0005429896475718881,
+      "candidate_shift_set": [
+        2,
+        8
+      ]
+    },
+    {
+      "case": 5,
+      "uid": "UE2",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.4139811890576124,
+      "candidate_shift_set": [
+        4,
+        10
+      ]
+    },
+    {
+      "case": 6,
+      "uid": "UE0",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.003942821745358802,
+      "candidate_shift_set": [
+        1,
+        7
+      ]
+    },
+    {
+      "case": 6,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.5112426662627245,
+      "candidate_shift_set": [
+        3,
+        9
+      ]
+    },
+    {
+      "case": 6,
+      "uid": "UE2",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.45706951593016826,
+      "candidate_shift_set": [
+        5,
+        11
+      ]
+    },
+    {
+      "case": 7,
+      "uid": "UE0",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0012118538483134583,
+      "candidate_shift_set": [
+        1,
+        7
+      ]
+    },
+    {
+      "case": 7,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.5080775139922618,
+      "candidate_shift_set": [
+        3,
+        9
+      ]
+    },
+    {
+      "case": 7,
+      "uid": "UE2",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.47863829630160687,
+      "candidate_shift_set": [
+        5,
+        11
+      ]
+    },
+    {
+      "case": 8,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.9957897065556854,
+      "candidate_shift_set": [
+        1,
+        7
+      ]
+    },
+    {
+      "case": 8,
+      "uid": "UE1",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0003515194348019632,
+      "candidate_shift_set": [
+        3,
+        9
+      ]
+    },
+    {
+      "case": 8,
+      "uid": "UE2",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0013515775331678869,
+      "candidate_shift_set": [
+        5,
+        11
+      ]
+    },
+    {
+      "case": 9,
+      "uid": "UE0",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.9700779705240475,
+      "candidate_shift_set": [
+        1,
+        7
+      ]
+    },
+    {
+      "case": 9,
+      "uid": "UE1",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.003997007411382874,
+      "candidate_shift_set": [
+        3,
+        9
+      ]
+    },
+    {
+      "case": 9,
+      "uid": "UE2",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.002228172964809072,
+      "candidate_shift_set": [
+        5,
+        11
+      ]
+    },
+    {
+      "case": 10,
+      "uid": "UE0",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0017637371368618992,
+      "candidate_shift_set": [
+        1,
+        7
+      ]
+    },
+    {
+      "case": 10,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        1
+      ],
+      "metric": 0.987266819243211,
+      "candidate_shift_set": [
+        3,
+        9
+      ]
+    },
+    {
+      "case": 10,
+      "uid": "UE2",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0005463854640137592,
+      "candidate_shift_set": [
+        5,
+        11
+      ]
+    },
+    {
+      "case": 11,
+      "uid": "UE0",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.00023825936969289568,
+      "candidate_shift_set": [
+        1,
+        7
+      ]
+    },
+    {
+      "case": 11,
+      "uid": "UE1",
+      "detected": true,
+      "harq_ack": [
+        0
+      ],
+      "metric": 0.995894851568736,
+      "candidate_shift_set": [
+        3,
+        9
+      ]
+    },
+    {
+      "case": 11,
+      "uid": "UE2",
+      "detected": false,
+      "harq_ack": null,
+      "metric": 0.0005673871549628245,
+      "candidate_shift_set": [
+        5,
+        11
+      ]
+    }
+  ]
+}
