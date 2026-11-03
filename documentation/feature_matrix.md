@@ -37,3 +37,5 @@ PUCCH F2：首版3～11位UCI小块编码/软ML，1/2符号、连续1～16RB、�
 当前更新（取代前文F2首版限制）：PUCCH2/3通过NRUCICode支持3～1706位UCI，小块/Polar、CRC6/11、PC位、完整速率匹配和双块分段；资源不足按含CRC码率0.6拒绝。F3支持4～14符号（受CP限制）、合法DFT带宽、QPSK/π/2-BPSK、DMRS/额外DMRS及跳频。接收为PC约束SC，不包含CRC辅助SCL、盲同步或强频选均衡。实际MATLAB：UCI15例、F2 56例、F3 22例，详见validation/NRPUCCH3_validation.md。
 
 PUCCH F4：已实现固定1RB、SF2/4及全部OCC、QPSK/π/2-BPSK、DMRS/额外DMRS/跳频、公共小块/Polar UCI及完整时域收发。实际MATLAB普通CP单用户132组通过；普通/扩展CP带噪链路、四用户OCC复用有Python测试，尚无独立MATLAB该类多用户/扩展CP向量。接收平坦每跳信道，非联合均衡或SCL。
+
+PUSCH首版：单层单码字CP-OFDM、连续RB、QPSK/16/64/256QAM、Type-A位置2/3、Type-1单符号DMRS/端口0/CDM组1或2；单码块UL-SCH CRC16/24A、BG/Z选择、LDPC、四RV全缓冲速率匹配/恢复、已知同步及DMRS辅助接收。实际MATLAB PUSCH32例及公共UL-SCH5例通过。扩展CP/噪声/CFO/延迟目前仅Python测试；不含MCS/TBS自动选择、多码块、HARQ合并、MIMO、DFT-s-OFDM、UCI/PTRS和更多DMRS模式。

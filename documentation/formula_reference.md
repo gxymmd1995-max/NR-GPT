@@ -476,3 +476,5 @@ F2参考：序列/DMRS初始化F2-1见[NRPUCCH2](../src/pucch/NRPUCCH2.md)，接
 新增公式与完整变量表：UCI-1见[NRUCICode](../src/common/NRUCICode.md)；F3-1见[NRPUCCH3](../src/pucch/NRPUCCH3.md)；F3-RX-1见[NRPUCCH3Receiver](../src/pucch/NRPUCCH3Receiver.md)。均为文档自编号，标明固定版本章节、索引、单位和维度。
 
 F4扩频/解扩公式F4-1及完整变量范围、单位、维度见[NRPUCCH4](../src/pucch/NRPUCCH4.md)；接收输入输出及信道假设见[NRPUCCH4Receiver](../src/pucch/NRPUCCH4Receiver.md)。OCC和DMRS映射表明确标注固定版本原表号。
+
+PUSCH公式与变量：ULSCH-1见[NRULSCHCode](../src/common/NRULSCHCode.md)，PUSCH-1见[NRPUSCH](../src/pusch/NRPUSCH.md)，PUSCH-RX-1见[接收机](../src/pusch/NRPUSCHReceiver.md)。全部为文档自编号，附固定版本章节、变量范围、单位和维度。

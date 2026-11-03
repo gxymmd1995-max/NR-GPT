@@ -55,3 +55,5 @@
 信道编码：运行python examples/common/compare_NRChannelCodes_reference.py。NRChannelCodes_reference.json由同目录export_NRChannelCodes_reference.m实际生成；Polar/LDPC调用5G Toolbox，经典RM使用独立MATLAB多项式求值。compare(write_report=True)写比较摘要，False不写；不保存图像。
 
 完整UCI参考：export_NRUCICode_reference.m实际调用nrUCIEncode生成NRUCICode_reference.json；运行compare_NRUCICode_reference.py逐位对比并译码，compare(write_report=True)默认写比较报告。覆盖15组小块/Polar/CRC/PC/打孔/缩短/重复/分段；不把LDPC用于PUCCH。
+
+单码块UL-SCH参考：export_NRULSCHCode_reference.m实际生成NRULSCHCode_reference.json；运行compare_NRULSCHCode_reference.py比较CRC16/24A、BG1/BG2及RV速率匹配，compare(write_report=True)写摘要，False不写。5组实际向量通过，完整PUSCH示例在examples/pusch/。

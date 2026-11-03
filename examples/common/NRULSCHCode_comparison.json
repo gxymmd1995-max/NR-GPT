@@ -1,0 +1,66 @@
+{
+  "status": "passed",
+  "case_count": 5,
+  "cases": [
+    {
+      "A": 16,
+      "bg": 2,
+      "Z": 6,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "converged": true
+    },
+    {
+      "A": 160,
+      "bg": 2,
+      "Z": 30,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "converged": true
+    },
+    {
+      "A": 256,
+      "bg": 2,
+      "Z": 36,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "converged": true
+    },
+    {
+      "A": 512,
+      "bg": 1,
+      "Z": 24,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "converged": true
+    },
+    {
+      "A": 4000,
+      "bg": 1,
+      "Z": 192,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "converged": true
+    }
+  ],
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "hashes": {
+    "examples/common/compare_NRULSCHCode_reference.py": "f00890cb003ee228da6df7cf0b7c491c539d547c2dd30403ef6e402aa9c0f642",
+    "examples/common/export_NRULSCHCode_reference.m": "ab54683002a93e280787c1981899dd22bac4bb989f5c43888b729a33eac7be62",
+    "examples/common/NRULSCHCode_reference.json": "b72dd17262b4ef9f538588b0835cc7e5871541c4840a09f9e7cfc597a8c4ffd3",
+    "src/common/NRULSCHCode.py": "f611db349f4ecdf359f8b61048346d741c990ecd0dfa983c65823190c0a9c658",
+    "src/common/NRLDPCCode.py": "8c484440bcd8e35988be714a2c394d1507c2ebeae23bee41c2ccb825b04544ab",
+    "src/common/_coding_tables.json": "65dabf3a328d827618d9a53521fadd7392b2d3ef3d5252f1b188a8cbee774a46"
+  }
+}

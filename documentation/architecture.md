@@ -114,3 +114,5 @@ PUCCH F2复用NRSmallBlockCode（3～11位）、Gold、NRGrid、NROFDM及NRChann
 PUCCH2/3共享NRUCICode编码链，NRSmallBlockCode处理A≤11，NRPolarCode.transform与UCI外层处理A≥12。LDPC仍独立服务后续数据信道。F3数据按每符号单位化DFT预编码；接收在频域MRC后单位化IDFT，再调制软解映射及公共译码。detected表示信号检测，crc_ok单独表示CRC状态。
 
 F4新增独立资源/收发类，复用F3单RB几何和DMRS基础序列，共享NRUCICode/NROFDM/NRChannel。调制数据每符号仅12/SF点，先OCC块复制成12点再DFT；接收在IDFT后共轭OCC分块平均。DMRS按OCC索引配置独立循环移位，不能与数据OCC混用。
+
+PUSCH新增pusch模块资源/收发类；公共NRULSCHCode负责单码块TB CRC、BG/Z/填充、LDPC和RV速率匹配/恢复。NRPUSCH执行单层QAM/加扰/DMRS及网格映射，复用NROFDM、NRChannel。接收每RB用DMRS估计近似平坦恒定信道，MRC/max-log QAM后恢复TB；detected、converged、crc_ok分别表示参考信号检测、LDPC收敛和可接受的TB CRC状态。

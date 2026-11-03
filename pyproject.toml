@@ -25,9 +25,11 @@ diagnostics = ["ExampleLogger.md", "NRPlotConfig.md", "NRStagePlotter.md"]
 grid = ["NRGrid.md", "channel_colors.md"]
 
 srs = ["NRSRS.md", "NRSRSReceiver.md"]
-common = ["NRCommon.md", "NRUplinkCodebook.md", "NRPhaseRotation.md", "NROFDM.md", "NRSmallBlockCode.md", "NRPolarCode.md", "NRLDPCCode.md", "NRRMCode.md", "_coding_tables.json", "NRUCICode.md", "_low_papr_24.json"]
+common = ["NRCommon.md", "NRUplinkCodebook.md", "NRPhaseRotation.md", "NROFDM.md", "NRSmallBlockCode.md", "NRPolarCode.md", "NRLDPCCode.md", "NRRMCode.md", "_coding_tables.json", "NRUCICode.md", "_low_papr_24.json", "NRULSCHCode.md"]
 channel = ["NRChannel.md"]
 pucch = ["NRPUCCH0.md", "NRPUCCH0Transmitter.md", "NRPUCCH0Receiver.md", "NRPUCCH1.md", "NRPUCCH1Transmitter.md", "NRPUCCH1Receiver.md", "NRPUCCH2.md", "NRPUCCH2Transmitter.md", "NRPUCCH2Receiver.md", "NRPUCCH3.md", "NRPUCCH3Transmitter.md", "NRPUCCH3Receiver.md", "NRPUCCH4.md", "NRPUCCH4Transmitter.md", "NRPUCCH4Receiver.md"]
+
+pusch = ["NRPUSCH.md", "NRPUSCHTransmitter.md", "NRPUSCHReceiver.md"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

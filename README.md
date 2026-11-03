@@ -141,3 +141,5 @@ Common新增[Polar母码](src/common/NRPolarCode.md)、[NR LDPC码块](src/commo
 当前PUCCH2/3均接入[公共UCI编码链](src/common/NRUCICode.md)，包含小块码与Polar CRC/PC/速率匹配/分段；新增[F3示例](examples/pucch/NRPUCCH3_demo.py)和[F2长UCI示例](examples/pucch/NRPUCCH2_Polar_demo.py)。当前验证见[报告](documentation/validation/NRPUCCH3_validation.md)。早期“F2仅3～11位”的限制已解除，实际长度仍受资源和码率约束。
 
 PUCCH Format4已实现：固定1RB，SF2/4全部OCC、QPSK/π/2-BPSK、完整时域收发、小块/Polar及CRC。见[示例](examples/pucch/NRPUCCH4_demo.py)、[资源文档](src/pucch/NRPUCCH4.md)、[MATLAB验证](documentation/validation/NRPUCCH4_validation.md)。
+
+PUSCH首版支持单层CP-OFDM、QPSK至256QAM、Type-A/Type-1单符号DMRS及单码块UL-SCH CRC/LDPC/RV0～3完整时域收发。见[示例](examples/pusch/NRPUSCH_demo.py)、[资源文档](src/pusch/NRPUSCH.md)、[验证报告](documentation/validation/NRPUSCH_validation.md)。多层/多码块、DFT-s-OFDM、UCI/PTRS及HARQ合并待扩展。

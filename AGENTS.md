@@ -34,6 +34,7 @@ NR1024/
 │   ├── common/                     # NRCommon、NROFDM、NRPhaseRotation、NRUplinkCodebook、NRUCICode及编解码类
 │   │                               # _validation.py：校验；_uplink_tables.py：码本；_low_papr_tables.py：共享12点相位表
 │   ├── channel/                    # NRChannel.py/.md：样点TA、CFO、按SNR加噪
+│   ├── pusch/                      # NRPUSCH资源/Transmitter/Receiver及同级文档
 │   ├── pucch/                      # NRPUCCH0/1/2/3/4资源、Transmitter、Receiver及同级文档
 │   ├── srs/                        # NRSRS.py/.md、NRSRSReceiver.py/.md
 │   │                               # _tables.py：SRS协议参数表
@@ -43,6 +44,7 @@ NR1024/
 │   ├── grid/
 │   ├── common/
 │   ├── channel/
+│   ├── pusch/
 │   ├── pucch/
 │   └── srs/
 │       # 各目录README.md：脚本和产物索引
@@ -104,3 +106,5 @@ PUCCH F2定位：`src/pucch/NRPUCCH2.py/.md`、`NRPUCCH2Transmitter.py/.md`、`N
 完整UCI/F3定位：src/common/NRUCICode.py/.md；src/pucch/NRPUCCH3.py/.md及对应Transmitter/Receiver。F2长UCI示例NRPUCCH2_Polar_demo.py，F3示例NRPUCCH3_demo.py；实际MATLAB参考在examples/common/NRUCICode_*及examples/pucch/NRPUCCH3_*；最新验证documentation/validation/NRPUCCH3_validation.md。
 
 F4定位：src/pucch/NRPUCCH4.py/.md及对应Transmitter/Receiver；examples/pucch/NRPUCCH4_demo.py、export_NRPUCCH4_reference.m、compare_NRPUCCH4_reference.py；tests/unit/test_NRPUCCH4*.py、tests/matlab/test_NRPUCCH4_matlab.py；验证documentation/validation/NRPUCCH4_validation.md。
+
+PUSCH首版定位：src/pusch/NRPUSCH.py/.md及对应Transmitter/Receiver；公共src/common/NRULSCHCode.py/.md；examples/pusch/含示例及实际MATLAB参考，公共UL-SCH参考在examples/common/NRULSCHCode_*；按类名查tests/unit及tests/matlab；边界documentation/validation/NRPUSCH_validation.md。

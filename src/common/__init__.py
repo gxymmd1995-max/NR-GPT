@@ -18,3 +18,6 @@ __all__.append("NRRMCode")
 
 from common.NRUCICode import NRUCICode
 __all__.append("NRUCICode")
+
+from common.NRULSCHCode import NRULSCHCode
+__all__.append("NRULSCHCode")
