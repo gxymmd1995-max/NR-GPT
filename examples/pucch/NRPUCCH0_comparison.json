@@ -1,6 +1,6 @@
 {
   "status": "passed",
-  "generated_at": "2026-10-27T14:24:27.858807+00:00",
+  "generated_at": "2026-11-05T11:08:42.087732+00:00",
   "matlab_version": "24.1.0.2537033 (R2024a)",
   "toolbox": {
     "Name": "5G Toolbox",
@@ -34,7 +34,7 @@
     "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
     "src/channel/NRChannel.py": "97f74be107977f8008e50c7fe953e0916f7f2b9a224dca18637082ddad1a8d74",
     "src/diagnostics/NRPlotConfig.py": "9196bce8463518d0ab750301e3c72120fb207ab83250e41ac2d8b8210d6e8adf",
-    "src/diagnostics/NRStagePlotter.py": "c1f22834e58afba522d5c871ddc20e0dec07aa84e30d7f518a4263116784aec8"
+    "src/diagnostics/NRStagePlotter.py": "16c073579851ca740107c61c854c1c053ff6bb03d4ea663ce55c9e7b6850ed44"
   },
   "note": "Python comparison of actual independent MATLAB references. Native MATLAB receiver metric and Toolbox UCI bits both retained.",
   "cases": [

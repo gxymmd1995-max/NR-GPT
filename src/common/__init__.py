@@ -21,3 +21,6 @@ __all__.append("NRUCICode")
 
 from common.NRULSCHCode import NRULSCHCode
 __all__.append("NRULSCHCode")
+
+from common.NRDLSCHCode import NRDLSCHCode
+__all__.append("NRDLSCHCode")

@@ -29,7 +29,8 @@ class NRPUCCH4:
         base=self.base_resource()
         object.__setattr__(self,'data_scrambling_id',base.data_scrambling_id)
         object.__setattr__(self,'hopping_id',base.hopping_id)
-        if type(self.spreading_factor) is not int or self.spreading_factor not in (2,4):raise ValueError('spreading_factor must be 2 or 4')
+        if type(self.spreading_factor) is not int or self.spreading_factor not in (2,4):
+            raise ValueError('spreading_factor must be 2 or 4')
         _integer('occ_index',self.occ_index,0,self.spreading_factor-1)
 
     def base_resource(self):
@@ -39,18 +40,23 @@ class NRPUCCH4:
             group_hopping=self.group_hopping,second_hop_prb=self.second_hop_prb,additional_dmrs=self.additional_dmrs,modulation=self.modulation)
 
     @property
-    def n_prbs(self):return 1
+    def n_prbs(self):
+        return 1
 
     @property
-    def dmrs_symbols(self):return self.base_resource().dmrs_symbols
+    def dmrs_symbols(self):
+        return self.base_resource().dmrs_symbols
 
     @property
-    def data_symbols(self):return self.base_resource().data_symbols
+    def data_symbols(self):
+        return self.base_resource().data_symbols
 
     @property
-    def coded_length(self):return self.base_resource().coded_length//self.spreading_factor
+    def coded_length(self):
+        return self.base_resource().coded_length//self.spreading_factor
 
-    def indices(self,dmrs=False):return self.base_resource().indices(dmrs)
+    def indices(self,dmrs=False):
+        return self.base_resource().indices(dmrs)
 
     def scrambling(self):
         from common import NRCommon
@@ -66,18 +72,21 @@ class NRPUCCH4:
     def spread(self,symbols):
         """Input [data_symbols,12/SF], output [data_symbols,12], no 1/sqrt(SF) scaling."""
         values=np.asarray(symbols,dtype=complex)
-        if values.shape!=(len(self.data_symbols),12//self.spreading_factor) or not np.all(np.isfinite(values)):raise ValueError('finite modulation symbols [S,12/SF] required')
+        if values.shape!=(len(self.data_symbols),12//self.spreading_factor) or not np.all(np.isfinite(values)):
+            raise ValueError('finite modulation symbols [S,12/SF] required')
         return np.tile(values,(1,self.spreading_factor))*self.occ()[None,:]
 
     def despread(self,symbols):
         """Conjugate-OCC combine after 12-point IDFT, divided by SF; input [S,12]."""
         values=np.asarray(symbols,dtype=complex)
-        if values.shape!=(len(self.data_symbols),12) or not np.all(np.isfinite(values)):raise ValueError('finite IDFT symbols [S,12] required')
+        if values.shape!=(len(self.data_symbols),12) or not np.all(np.isfinite(values)):
+            raise ValueError('finite IDFT symbols [S,12] required')
         return (values*self.occ().conj()[None,:]).reshape(len(self.data_symbols),self.spreading_factor,12//self.spreading_factor).mean(axis=1)
 
     def generate(self,coded_bits):
         v=np.asarray(coded_bits)
-        if v.shape!=(self.coded_length,) or v.dtype.kind not in 'iu' or np.any((v!=0)&(v!=1)):raise ValueError('binary coded bits [E] required')
+        if v.shape!=(self.coded_length,) or v.dtype.kind not in 'iu' or np.any((v!=0)&(v!=1)):
+            raise ValueError('binary coded bits [E] required')
         scrambled=v^self.scrambling()
         d=NRPUCCH2.qpsk(scrambled) if self.modulation=='QPSK' else (1-2*scrambled.astype(int))*(1+1j)/np.sqrt(2)*np.exp(1j*np.pi/2*(np.arange(len(scrambled))%2))
         spread=self.spread(d.reshape(len(self.data_symbols),12//self.spreading_factor))
@@ -90,7 +99,8 @@ class NRPUCCH4:
         return (base*np.exp(2j*np.pi*m0*np.arange(12)/12)[None,:]).ravel()
 
     def map_to_grid(self,grid,coded_bits,beta=1.):
-        if not isinstance(grid,NRGrid) or grid.cell!=self.cell or grid.n_ports!=1:raise ValueError('matching one-port grid required')
+        if not isinstance(grid,NRGrid) or grid.cell!=self.cell or grid.n_ports!=1:
+            raise ValueError('matching one-port grid required')
         amplitude=real_value('beta',beta,0)
         indices=np.concatenate([self.indices(),self.indices(True)])
         grid.map(indices,amplitude*np.concatenate([self.generate(coded_bits),self.dmrs()]),owner='PUCCH')

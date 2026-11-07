@@ -19,3 +19,17 @@
 独立UL-SCH参考位于examples/common/export_NRULSCHCode_reference.m、NRULSCHCode_reference.json、compare_NRULSCHCode_reference.py及NRULSCHCode_comparison.json，包含CRC24A的4000位单码块案例。
 
 [资源/序列](../../src/pusch/NRPUSCH.md)、[发射机](../../src/pusch/NRPUSCHTransmitter.md)、[接收机](../../src/pusch/NRPUSCHReceiver.md)、[公共UL-SCH](../../src/common/NRULSCHCode.md)、[验证边界](../../documentation/validation/NRPUSCH_validation.md)。
+
+## 1～4层与完整DMRS示例
+
+运行 `.venv\Scripts\python -X utf8 examples/pusch/NRPUSCH_mimo_demo.py`：4层、4Tx/4Rx、Type2双符号、端口(1,7,4,10)、附加位置1、16QAM/256位TB。每层OFDM经非对角4×4有效信道混合，再加2采样点延迟、731Hz频偏、0.23rad初相和25dB SNR噪声。接收机只拿Rx波形，经同步补偿、DMRS联合LS/ZF和UL-SCH恢复；图例Layer0～3表示均衡层。main的plot_config可关闭绘图，图片只显示、不保存。
+
+| 文件 | 用途 |
+|---|---|
+| [NRPUSCH_mimo_demo.py](NRPUSCH_mimo_demo.py) | 4层带噪时域链路；main(log,plot_config=None)返回接收结果 |
+| [export_NRPUSCH_mimo_reference.m](export_NRPUSCH_mimo_reference.m) | MATLAB R2024a/5G Toolbox24.1实际导出64例 |
+| [NRPUSCH_mimo_reference.json](NRPUSCH_mimo_reference.json) | 完整配置、输入位、编码位、端口、网格、复信道和混合Rx时域向量 |
+| [compare_NRPUSCH_mimo_reference.py](compare_NRPUSCH_mimo_reference.py) | compare(write_report=True)比较并生成摘要；False仅比较 |
+| [NRPUSCH_mimo_comparison.json](NRPUSCH_mimo_comparison.json) | 网格/波形/信道误差、CRC、均衡状态和SHA256 |
+
+运行比较：`.venv\Scripts\python -X utf8 examples/pusch/compare_NRPUSCH_mimo_reference.py`。原单层示例保持兼容；当前单层也使用联合LS/ZF。详见[多层验证与边界](../../documentation/validation/NRPUSCH_mimo_validation.md)。不含动态TPMI预编码、DFT-s-OFDM或UCI复用。

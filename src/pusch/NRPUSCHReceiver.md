@@ -1,50 +1,76 @@
-# NRPUSCHReceiver
+# NRPUSCHReceiver：多层DMRS联合估计与ZF均衡
 
-[源码](NRPUSCHReceiver.py)。完整时域接收→已知同步补偿→OFDM→每RB DMRS平坦信道估计/MRC→max-log QAM软解映射/解扰→NRULSCHCode速率恢复/LDPC/TB CRC。参考发送规则为TS38.211 V15.2.0 §6.3.1及§6.4.1.1；编码为TS38.212 V15.2.0 §6.2。接收算法为项目工程实现，不是规范指定的唯一算法。
+[源码](NRPUSCHReceiver.py)。固定发送依据TS38.211 V15.2.0 §6.3.1/§6.4.1.1及表6.3.1.3-1、6.4.1.1.3-1～5，编码依据TS38.212 V15.2.0 §6.2；LS/ZF是项目接收算法。链路为完整Rx时域信号→已知同步补偿→OFDM→时频OCC联合LS估计→ZF→逆层映射→QAM软解映射/解扰→UL-SCH/LDPC/TB CRC。
 
 | 字段 | 含义、范围、示例 |
 |---|---|
-| resource | NRPUSCH，不包含实际发送TB |
-| n_bits | 期待TBS，字节对齐，16..8424且单码块可容纳；例256 |
-| target_code_rate=.5 | MCS目标码率0.0001..0.95，用于BG选择，须与发送一致 |
-| redundancy_version=0 | RV0..3，与接收到的码字一致 |
-| carrier_frequency_hz=0 | 有限非负Hz，与发射一致 |
-| max_iterations=30 | LDPC最大迭代1..1000 |
+| resource | NRPUSCH，1～4层和DMRS配置，不含实际TB |
+| n_bits | 期待TBS，整数16..8424、字节对齐且符合单码块容量，例256 |
+| target_code_rate=.5 | 与发送一致的MCS目标R，0.0001..0.95，决定BG选择 |
+| redundancy_version=0 | 当前接收RV0..3 |
+| carrier_frequency_hz=0 | 有限非负载频Hz，与发送一致 |
+| max_iterations=30 | LDPC最大迭代次数1..1000 |
 | plot_config=None | 可选NRPlotConfig，None禁用 |
-| detection_threshold=.1 | DMRS拟合能量比门限，有限0..1，严格大于才检测 |
+| detection_threshold=.1 | DMRS联合拟合能量比门限0..1，严格大于才检测 |
+| max_condition_number=1e8 | 每RB信道条件数上限，有限实数≥1 |
 
-构造/`__post_init__`校验上述值。`receive(waveform,*,known_frequency_offset_hz=0,known_initial_phase_rad=0,known_delay_samples=0,cp_fraction=1,plotter=None)`要求有限complex[Rx,T]完整当前slot，形状严格匹配cell。CFO（Hz）、初相（rad）先取负反旋，再按整数采样点净延迟提前补偿；cp_fraction为CP内FFT窗比例0..1；可选共享plotter。参数均显式已知，不是盲同步估计结果。
+构造/`__post_init__`验证上述字段，要求cell.n_rx_antennas≥n_layers，明确拒绝欠定ZF。每层波形必须先经有效MIMO信道叠加到接收天线；接收机没有真实信道参数输入，只能用DMRS估计。
 
-每Rx每RB用6点DMRS共轭平均估计h，假设该RB在整个分配期间近似恒定平坦。对应每个数据RE跨Rx做MRC，除sum(abs(h)^2)，≤1e-20时置0。对每个QAM标记位，取其他位所有可能点的最小欧氏距离差，乘有效信道能量以形成可靠度加权软分数；之后按Gold符号解扰。没有独立噪声方差估计，soft_bits不是标定LLR。
+`receive(waveform,*,known_frequency_offset_hz=0,known_initial_phase_rad=0,known_delay_samples=0,cp_fraction=1,plotter=None)`要求有限complex[Rx,T]完整当前slot，形状严格匹配cell；已知CFO（Hz）/初相（rad）先取负反旋，再按整数采样点净延迟提前补偿；cp_fraction为0..1的CP内FFT窗比例；plotter为可选共享NRStagePlotter。同步量不是估计结果，错误输入抛校验异常。
 
-文档自编号PUSCH-RX-1，参考上述固定版本发送规则；软解映射为工程max-log算法：
+每RB收集已用端口的所有DMRS位置，构造已知端口签名矩阵A。不占某CDM组位置的端口系数为0，其余保留真实Gold-QPSK及频域/时域OCC。不能把混合参考分别直接除以每个端口序列。联合LS假设每RB在整个分配时间内近似恒定；附加DMRS是联合观测，不表示已实现时变插值。
+
+文档自编号PUSCH-MRX-1，参考上述固定端口规则，LS/ZF为项目算法：
 
 $$
-\widehat h_{r,b}=\frac16\sum_{q=0}^{5}Y^{\rm DMRS}_{r,b,q}R_{b,q}^{*},\quad
-\widehat d_t=\frac{\sum_r\widehat h_{r,b(t)}^{*}Y_{r,t}}{W_t},\quad W_t=\sum_r|\widehat h_{r,b(t)}|^2,
-\quad L_{t,i}\propto W_t\left[\min_{a\in\mathcal A_{i,1}}|\widehat d_t-a|^2-\min_{a\in\mathcal A_{i,0}}|\widehat d_t-a|^2\right].\tag{PUSCH-RX-1}
+Y_b=H_bA_b^T+N_b,\quad \widehat H_b=Y_b(A_b^\dagger)^T,\quad
+W_b=\widehat H_b^\dagger,\quad \widehat x_{b,t}=W_by_{b,t},\quad
+\nu_{b,v}=\sum_r|W_{b,v,r}|^2.\tag{PUSCH-MRX-1}
 $$
 
-| 变量 | 含义、范围、单位与维度 |
+| 变量 | 含义、范围、单位、维度 |
 |---|---|
-| r、b、q、t、i | Rx、资源RB、DMRS点、数据RE、调制位索引；0..Rx-1、0..P-1、0..5、0..Nd-1、0..Qm-1 |
-| Y_DMRS、R | 接收/参考DMRS，complex[Rx,P,6]/complex[P,6]，归一化幅度 |
-| h_hat、Y、d_hat | 信道估计[Rx,P]、数据RE[Rx,Nd]、均衡数据[Nd]，complex归一化幅度 |
-| b(t)、W | RE对应RB索引、有效信道能量；int[Nd]、float[Nd] |
-| A_i,0/1 | 该标记位为0/1的QAM候选集合，complex[2^(Qm-1)]，平均能量归一化 |
-| L | 无量纲软可靠性，解扰后展开float[G]，正值支持0 |
+| b、v、r、t | RB、层、Rx、数据RE索引；0..P-1、0..V-1、0..Rx-1、每RB有效RE范围 |
+| A_b、Q | 已知DMRS签名complex[Q,V]、实际参考位置数Q；不含纯保留无发送的CDM组 |
+| Y_b、H_b、N_b | 参考观测[Rx,Q]、有效信道[Rx,V]、参考噪声[Rx,Q]，complex归一化幅度 |
+| dagger、T | Moore–Penrose伪逆、普通转置；A已包含发送参考相位 |
+| W_b、x_hat | ZF矩阵[V,Rx]、层均衡符号[V]，complex |
+| nu | 空间白噪声经ZF后的相对方差增益float[V]，软权重取1/nu；未标定绝对噪声 |
 
-返回dict：bits为A位list，未检测时None；crc_ok严格bool，要求LDPC收敛且TB CRC通过；converged为LDPC校验状态；iterations为迭代次数，未检测0；detected为bool；metric为DMRS拟合能量比0..1；equalized_symbols为complex[Nd]；soft_bits为float[G]；channel_estimates为complex[Rx,P]；rx_grid为complex[Rx,slot符号数,载波子载波数]。
+逐RB检查估计矩阵的秩和条件数，任一RB秩亏/非有限/超限则equalizer_ok=False，不解码TB。未坏RB可保留诊断层符号，但不把整体传输报成功。强信号秩亏可以detected=True同时crc_ok=False；零信号不译码。
 
-检测指标为6*sum(abs(h)^2)/sum(abs(received_dmrs)^2)，clip到0..1；零输入不译码，避免全零码字CRC偶然通过。检测、LDPC收敛和TB CRC是不同状态。某些RV单独接收时即使无噪仍可能因缺少系统位而不收敛；未实现跨次HARQ合并，失败时不会强制报成功。
+逆层映射将complex[V,Nd]按每RE的Layer0..V-1轮流还原码字顺序。QAM max-log软解映射公式PUSCH-MRX-2为工程自编号：
 
-绘图rx.channel、rx.equalized、rx.soft_bits及OFDM内部步骤，只显示不保存。首版不含频选插值/时间跟踪、盲同步、MIMO均衡、多码块、UCI/PTRS或HARQ软合并。
+$$
+L_{t,v,i}\propto\frac1{\nu_{b(t),v}}\left[\min_{a\in\mathcal A_{i,1}}|\widehat x_{v,t}-a|^2-\min_{a\in\mathcal A_{i,0}}|\widehat x_{v,t}-a|^2\right].\tag{PUSCH-MRX-2}
+$$
+
+其中i=0..Qm-1是标记位；A_i,0/1是该位0/1的QAM候选complex[2^(Qm-1)]；x_hat为归一化层QAM点；b(t)为RE所在RB；L按RE、层、标记位展开为无量纲float[G]，解扰后正支持0。假设Rx空间白噪声/同方差，未估计噪声协方差。
+
+| 输出字段 | 含义、单位、维度 |
+|---|---|
+| bits、crc_ok、converged、iterations | A位候选list或None；TB CRC/LDPC校验bool；失败无译码时迭代0 |
+| detected、metric | DMRS参考检测bool、联合拟合能量/实际能量比0..1，独立于均衡/CRC |
+| equalizer_ok | 所有RB满列秩且条件数合格，bool |
+| condition_numbers | float[P]，零/奇异信道可能inf，仅用于诊断 |
+| equalized_symbols | 已恢复码字顺序complex[V*Nd] |
+| layer_symbols | 每层均衡QAM，complex[V,Nd] |
+| soft_bits | 已解扰且按码字顺序排列的float[G] |
+| channel_matrix | DMRS估计complex[Rx,V,P]，含发送幅度beta |
+| channel_estimates | 单层兼容旧形状[Rx,P]；多层为[Rx,V,P] |
+| rx_grid | complex[Rx,slot符号数,载波子载波数] |
+
+metric为实际DMRS位置联合拟合能量比，clip至0..1；未校准恒定虚警率。CRC失败仍可返回候选位，均衡失败为None，不能只凭detected判成功。
+
+图阶段rx.channel（Rx/层轴展平）、rx.equalized（Layer图例）、rx.soft_bits及OFDM步骤，直接显示、不保存。不含频选/时间插值、MMSE/噪声白化、盲同步、动态预编码、超过4层/多码字或HARQ软合并。
 
 ```python
+import numpy as np
 from cell import NRCell
 from pusch import NRPUSCH, NRPUSCHTransmitter, NRPUSCHReceiver
-r = NRPUSCH(NRCell(n_size_grid=12), n_symbols=12)
-wave = NRPUSCHTransmitter(r).transmit([0,1]*128)['waveform']
-out = NRPUSCHReceiver(r,256).receive(wave)
-assert out['crc_ok'] and out['bits'] == [0,1]*128
+r = NRPUSCH(NRCell(n_size_grid=12,n_rx_antennas=2),n_layers=2,n_prbs=2)
+sent = NRPUSCHTransmitter(r).transmit([0,1]*64)
+H = np.array([[1,.2j],[.1,1]],dtype=complex)
+out = NRPUSCHReceiver(r,128).receive(H@sent['waveform'])
+assert out['equalizer_ok'] and out['crc_ok'] and out['bits']==[0,1]*64
 ```

@@ -23,3 +23,25 @@ def test_actual_waveform_through_channel(bits,extended):
 def test_invalid_waveform():
     rx=NRPUCCH1Receiver(NRPUCCH1(NRCell()))
     with pytest.raises(ValueError):rx.receive([[float('nan')]])
+
+
+def test_reject_missing_resource():
+    import pytest
+    from pucch import NRPUCCH1Receiver
+    with pytest.raises(TypeError):NRPUCCH1Receiver(None)
+
+
+def test_shared_plotter_and_invalid_inputs():
+    import numpy as np
+    import pytest
+    from cell import NRCell
+    from diagnostics import NRPlotConfig,NRStagePlotter
+    from pucch import NRPUCCH1,NRPUCCH1Transmitter,NRPUCCH1Receiver
+    cell=NRCell(n_size_grid=12)
+    r=NRPUCCH1(cell)
+    trace=NRStagePlotter(NRPlotConfig(enabled=False))
+    bits=[0]
+    sent=NRPUCCH1Transmitter(r).transmit(bits,plotter=trace)
+    rx=NRPUCCH1Receiver(r)
+    out=rx.receive(sent['waveform'],plotter=trace)
+    assert out['detected']

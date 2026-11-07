@@ -129,3 +129,12 @@ def test_constellation_axes_plot_actual_complex_correlations():
     assert len(ax.texts)==4
     q=NRStagePlotter(NRPlotConfig(enabled=True));q.record('bare',[1j],kind='constellation')
     assert len(q.figures()[0].axes[0].texts)==0
+
+
+def test_layer_legend_prefix():
+    p=NRStagePlotter(NRPlotConfig(enabled=True))
+    p.record('layers',[[1j],[-1j]],kind='constellation',branch_prefix='Layer')
+    legend=p.figures()[0].axes[0].get_legend()
+    assert [text.get_text() for text in legend.get_texts()]==['Layer0','Layer1']
+    for invalid in ('',123):
+        with pytest.raises(ValueError,match='branch_prefix'):p.record('bad',[1j],kind='constellation',branch_prefix=invalid)

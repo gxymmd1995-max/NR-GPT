@@ -21,18 +21,21 @@ class NRPUCCH2:
     second_hop_prb: int | None = None
 
     def __post_init__(self):
-        if not isinstance(self.cell, NRCell): raise TypeError('cell must be NRCell')
+        if not isinstance(self.cell, NRCell):
+            raise TypeError('cell must be NRCell')
         _integer('n_prbs',self.n_prbs,1,min(16,self.cell.bwp_size))
         _integer('prb',self.prb,0,self.cell.bwp_size-self.n_prbs)
         _integer('n_symbols',self.n_symbols,1,2)
         _integer('start_symbol',self.start_symbol,0,self.cell.symbols_per_slot-self.n_symbols)
         _integer('rnti',self.rnti,0,65535)
         for name,maximum in [('data_scrambling_id',1023),('dmrs_scrambling_id',65535)]:
-            if getattr(self,name) is None: object.__setattr__(self,name,self.cell.n_cell_id)
+            if getattr(self,name) is None:
+                object.__setattr__(self,name,self.cell.n_cell_id)
             _integer(name,getattr(self,name),0,maximum)
         if self.second_hop_prb is not None:
             _integer('second_hop_prb',self.second_hop_prb,0,self.cell.bwp_size-self.n_prbs)
-            if self.n_symbols != 2: raise ValueError('intra-slot hopping requires two symbols')
+            if self.n_symbols != 2:
+                raise ValueError('intra-slot hopping requires two symbols')
 
     @property
     def coded_length(self):
@@ -40,7 +43,8 @@ class NRPUCCH2:
 
     def indices(self, dmrs=False):
         """[RE,3] port0/symbol/carrier-local k；DMRS k%3=1，其他RE为数据。"""
-        if type(dmrs) is not bool: raise TypeError('dmrs must be bool')
+        if type(dmrs) is not bool:
+            raise TypeError('dmrs must be bool')
         result=[]
         for s in range(self.n_symbols):
             prb=self.second_hop_prb if s==1 and self.second_hop_prb is not None else self.prb
@@ -75,7 +79,8 @@ class NRPUCCH2:
         return self.qpsk(np.asarray(values)^self.scrambling())
 
     def map_to_grid(self,grid,coded_bits,beta=1.):
-        if not isinstance(grid,NRGrid) or grid.cell!=self.cell or grid.n_ports!=1: raise ValueError('matching single-port NRGrid required')
+        if not isinstance(grid,NRGrid) or grid.cell!=self.cell or grid.n_ports!=1:
+            raise ValueError('matching single-port NRGrid required')
         amplitude=real_value('beta',beta,0)
         data=self.generate(coded_bits); pilot=self.dmrs()
         indices=np.concatenate([self.indices(),self.indices(True)])

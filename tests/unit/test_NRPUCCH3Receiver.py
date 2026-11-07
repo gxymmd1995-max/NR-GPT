@@ -19,3 +19,22 @@ def test_channel_chain(modulation,a,extended):
     result=receiver.receive(wave,known_delay_samples=2,known_frequency_offset_hz=731,known_initial_phase_rad=.23)
     assert result['bits']==bits and result['crc_ok'] is not False
     assert receiver.receive(np.zeros_like(wave))['bits'] is None
+
+
+def test_shared_plotter_and_invalid_inputs():
+    import numpy as np
+    import pytest
+    from cell import NRCell
+    from diagnostics import NRPlotConfig,NRStagePlotter
+    from pucch import NRPUCCH3,NRPUCCH3Transmitter,NRPUCCH3Receiver
+    cell=NRCell(n_size_grid=12)
+    r=NRPUCCH3(cell)
+    trace=NRStagePlotter(NRPlotConfig(enabled=False))
+    bits=[0,1,0]
+    sent=NRPUCCH3Transmitter(r).transmit(bits,plotter=trace)
+    rx=NRPUCCH3Receiver(r,len(bits))
+    out=rx.receive(sent['waveform'],plotter=trace)
+    assert out['detected']
+    with pytest.raises(TypeError):NRPUCCH3Receiver(None,3)
+    with pytest.raises(ValueError):rx.receive([[np.nan]])
+    with pytest.raises(ValueError,match='0.6'):NRPUCCH3Receiver(r,int(.8*r.coded_length))

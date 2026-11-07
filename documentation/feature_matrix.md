@@ -38,4 +38,10 @@ PUCCH F2：首版3～11位UCI小块编码/软ML，1/2符号、连续1～16RB、�
 
 PUCCH F4：已实现固定1RB、SF2/4及全部OCC、QPSK/π/2-BPSK、DMRS/额外DMRS/跳频、公共小块/Polar UCI及完整时域收发。实际MATLAB普通CP单用户132组通过；普通/扩展CP带噪链路、四用户OCC复用有Python测试，尚无独立MATLAB该类多用户/扩展CP向量。接收平坦每跳信道，非联合均衡或SCL。
 
-PUSCH首版：单层单码字CP-OFDM、连续RB、QPSK/16/64/256QAM、Type-A位置2/3、Type-1单符号DMRS/端口0/CDM组1或2；单码块UL-SCH CRC16/24A、BG/Z选择、LDPC、四RV全缓冲速率匹配/恢复、已知同步及DMRS辅助接收。实际MATLAB PUSCH32例及公共UL-SCH5例通过。扩展CP/噪声/CFO/延迟目前仅Python测试；不含MCS/TBS自动选择、多码块、HARQ合并、MIMO、DFT-s-OFDM、UCI/PTRS和更多DMRS模式。
+PUSCH已扩展1～4层单码字CP-OFDM、连续RB、QPSK/16/64/256QAM、Type-A位置2/3、DMRS Type1/2单/双符号、附加位置与频域/时域OCC端口；每RB联合LS估计有效MIMO信道并ZF均衡、逆层映射及UL-SCH解码。实际MATLAB新增64例MIMO及原32例单层通过；公共UL-SCH5例保留。见[验证报告](validation/NRPUSCH_mimo_validation.md)。扩展CP/噪声/CFO/延迟仅Python链路验证；不含多码块、HARQ合并、DFT-s-OFDM、动态TPMI预编码、UCI/PTRS、Type-B、跳频或时变信道插值。
+
+PDSCH当前：1～4层单码字、Type-A DMRS Type1/2、单/双符号、附加位置及端口OCC；单码块DL-SCH/Nref、联合LS信道估计与ZF均衡。实际MATLAB：原单层32例+多层64例、DL-SCH5例；普通/扩展CP带噪MIMO、秩亏拒绝有Python测试。5～8层/双码字、Type-B、多码块、动态预编码、频选/时间插值、MMSE、PTRS/预留RE及HARQ合并仍待扩展。
+
+PRACH：固定R15，长0/1/2/3与短A1/A2/A3/B1/B2/B3/B4/C0/C2，非受限集合、64前导、ZC/DFT、独立FFT/CP、BWP频域映射、短格式半毫秒CP扩展；实际MATLAB44波形+32序列边界例通过。接收为已知RO/可选已知CFO补偿、周期平均/64候选相关、样点峰值时延与多Rx合并；三UE带噪延迟例通过。无受限Type A/B、完整配置表调度、RAR/Msg3、盲CFO、SIC或分数采样。详见[验证边界](validation/NRPRACH_validation.md)。
+
+PDCCH首版：显式候选、六CRB对齐BWP、duration1/2/3、聚合等级1/2/4/8/16、两种REG映射、单端口DMRS/QPSK和完整DCI Polar/CRC时域收发。实际MATLAB15例通过。无CORESET0/完整SearchSpace盲搜调度、DCI字段打包、allContiguousRBs或SCL。见[验证](validation/NRPDCCH_validation.md)。

@@ -13,6 +13,7 @@
 - 实现具体物理信道/信号必须与 MATLAB 5G Toolbox 独立比对，保留输入、生成脚本、MATLAB/Toolbox 版本、向量和比较结果。
 - 没有 MATLAB 实测向量时，明确标记未验证，不得伪造或用 Python 输出充当 MATLAB 结果。
 - 每次功能提交运行相关单元测试及独立参考测试，代码注释须说明单位、坐标和算法依据。
+- 全仓语句与分支覆盖率门限为100%；补足有效异常/边界用例，不通过降低门限或添加覆盖率排除凑数。新增代码优先使用多行控制语句，避免单行语句掩盖未执行的异常处理。不可达保护应先论证参数约束，再删除冗余逻辑并留下依据。
 - Git 提交不得包含虚拟环境、访问令牌、私钥或运行缓存；保留远端已有历史。
 - 项目原创代码采用根目录 LICENSE 中的个人非商业免费、商业付费授权条款，不得将其描述为 Apache/MIT 或无条件商业可用的开源项目；第三方协议资料保留原有许可。
 - 在用户明确通知前，不创建 Git 提交、不推送。
@@ -34,6 +35,9 @@ NR1024/
 │   ├── common/                     # NRCommon、NROFDM、NRPhaseRotation、NRUplinkCodebook、NRUCICode及编解码类
 │   │                               # _validation.py：校验；_uplink_tables.py：码本；_low_papr_tables.py：共享12点相位表
 │   ├── channel/                    # NRChannel.py/.md：样点TA、CFO、按SNR加噪
+│   ├── pdcch/                      # NRPDCCH显式CORESET/候选及收发类；公共NRDCICode
+│   ├── pdsch/                      # NRPDSCH资源/Transmitter/Receiver及同级文档
+│   ├── prach/                      # NRPRACH资源/Transmitter/Receiver及同级文档；固定R15非受限集合
 │   ├── pusch/                      # NRPUSCH资源/Transmitter/Receiver及同级文档
 │   ├── pucch/                      # NRPUCCH0/1/2/3/4资源、Transmitter、Receiver及同级文档
 │   ├── srs/                        # NRSRS.py/.md、NRSRSReceiver.py/.md
@@ -44,6 +48,9 @@ NR1024/
 │   ├── grid/
 │   ├── common/
 │   ├── channel/
+│   ├── pdcch/
+│   ├── pdsch/
+│   ├── prach/
 │   ├── pusch/
 │   ├── pucch/
 │   └── srs/
@@ -108,3 +115,13 @@ PUCCH F2定位：`src/pucch/NRPUCCH2.py/.md`、`NRPUCCH2Transmitter.py/.md`、`N
 F4定位：src/pucch/NRPUCCH4.py/.md及对应Transmitter/Receiver；examples/pucch/NRPUCCH4_demo.py、export_NRPUCCH4_reference.m、compare_NRPUCCH4_reference.py；tests/unit/test_NRPUCCH4*.py、tests/matlab/test_NRPUCCH4_matlab.py；验证documentation/validation/NRPUCCH4_validation.md。
 
 PUSCH首版定位：src/pusch/NRPUSCH.py/.md及对应Transmitter/Receiver；公共src/common/NRULSCHCode.py/.md；examples/pusch/含示例及实际MATLAB参考，公共UL-SCH参考在examples/common/NRULSCHCode_*；按类名查tests/unit及tests/matlab；边界documentation/validation/NRPUSCH_validation.md。
+
+PDSCH首版定位：src/pdsch/NRPDSCH.py/.md及对应Transmitter/Receiver，公共src/common/NRDLSCHCode.py/.md（Nref有限缓冲）及_qam.py；examples/pdsch/含示例和真实MATLAB参考，公共DL-SCH参考在examples/common/NRDLSCHCode_*；tests/unit/test_NRPDSCH*.py、test_NRDLSCHCode.py及tests/matlab对应入口；边界documentation/validation/NRPDSCH_validation.md。
+
+PDSCH多层/DMRS定位：沿用src/pdsch三类，支持1～4层及Type1/2单/双符号/附加DMRS；NRPDSCH_mimo_demo.py、export_NRPDSCH_mimo_reference.m、compare_NRPDSCH_mimo_reference.py及向量在examples/pdsch/；测试test_NRPDSCH_mimo_matlab.py；最新验证documentation/validation/NRPDSCH_mimo_validation.md。
+
+PUSCH多层/DMRS定位：沿用src/pusch三类，支持1～4层及Type1/2单/双符号/附加DMRS；NRPUSCH_mimo_demo.py、export_NRPUSCH_mimo_reference.m、compare_NRPUSCH_mimo_reference.py及实际向量在examples/pusch/；测试test_NRPUSCH_mimo_matlab.py；最新边界documentation/validation/NRPUSCH_mimo_validation.md。
+
+PRACH定位：src/prach/NRPRACH.py/.md及对应Transmitter/Receiver；_tables.py和_root_table.json保存固定R15格式/NCS/频率组合/长根表。examples/prach/包含三UE时域示例、MATLAB实际导出/比较/向量；tests/unit/test_NRPRACH*.py、tests/matlab/test_NRPRACH_matlab.py；验证documentation/validation/NRPRACH_validation.md。仅显式RO与非受限集合，独立PRACH FFT/CP，不能直接沿用普通NROFDM网格。
+
+PDCCH定位：src/pdcch/NRPDCCH.py/.md及对应Transmitter/Receiver；公共src/common/NRDCICode.py/.md；examples/pdcch/含时域示例、实际MATLAB导出/比较/向量；tests/unit/test_NRPDCCH*.py、test_NRDCICode.py及tests/matlab/test_NRPDCCH_matlab.py；验证documentation/validation/NRPDCCH_validation.md。显式候选/六CRB对齐BWP，SearchSpace盲搜调度待扩展。

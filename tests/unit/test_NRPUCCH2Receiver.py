@@ -34,3 +34,21 @@ def test_polar_channel_chain(a):
     wave,_=channel.add_awgn(wave,snr_db=15,seed=42)
     out=NRPUCCH2Receiver(resource,a).receive(wave,known_delay_samples=2,known_frequency_offset_hz=731,known_initial_phase_rad=.23)
     assert out['bits']==bits and out['crc_ok'] is True
+
+
+def test_shared_plotter_and_invalid_inputs():
+    import numpy as np
+    import pytest
+    from cell import NRCell
+    from diagnostics import NRPlotConfig,NRStagePlotter
+    from pucch import NRPUCCH2,NRPUCCH2Transmitter,NRPUCCH2Receiver
+    cell=NRCell(n_size_grid=12)
+    r=NRPUCCH2(cell)
+    trace=NRStagePlotter(NRPlotConfig(enabled=False))
+    bits=[0,1,0]
+    sent=NRPUCCH2Transmitter(r).transmit(bits,plotter=trace)
+    rx=NRPUCCH2Receiver(r,len(bits))
+    out=rx.receive(sent['waveform'],plotter=trace)
+    assert out['detected']
+    with pytest.raises(TypeError):NRPUCCH2Receiver(None,3)
+    with pytest.raises(ValueError):rx.receive([[np.nan]])

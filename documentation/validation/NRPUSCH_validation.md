@@ -1,5 +1,7 @@
 # PUSCH首版验证
 
+> 本文保留首版单层验证记录；当前1～4层及DMRS扩展能力与限制见[最新验证报告](NRPUSCH_mimo_validation.md)。
+
 固定TS38.211 V15.2.0 §5.1、§6.3.1及§6.4.1.1，TS38.212 V15.2.0 §6.2及§5.2.2/5.3.2/5.4.2。首版单层、单码字、CP-OFDM、连续RB、Type-A/Type-1单符号DMRS（AdditionalPosition0、端口0），完整单码块TB CRC/LDPC/RV速率匹配。没有将不支持的多层/多码块/DFT预编码/PTRS/UCI功能伪装成可配置能力。
 
 ## 实际MATLAB独立参考

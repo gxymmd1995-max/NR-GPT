@@ -16,3 +16,20 @@ def test_positions(length,hop,extra):
 
 def test_invalid_bandwidth():
     with pytest.raises(ValueError):NRPUCCH3(NRCell(),n_prbs=7)
+
+
+def test_resource_validation_boundaries():
+    import numpy as np
+    import pytest
+    from cell import NRCell
+    from grid import NRGrid
+    from pucch import NRPUCCH3
+    r=NRPUCCH3(NRCell())
+    with pytest.raises(ValueError):r.map_to_grid(None,[0]*r.coded_length)
+    with pytest.raises(TypeError):NRPUCCH3(None)
+    with pytest.raises(TypeError):r.indices(dmrs=1)
+    for kw in [dict(additional_dmrs=1),dict(modulation='16QAM'),dict(group_hopping='bad')]:
+        with pytest.raises((ValueError,TypeError)):NRPUCCH3(r.cell,**kw)
+    with pytest.raises(ValueError):r.generate([0])
+    hopped=NRPUCCH3(r.cell,n_prbs=6,group_hopping='disable')
+    np.testing.assert_allclose(abs(hopped.dmrs()),1,atol=1e-12)

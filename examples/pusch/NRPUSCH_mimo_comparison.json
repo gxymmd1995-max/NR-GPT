@@ -1,0 +1,1084 @@
+{
+  "status": "passed",
+  "case_count": 64,
+  "cases": [
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.522172224755356e-17,
+      "channel_error": 4.695944831791985e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.2207643840401616e-17,
+      "channel_error": 4.695944831791985e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.291468873614597e-17,
+      "channel_error": 2.3714374201337736e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 4.518280359883027e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.469446951953614e-17,
+      "channel_error": 2.2591401799415137e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0
+      ],
+      "grid_error": 0.0,
+      "wave_error": 3.1031676915590914e-17,
+      "channel_error": 2.3714374201337736e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 2.2591401799415137e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 3.1031676915590914e-17,
+      "channel_error": 3.925231146709438e-17,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.508261114975577e-17,
+      "channel_error": 4.163336342344337e-17,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5
+      ],
+      "grid_error": 0.0,
+      "wave_error": 3.469446951953614e-17,
+      "channel_error": 4.449557262054371e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5
+      ],
+      "grid_error": 0.0,
+      "wave_error": 5.594315114139762e-17,
+      "channel_error": 4.518280359883027e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 1.3877787807814457e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.2207643840401616e-17,
+      "channel_error": 9.71445146547012e-17,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.163336342344337e-17,
+      "channel_error": 4.545902364027965e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1
+      ],
+      "grid_error": 0.0,
+      "wave_error": 3.925231146709438e-17,
+      "channel_error": 6.938893903907228e-17,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 1,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.2207643840401616e-17,
+      "channel_error": 4.449557262054371e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 2.2887833992611187e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.291468873614597e-17,
+      "channel_error": 9.155133597044475e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.177767360805209e-17,
+      "channel_error": 2.237726045655905e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 3.925231146709438e-17,
+      "channel_error": 4.577566798522237e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.2207643840401616e-17,
+      "channel_error": 3.554447978966673e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 1.528132866464668e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4
+      ],
+      "grid_error": 0.0,
+      "wave_error": 5.76648802964689e-17,
+      "channel_error": 3.1401849173675503e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.443059973708341e-17,
+      "channel_error": 3.0539017265942256e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.654751537338637e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.2207643840401616e-17,
+      "channel_error": 2.7755575615628914e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0
+      ],
+      "grid_error": 0.0,
+      "wave_error": 5.003707553108402e-17,
+      "channel_error": 2.237726045655905e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 2.2591401799415137e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 5.721958498152797e-17,
+      "channel_error": 2.423651445728339e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7
+      ],
+      "grid_error": 0.0,
+      "wave_error": 3.469446951953614e-17,
+      "channel_error": 2.2591401799415137e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7
+      ],
+      "grid_error": 0.0,
+      "wave_error": 5.815852873680767e-17,
+      "channel_error": 2.5476231888929306e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 2,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.654751537338637e-17,
+      "channel_error": 2.3263411494723067e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.252726876253798e-17,
+      "channel_error": 4.0029660424867215e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.5102810375396984e-17,
+      "channel_error": 5.23691153334427e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.443059973708341e-17,
+      "channel_error": 5.23691153334427e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.291468873614597e-17,
+      "channel_error": 6.280369834735101e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.2207643840401616e-17,
+      "channel_error": 4.742874840267547e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.2207643840401616e-17,
+      "channel_error": 4.742874840267547e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.654751537338637e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 5.594315114139762e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 7.021666937153402e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.291468873614597e-17,
+      "channel_error": 6.753223014464258e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.654751537338637e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.906538933386797e-17,
+      "channel_error": 2.7755575615628914e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.291468873614597e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4
+      ],
+      "grid_error": 0.0,
+      "wave_error": 5.647850449853784e-17,
+      "channel_error": 2.7755575615628914e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 3,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 5.721958498152797e-17,
+      "channel_error": 2.7894008272968645e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2,
+        0
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 5.23691153334427e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2,
+        0
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.1957363356048215e-17,
+      "channel_error": 9.930136612989092e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2,
+        0
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 4.742874840267547e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 1,
+      "ports": [
+        3,
+        1,
+        2,
+        0
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.654751537338637e-17,
+      "channel_error": 4.965068306494546e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3,
+        7
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 5.594315114139762e-17,
+      "channel_error": 4.47545209131181e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3,
+        7
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.177767360805209e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3,
+        7
+      ],
+      "grid_error": 0.0,
+      "wave_error": 5.551115123125783e-17,
+      "channel_error": 4.47545209131181e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 1,
+      "length": 2,
+      "ports": [
+        0,
+        4,
+        3,
+        7
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 4.577566798522237e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4,
+        1
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.654751537338637e-17,
+      "channel_error": 4.034117999026819e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4,
+        1
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.443059973708341e-17,
+      "channel_error": 4.965068306494546e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4,
+        1
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.3885418357208765e-17,
+      "channel_error": 6.661338147750939e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 1,
+      "ports": [
+        5,
+        0,
+        4,
+        1
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 5.003707553108402e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4,
+        10
+      ],
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.5102810375396984e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4,
+        10
+      ],
+      "grid_error": 0.0,
+      "wave_error": 4.654751537338637e-17,
+      "channel_error": 4.518280359883027e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4,
+        10
+      ],
+      "grid_error": 0.0,
+      "wave_error": 5.721958498152797e-17,
+      "channel_error": 2.482534153247273e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    },
+    {
+      "layers": 4,
+      "type": 2,
+      "length": 2,
+      "ports": [
+        1,
+        7,
+        4,
+        10
+      ],
+      "grid_error": 3.1401849173675503e-16,
+      "wave_error": 5.594315114139762e-17,
+      "channel_error": 4.47545209131181e-16,
+      "coding_errors": 0,
+      "decoded_errors": 0,
+      "crc_ok": true,
+      "equalizer_ok": true
+    }
+  ],
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "hashes": {
+    "examples/pusch/compare_NRPUSCH_mimo_reference.py": "3aa925124ddd44d4c6a9ff2b1a08a5f9d907bc48634e81ed4db0c81b2969263e",
+    "examples/pusch/export_NRPUSCH_mimo_reference.m": "16f042dee2e2d82d30dd960696705a02b79a6e1d2b8635168a79e8ed7e7b5f58",
+    "examples/pusch/NRPUSCH_mimo_reference.json": "148d7852663e5c64d53d04a73d8568b425dee14d01ceb8ddead2ee6edb683383",
+    "src/pusch/NRPUSCH.py": "18988c7ba269776e974b8bb0f61c865d8f3b3975cc8c9da5e86d3eaa2b144a50",
+    "src/pusch/NRPUSCHTransmitter.py": "318925035533a2e221d206dd28b085df9aaf5310726c1694b4f987cb196228d4",
+    "src/pusch/NRPUSCHReceiver.py": "f08fdc84a6b53435de96f2aedcc6ab03973ca4d6b55c9f3b58c4136484bfeb4b",
+    "src/common/NRULSCHCode.py": "6171cabbf19e5892af6ab907834e147f7d54049baff43a578414c19fd4f7d846",
+    "src/common/NRLDPCCode.py": "876edf30611ac5678b3eda83484654cc0ae255170c9089bae304c502b4b1d60a",
+    "src/common/NRCommon.py": "f337310818d7757019b90d991c7f5211970519fec4fb32fec42eb3f71977b2d1",
+    "src/common/NROFDM.py": "bc718b62fc2a8b766212f53cc808042775e3472529bda54573d3f5d462f4a282",
+    "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
+    "src/common/_qam.py": "1c3296497cf9485b5fdf6d62e4ed8933b981f74a8e52977b73520e5d8336ac57",
+    "src/common/_coding_tables.json": "65dabf3a328d827618d9a53521fadd7392b2d3ef3d5252f1b188a8cbee774a46"
+  }
+}

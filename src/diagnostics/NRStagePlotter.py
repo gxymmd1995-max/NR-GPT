@@ -25,7 +25,7 @@ class NRStagePlotter:
         return tuple(item[0] for item in self._records)
 
     def record(self, stage: str, values, *, kind: str = "waveform", title: str = "",
-               xlabel: str = "Sample", ylabel: str = "Normalized amplitude", labels=None):
+               xlabel: str = "Sample", ylabel: str = "Normalized amplitude", labels=None, branch_prefix: str = "Rx"):
         """选中时复制实际结果；kind为waveform/sequence/grid/metric/constellation，无文件系统操作。
 
         波形/序列为[B,N]或[N]，网格为[B,L,K]，metric为[N]实数。
@@ -45,7 +45,9 @@ class NRStagePlotter:
             raise ValueError("stage values must be finite and match the requested plot axes")
         if labels is not None and len(labels)!=data.shape[-1]:
             raise ValueError("labels must match the final array axis")
-        self._records.append((name,data.copy(),kind,title,xlabel,ylabel,None if labels is None else tuple(labels)))
+        if not isinstance(branch_prefix,str) or not branch_prefix.strip():
+            raise ValueError('branch_prefix must be a nonempty string')
+        self._records.append((name,data.copy(),kind,title,xlabel,ylabel,None if labels is None else tuple(labels),branch_prefix))
 
     def figures(self):
         """生成内存Figure列表，不调用show，不保存；调用方可嵌入自己的界面或关闭图窗。"""
@@ -62,7 +64,7 @@ class NRStagePlotter:
             fig,axes=plt.subplots(rows,cols,figsize=(7*cols,3.2*rows),layout="constrained",squeeze=False)
             fig.suptitle(f"{self.config.channel} transform stages | {self.prefix or 'single call'} | page {start//size+1}")
             for ax,item in zip(axes.flat,records):
-                name,data,kind,title,xlabel,ylabel,labels=item
+                name,data,kind,title,xlabel,ylabel,labels,branch_prefix=item
                 ax.set_title(f"{name}\n{title}",fontsize=9)
                 if kind=="grid":
                     power=np.mean(np.abs(data)**2,axis=0)
@@ -79,7 +81,7 @@ class NRStagePlotter:
                     points=np.linspace(0,max(length-1,0),min(length,self.config.max_points),dtype=int)
                     for branch in range(min(branches.shape[0],self.config.max_branches)):
                         y=branches[branch,points]
-                        ax.scatter(y.real,y.imag,label=f"Rx{branch}",color=color,marker=("o","x","s","d")[branch%4],s=48)
+                        ax.scatter(y.real,y.imag,label=f"{branch_prefix}{branch}",color=color,marker=("o","x","s","d")[branch%4],s=48)
                         if labels is not None:
                             for index,value in zip(points,y):
                                 ax.annotate(str(labels[index]),(value.real,value.imag),xytext=(4,4),textcoords="offset points",fontsize=7)

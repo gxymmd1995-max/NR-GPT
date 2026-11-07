@@ -19,7 +19,8 @@ class NRPUCCH2Receiver:
     plot_config: NRPlotConfig | None = None
 
     def __post_init__(self):
-        if not isinstance(self.resource,NRPUCCH2): raise TypeError('resource must be NRPUCCH2')
+        if not isinstance(self.resource,NRPUCCH2):
+            raise TypeError('resource must be NRPUCCH2')
         _integer('n_bits',self.n_bits,3,1706)
         codec=NRUCICode(self.n_bits,self.resource.coded_length)
         if self.n_bits+codec.crc_length*codec.n_blocks > .6*self.resource.coded_length:
@@ -31,7 +32,8 @@ class NRPUCCH2Receiver:
     def receive(self,waveform,*,known_frequency_offset_hz=0.,known_initial_phase_rad=0.,known_delay_samples=0,cp_fraction=1.,plotter=None):
         cell=self.resource.cell; r=self.resource
         y=np.asarray(waveform,dtype=complex)
-        if y.shape!=(cell.n_rx_antennas,cell.samples_per_slot) or not np.all(np.isfinite(y)): raise ValueError('finite current-slot [Rx,T] waveform required')
+        if y.shape!=(cell.n_rx_antennas,cell.samples_per_slot) or not np.all(np.isfinite(y)):
+            raise ValueError('finite current-slot [Rx,T] waveform required')
         trace=NRStagePlotter(self.plot_config) if plotter is None else plotter
         channel=NRChannel(cell)
         corrected=channel.frequency_offset(y,-real_value('CFO',known_frequency_offset_hz),-real_value('phase',known_initial_phase_rad))
@@ -55,6 +57,7 @@ class NRPUCCH2Receiver:
         trace.record('rx.channel_estimates',h.reshape(cell.n_rx_antennas,-1),kind='sequence',title='Per-symbol per-RB channel estimates')
         trace.record('rx.equalized_constellation',equalized.ravel(),kind='constellation',title='F2 equalized QPSK',xlabel='I (normalized amplitude)',ylabel='Q (normalized amplitude)')
         trace.record('rx.soft_bits',llr,kind='sequence',title='Descrambled soft scores')
-        if plotter is None: trace.show()
+        if plotter is None:
+            trace.show()
         return dict(detected=bool(detected),bits=bits,crc_ok=decoded['crc_ok'],metric=metric,soft_bits=llr,equalized_symbols=equalized,
                     channel_estimates=h,rx_grid=grid)

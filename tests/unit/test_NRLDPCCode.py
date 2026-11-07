@@ -15,3 +15,23 @@ def test_syndrome_and_decode(bg,z):
 
 def test_invalid():
     with pytest.raises(ValueError):NRLDPCCode(3,2)
+
+
+def test_validation_and_corrupted_parity_equations(monkeypatch):
+    import numpy as np
+    import pytest
+    from common.NRLDPCCode import NRLDPCCode
+    for kw in [dict(lifting_size=1),dict(max_iterations=0),dict(normalization=0),dict(normalization=True)]:
+        args=dict(base_graph=2,lifting_size=2);args.update(kw)
+        with pytest.raises(ValueError):NRLDPCCode(**args)
+    c=NRLDPCCode(2,2)
+    for bits in [[0],np.full(c.n_bits,2),np.zeros(c.n_bits,float)]:
+        with pytest.raises(ValueError):c.encode(bits)
+    for llr in [[0],np.full(c.code_length,np.nan)]:
+        with pytest.raises(ValueError):c.decode(llr)
+    for pos in [(-1,),(c.n_bits,)]:
+        with pytest.raises(ValueError):c.decode(np.zeros(c.code_length),filler_positions=pos)
+    monkeypatch.setattr(NRLDPCCode,'check_rows',lambda self:[np.array([0])])
+    with pytest.raises(RuntimeError,match='inconsistent'):c.encode(np.ones(c.n_bits,int))
+    monkeypatch.setattr(NRLDPCCode,'check_rows',lambda self:[np.array([c.n_bits])]*2)
+    with pytest.raises(RuntimeError,match='rank-deficient'):c.encode(np.zeros(c.n_bits,int))

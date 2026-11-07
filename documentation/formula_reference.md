@@ -477,4 +477,14 @@ F2参考：序列/DMRS初始化F2-1见[NRPUCCH2](../src/pucch/NRPUCCH2.md)，接
 
 F4扩频/解扩公式F4-1及完整变量范围、单位、维度见[NRPUCCH4](../src/pucch/NRPUCCH4.md)；接收输入输出及信道假设见[NRPUCCH4Receiver](../src/pucch/NRPUCCH4Receiver.md)。OCC和DMRS映射表明确标注固定版本原表号。
 
-PUSCH公式与变量：ULSCH-1见[NRULSCHCode](../src/common/NRULSCHCode.md)，PUSCH-1见[NRPUSCH](../src/pusch/NRPUSCH.md)，PUSCH-RX-1见[接收机](../src/pusch/NRPUSCHReceiver.md)。全部为文档自编号，附固定版本章节、变量范围、单位和维度。
+PUSCH公式与变量：ULSCH-1见[NRULSCHCode](../src/common/NRULSCHCode.md)，PUSCH-1见[NRPUSCH](../src/pusch/NRPUSCH.md)，PUSCH-MRX-1/2见[接收机](../src/pusch/NRPUSCHReceiver.md)。全部为文档自编号，附固定版本章节、变量范围、单位和维度。
+
+PDSCH/DL-SCH变量说明：DLSCH-1见[NRDLSCHCode](../src/common/NRDLSCHCode.md)，PDSCH-1见[NRPDSCH](../src/pdsch/NRPDSCH.md)，PDSCH-RX-1见[接收机](../src/pdsch/NRPDSCHReceiver.md)。均为文档自编号，附固定版本章节与每个变量的单位、范围、维度。
+
+PDSCH多层公式：PDSCH-M1（层映射/端口OCC）见[资源文档](../src/pdsch/NRPDSCH.md)；PDSCH-MRX-1/2（联合LS/ZF、可靠度加权软解映射）见[接收文档](../src/pdsch/NRPDSCHReceiver.md)。均文档自编号，逐变量标明索引、单位、维度及固定规范章节。
+
+PUSCH多层公式：PUSCH-M1（层映射/端口OCC）、PUSCH-1（DMRS Gold初始化）见[资源文档](../src/pusch/NRPUSCH.md)；PUSCH-MRX-1/2（联合LS/ZF和可靠度加权软解映射）见[接收文档](../src/pusch/NRPUSCHReceiver.md)。均文档自编号，附变量范围、单位、维度和固定R15章节。
+
+PRACH公式索引（均文档自编号）：PRACH-1（逻辑根/循环移位/ZC/DFT）、PRACH-2（独立频域映射与幅度约定）、PRACH-3（半毫秒CP边界）见[NRPRACH](../src/prach/NRPRACH.md)；PRACH-TX-1（CP/重复/数组索引）见[发送机](../src/prach/NRPRACHTransmitter.md)；PRACH-RX-1/2（周期平均、循环相关、归一化检测和增益）见[接收机](../src/prach/NRPRACHReceiver.md)。每式附范围、单位、维度及固定R15章节；接收公式是项目算法。
+
+PDCCH公式入口：PDCCH-1/2（REG交织、数据/DMRS Gold初始化）见[资源文档](../src/pdcch/NRPDCCH.md)，DCI-1（CRC/交织/Polar）见[NRDCICode](../src/common/NRDCICode.md)，接收LS/MRC的PDCCH-RX-1变量/维度见[接收机](../src/pdcch/NRPDCCHReceiver.md)。编号均为文档自编号；接收算法属于项目实现。

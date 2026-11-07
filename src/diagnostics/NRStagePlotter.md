@@ -47,3 +47,5 @@ assert result['harq_ack']==[1]
 ```
 
 传入共享plotter时收发类不自行显示，等链路完成再统一show；不传plotter时，各类按自己的plot_config字段收集并非阻塞显示。用户独立脚本最后可用`plt.show()`等待关闭图窗。仅绘图开关改变时，同一发送波形和接收判决必须保持相同，单测对此作逐元素核对。
+
+record新增可选branch_prefix="Rx"：非空字符串，仅控制星座图各分支图例前缀；例如branch_prefix="Layer"显示Layer0、Layer1，避免把均衡后的空间层误标为接收天线。禁用/过滤时仍在检查或复制数据前返回，默认Rx图例保持兼容。

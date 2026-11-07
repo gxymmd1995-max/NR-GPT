@@ -22,3 +22,14 @@ def test_occ_walsh_and_bit_validation():
     z=NRPUCCH1(NRCell(),n_symbols=8)
     np.testing.assert_allclose((r.reference()/z.reference())[1::2,0],[1,-1,1,-1],atol=1e-14)
     with pytest.raises(ValueError):r.generate([True])
+
+
+def test_reject_missing_cell_and_mismatched_grid():
+    from cell import NRCell
+    from grid import NRGrid
+    from pucch import NRPUCCH1
+    import pytest
+    with pytest.raises(TypeError):NRPUCCH1(None)
+    resource=NRPUCCH1(NRCell())
+    for grid in [None,NRGrid(NRCell(n_size_grid=6),1),NRGrid(resource.cell,2)]:
+        with pytest.raises(ValueError,match='matching'):resource.map_to_grid(grid,[0])

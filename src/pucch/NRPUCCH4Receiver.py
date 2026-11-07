@@ -18,15 +18,18 @@ class NRPUCCH4Receiver:
     plot_config: NRPlotConfig | None = None
 
     def __post_init__(self):
-        if not isinstance(self.resource,NRPUCCH4):raise TypeError('resource must be NRPUCCH4')
+        if not isinstance(self.resource,NRPUCCH4):
+            raise TypeError('resource must be NRPUCCH4')
         code=NRUCICode(self.n_bits,self.resource.coded_length)
-        if (self.n_bits+code.crc_length*code.n_blocks)>.6*self.resource.coded_length:raise ValueError('code rate exceeds 0.6')
+        if (self.n_bits+code.crc_length*code.n_blocks)>.6*self.resource.coded_length:
+            raise ValueError('code rate exceeds 0.6')
         real_value('threshold',self.detection_threshold,0,1)
         NROFDM(self.resource.cell,self.carrier_frequency_hz);NRStagePlotter(self.plot_config)
 
     def receive(self,waveform,*,known_frequency_offset_hz=0.,known_initial_phase_rad=0.,known_delay_samples=0,cp_fraction=1.,plotter=None):
         r=self.resource;cell=r.cell;y=np.asarray(waveform,dtype=complex)
-        if y.shape!=(cell.n_rx_antennas,cell.samples_per_slot) or not np.all(np.isfinite(y)):raise ValueError('finite current-slot [Rx,T] required')
+        if y.shape!=(cell.n_rx_antennas,cell.samples_per_slot) or not np.all(np.isfinite(y)):
+            raise ValueError('finite current-slot [Rx,T] required')
         trace=NRStagePlotter(self.plot_config) if plotter is None else plotter;ch=NRChannel(cell)
         y=ch.frequency_offset(y,-real_value('CFO',known_frequency_offset_hz),-real_value('phase',known_initial_phase_rad));y=ch.timing_advance(y,known_delay_samples)
         grid=NROFDM(cell,self.carrier_frequency_hz).demodulate(y,cp_fraction,plotter=trace)
@@ -48,13 +51,16 @@ class NRPUCCH4Receiver:
             mask=np.array([int(r.second_hop_prb is not None and p>=r.n_symbols//2)==hop for p in r.dmrs_symbols])
             h=np.mean(projection[:,mask,:],axis=(1,2));fitted+=M*np.count_nonzero(mask)*np.sum(abs(h)**2)
         soft=np.array(soft)
-        if r.modulation=='QPSK':llr=np.stack([soft.real,soft.imag],axis=-1).ravel()
-        else:llr=(soft*np.exp(-1j*np.pi/2*(np.arange(len(soft))%2))*(1-1j)/np.sqrt(2)).real
+        if r.modulation=='QPSK':
+            llr=np.stack([soft.real,soft.imag],axis=-1).ravel()
+        else:
+            llr=(soft*np.exp(-1j*np.pi/2*(np.arange(len(soft))%2))*(1-1j)/np.sqrt(2)).real
         llr*=1-2*r.scrambling().astype(int)
         energy=np.sum(abs(pilots)**2);metric=float(np.clip(fitted/energy,0,1)) if energy else 0.
         detected=metric>self.detection_threshold and fitted>1e-20
         result=NRUCICode(self.n_bits,r.coded_length).decode(llr) if detected else dict(bits=None,crc_ok=None)
         trace.record('rx.idft_constellation',equalized,kind='constellation',title='F4 IDFT / OCC despread modulation',xlabel='I',ylabel='Q')
         trace.record('rx.soft_bits',llr,kind='sequence',title='F4 descrambled soft scores')
-        if plotter is None:trace.show()
+        if plotter is None:
+            trace.show()
         return dict(**result,detected=bool(detected),metric=metric,soft_bits=llr,equalized_symbols=np.array(equalized),channel_estimates=np.array(estimates),rx_grid=grid)

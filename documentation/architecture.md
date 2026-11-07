@@ -115,4 +115,12 @@ PUCCH2/3共享NRUCICode编码链，NRSmallBlockCode处理A≤11，NRPolarCode.tr
 
 F4新增独立资源/收发类，复用F3单RB几何和DMRS基础序列，共享NRUCICode/NROFDM/NRChannel。调制数据每符号仅12/SF点，先OCC块复制成12点再DFT；接收在IDFT后共轭OCC分块平均。DMRS按OCC索引配置独立循环移位，不能与数据OCC混用。
 
-PUSCH新增pusch模块资源/收发类；公共NRULSCHCode负责单码块TB CRC、BG/Z/填充、LDPC和RV速率匹配/恢复。NRPUSCH执行单层QAM/加扰/DMRS及网格映射，复用NROFDM、NRChannel。接收每RB用DMRS估计近似平坦恒定信道，MRC/max-log QAM后恢复TB；detected、converged、crc_ok分别表示参考信号检测、LDPC收敛和可接受的TB CRC状态。
+PUSCH的pusch模块提供1～4层资源/收发类，公共NRULSCHCode负责单码块TB CRC、BG/Z/填充、LDPC和RV全缓冲速率匹配/恢复。码字符号轮流映射各层；Type1/2单/双符号DMRS保留频域/时域OCC。外部有效MIMO信道在时域叠加各层波形，每RB联合LS估计[Rx,Layer]信道，检查秩/条件数后ZF及逆层映射恢复码字。detected、equalizer_ok、converged、crc_ok分别表示参考检测、均衡可解、LDPC收敛和TB CRC状态。信道假设每RB整个分配时间内近似恒定，附加DMRS不代表时变插值。
+
+新增pdsch模块资源/收发类，NRDLSCHCode继承共享CRC/BG/Z/LDPC数值算子并实现下行有限缓冲选择；common/_qam.py提供Gray标记QAM。首版单层端口1000，DMRS估计/MRC后max-log解映射，DL-SCH反速率匹配/LDPC/CRC恢复TB；复用NRGrid、NROFDM、NRChannel。Nref由上层显式给定，None是Nref=N特例；不宣称自动执行UE能力到TBS_LBRM的推导。
+
+PDSCH更新为1～4层单码字：QAM码字符号轮流映射各层，NRGrid/OFDM按层输出逻辑端口波形，外部有效MIMO矩阵映射/叠加到Rx。Type1/2端口DMRS保留频域/时域OCC，Rx每RB联合LS估计[Rx,Layer]信道，检查条件数/秩后ZF，逆层映射恢复单码字。每RB/整段时间假设近似恒定，附加DMRS不等于已实现时变插值。
+
+PRACH采用src/prach独立模块，NRCell提供BWP、Fs及Rx数量，NRPRACH维护固定R15表和一次显式RO；RA间隔独立于UL间隔，不能用普通NRGrid/NROFDM替代。NRPRACHTransmitter生成ZC→DFT→独立PRACH IFFT→CP/重复，外部NRChannel施加样点TA/CFO/SNR噪声后，NRPRACHReceiver平均有效周期并按64前导相关检测。time_origin_samples与数组内occasion_start_samples分别表示物理时间原点和捕获偏移，共同决定短格式CP边界，避免FR2子slot的CP误加。
+
+PDCCH模块src/pdcch维护CORESET与单个显式候选，common/NRDCICode独立提供CRC24C/RNTI、输入交织Polar和速率匹配/SC译码。资源类负责REG/CCE、Gold/QPSK/DMRS，收发类复用NRGrid/NROFDM及NRChannel。每REG以3点参考估计[Rx,REG]平坦信道，MRC恢复9点QPSK及码字，不把SearchSpace调度隐式放入NRCell。

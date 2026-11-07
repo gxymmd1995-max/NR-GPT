@@ -42,3 +42,22 @@ def test_four_users_same_time_frequency_by_occ():
     received,_=NRChannel(cell).add_awgn(mixed,snr_db=15,seed=42)
     for i,r in enumerate(resources):
         assert NRPUCCH4Receiver(r,7).receive(received)['bits']==bits[i]
+
+
+def test_shared_plotter_and_invalid_inputs():
+    import numpy as np
+    import pytest
+    from cell import NRCell
+    from diagnostics import NRPlotConfig,NRStagePlotter
+    from pucch import NRPUCCH4,NRPUCCH4Transmitter,NRPUCCH4Receiver
+    cell=NRCell(n_size_grid=12)
+    r=NRPUCCH4(cell)
+    trace=NRStagePlotter(NRPlotConfig(enabled=False))
+    bits=[0,1,0]
+    sent=NRPUCCH4Transmitter(r).transmit(bits,plotter=trace)
+    rx=NRPUCCH4Receiver(r,len(bits))
+    out=rx.receive(sent['waveform'],plotter=trace)
+    assert out['detected']
+    with pytest.raises(TypeError):NRPUCCH4Receiver(None,3)
+    with pytest.raises(ValueError):rx.receive([[np.nan]])
+    with pytest.raises(ValueError,match='0.6'):NRPUCCH4Receiver(r,int(.8*r.coded_length))

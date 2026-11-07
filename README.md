@@ -142,4 +142,14 @@ Common新增[Polar母码](src/common/NRPolarCode.md)、[NR LDPC码块](src/commo
 
 PUCCH Format4已实现：固定1RB，SF2/4全部OCC、QPSK/π/2-BPSK、完整时域收发、小块/Polar及CRC。见[示例](examples/pucch/NRPUCCH4_demo.py)、[资源文档](src/pucch/NRPUCCH4.md)、[MATLAB验证](documentation/validation/NRPUCCH4_validation.md)。
 
-PUSCH首版支持单层CP-OFDM、QPSK至256QAM、Type-A/Type-1单符号DMRS及单码块UL-SCH CRC/LDPC/RV0～3完整时域收发。见[示例](examples/pusch/NRPUSCH_demo.py)、[资源文档](src/pusch/NRPUSCH.md)、[验证报告](documentation/validation/NRPUSCH_validation.md)。多层/多码块、DFT-s-OFDM、UCI/PTRS及HARQ合并待扩展。
+PUSCH支持1～4层CP-OFDM、QPSK至256QAM、Type-A DMRS Type1/2单/双符号及附加位置；接收端联合DMRS信道估计、ZF均衡和单码块UL-SCH解码。见[4层时域示例](examples/pusch/NRPUSCH_mimo_demo.py)、[资源文档](src/pusch/NRPUSCH.md)、[MATLAB验证报告](documentation/validation/NRPUSCH_mimo_validation.md)。多码块、DFT-s-OFDM、动态TPMI预编码、UCI/PTRS及HARQ合并待扩展。
+
+PDSCH首版已实现单层CP-OFDM、QPSK至256QAM、Type-A/Type-1单符号DMRS，以及单码块DL-SCH CRC/LDPC/RV0～3有限缓冲速率匹配。见[示例](examples/pdsch/NRPDSCH_demo.py)、[类文档](src/pdsch/NRPDSCH.md)、[独立验证](documentation/validation/NRPDSCH_validation.md)。多层/多码块、预留RE、PTRS及自动调度仍待扩展。
+
+PDSCH现支持1～4层单码字、DMRS Type1/2单/双符号及附加位置，端口频域/时域OCC联合估计后ZF均衡。[4层MIMO示例](examples/pdsch/NRPDSCH_mimo_demo.py)、[独立验证](documentation/validation/NRPDSCH_mimo_validation.md)。
+
+PRACH已支持R15长/短13种格式、非受限集合64前导、根/循环移位分配和独立PRACH时域收发。接收端输出前导编号及采样点时延，支持多Rx和不同移位多用户。见[三UE示例](examples/prach/NRPRACH_demo.py)、[资源文档](src/prach/NRPRACH.md)、[MATLAB验证](documentation/validation/NRPRACH_validation.md)。发送RO显式给定；受限集合及ConfigurationIndex调度、RAR/Msg3待扩展。
+
+当前全仓语句/分支覆盖率门限为100%；本轮1101项测试通过，3286条语句、982个分支全部覆盖。补齐内容、不可达逻辑依据及复现命令见[覆盖率验证](documentation/validation/coverage_validation.md)。
+
+PDCCH已实现CORESET/显式候选、聚合等级1/2/4/8/16、REG交织/非交织、CRC24C/RNTI及Polar、DMRS辅助时域收发。见[示例](examples/pdcch/NRPDCCH_demo.py)和[验证报告](documentation/validation/NRPDCCH_validation.md)。全仓1141项通过，覆盖率100%。

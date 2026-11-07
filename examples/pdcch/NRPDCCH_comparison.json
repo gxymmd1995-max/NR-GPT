@@ -1,0 +1,152 @@
+{
+  "status": "passed",
+  "case_count": 15,
+  "cases": [
+    {
+      "al": 1,
+      "variant": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.878959614448864e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 1,
+      "variant": 1,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.576224061345498e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 1,
+      "variant": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.6020852139652106e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 2,
+      "variant": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 5.818439421673296e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 2,
+      "variant": 1,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 5.204170427930421e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 2,
+      "variant": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.496446946337351e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 4,
+      "variant": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 8.716877585302702e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 4,
+      "variant": 1,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 7.05981306231723e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 4,
+      "variant": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 5.485677294651096e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 8,
+      "variant": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 1.179739509965479e-17,
+      "decoded_ok": true
+    },
+    {
+      "al": 8,
+      "variant": 1,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 8.673617379884035e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 8,
+      "variant": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 8.716877585302702e-18,
+      "decoded_ok": true
+    },
+    {
+      "al": 16,
+      "variant": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.1942709178604383e-17,
+      "decoded_ok": true
+    },
+    {
+      "al": 16,
+      "variant": 1,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 1.4304896245381992e-17,
+      "decoded_ok": true
+    },
+    {
+      "al": 16,
+      "variant": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 1.0971354589302191e-17,
+      "decoded_ok": true
+    }
+  ],
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "hashes": {
+    "src/pdcch/NRPDCCH.py": "14491b20e2a5984e73e894b0cab0765ad7da34139b2fe861530c8ffd8363b97a",
+    "src/pdcch/NRPDCCHReceiver.py": "7d874f0dd8f209abb9d2bec7fe11f1a15e68ee2920b580511213c552745c0ed6",
+    "src/pdcch/NRPDCCHTransmitter.py": "2b7332a9275d2e6503a09f0968df25f47059cd34d898440562b2e6baef67b7c4",
+    "src/pdcch/__init__.py": "1f9ab2482a283fdc9be02e138f2ad61e3d78d1ba21c52e940be631ac6ed984c9",
+    "src/common/NRDCICode.py": "29fa3eb3a5d6cb42ec34307171c123c08a1231bb4cd3425b70b9d21ad99f93fe",
+    "examples/pdcch/compare_NRPDCCH_reference.py": "64f0869fa7fee6b253eb916a4d8b935c2f0b418c2346f37c8edfeb136d07f251",
+    "examples/pdcch/NRPDCCH_reference.json": "07d50e1cf48d4ea8c751834ffe306573a4674e3460ae25b1d7e062b96e939bf0",
+    "examples/pdcch/export_NRPDCCH_reference.m": "8049cd9e8668b3bdf843d17e23849e31318592bfe9dabdce685e5f957dc84125",
+    "src/common/NRPolarCode.py": "e05763484b81a5527c21ef614c5888186273b55208cd36e4e6da0b2607b7037d",
+    "src/common/NRUCICode.py": "469ced3bbd6ae2c95b30ee6e59b64fa984a3c83fe2d252e2b257c572e560f970",
+    "src/common/NRCommon.py": "f337310818d7757019b90d991c7f5211970519fec4fb32fec42eb3f71977b2d1",
+    "src/common/NROFDM.py": "bc718b62fc2a8b766212f53cc808042775e3472529bda54573d3f5d462f4a282",
+    "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
+    "src/common/_validation.py": "63a690ea4c777b877610cccde82b2e0c4605a4d9f1b5e651680e0f173aedc875",
+    "src/common/_coding_tables.json": "65dabf3a328d827618d9a53521fadd7392b2d3ef3d5252f1b188a8cbee774a46",
+    "src/grid/NRGrid.py": "cf89a1c690241a8b01d27326f3f0da6652eb3897bf73704fb6c76e23c9df0347",
+    "src/channel/NRChannel.py": "97f74be107977f8008e50c7fe953e0916f7f2b9a224dca18637082ddad1a8d74"
+  }
+}

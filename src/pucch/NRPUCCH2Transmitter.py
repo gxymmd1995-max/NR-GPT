@@ -14,7 +14,8 @@ class NRPUCCH2Transmitter:
     plot_config: NRPlotConfig | None = None
 
     def __post_init__(self):
-        if not isinstance(self.resource,NRPUCCH2): raise TypeError('resource must be NRPUCCH2')
+        if not isinstance(self.resource,NRPUCCH2):
+            raise TypeError('resource must be NRPUCCH2')
         NROFDM(self.resource.cell,self.carrier_frequency_hz)
         NRStagePlotter(self.plot_config)
 
@@ -31,5 +32,6 @@ class NRPUCCH2Transmitter:
         trace.record('tx.qpsk',self.resource.generate(coded),kind='constellation',title='Scrambled QPSK',xlabel='I (normalized amplitude)',ylabel='Q (normalized amplitude)')
         trace.record('tx.mapped_grid',grid.data,kind='grid',title='F2 data and DMRS')
         wave=NROFDM(self.resource.cell,self.carrier_frequency_hz).modulate(grid.data,plotter=trace)
-        if plotter is None: trace.show()
+        if plotter is None:
+            trace.show()
         return dict(waveform=wave,grid=grid,coded_bits=coded,symbols=self.resource.generate(coded))

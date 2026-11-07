@@ -29,3 +29,16 @@ def test_invalid(kw):
 def test_r15_sf4_table_order():
     r=NRPUCCH4(NRCell(),spreading_factor=4,occ_index=1)
     np.testing.assert_array_equal(r.occ(),[1]*3+[-1j]*3+[-1]*3+[1j]*3)
+
+
+def test_resource_validation_boundaries():
+    import numpy as np
+    import pytest
+    from cell import NRCell
+    from grid import NRGrid
+    from pucch import NRPUCCH4
+    r=NRPUCCH4(NRCell())
+    with pytest.raises(ValueError):r.map_to_grid(None,[0]*r.coded_length)
+    with pytest.raises(ValueError):r.spread([[np.nan]])
+    with pytest.raises(ValueError):r.despread([[np.nan]])
+    with pytest.raises(ValueError):r.generate([0])
