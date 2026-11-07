@@ -35,3 +35,11 @@ TBS、目标码率和Nref均显式给定，不包含MCS/TBS调度或UE能力到N
 运行`python examples/pdsch/NRPDSCH_mimo_demo.py`。main(log,plot_config=None)构造4层/4Rx、Type2双符号/附加位置1、相对端口(1,7,4,10)，16QAM/256位TB。每层波形经非对角4×4复信道实际叠加到Rx，再加入2采样点延迟、731Hz频偏和SNR25dB噪声；Rx通过DMRS联合LS/ZF恢复，不能读取真实H。plot_config默认NRPlotConfig(enabled=True,channel=PDSCH)，可按stages筛选；enabled=False关闭；返回接收dict，图只显示不保存。均衡星座图例为Layer，不是接收天线。
 
 [实际MATLAB导出](export_NRPDSCH_mimo_reference.m)、[64例参考](NRPDSCH_mimo_reference.json)、[独立比较](compare_NRPDSCH_mimo_reference.py)、[比较报告](NRPDSCH_mimo_comparison.json)。compare(write_report=True)写报告，False只比较；命令行打印精简误差。新接口和实际范围见[最新验证](../../documentation/validation/NRPDSCH_mimo_validation.md)。上方单层例继续可用，实际接收已统一到LS/ZF（单层与MRC等价）。
+
+## 100MHz / 30kHz测试
+
+- [NRPDSCH_100MHz_30kHz_demo.py](NRPDSCH_100MHz_30kHz_demo.py)：PRB0～272，12符号，1024bit TB，单层QPSK。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。

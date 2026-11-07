@@ -45,3 +45,5 @@ PDSCH当前：1～4层单码字、Type-A DMRS Type1/2、单/双符号、附加�
 PRACH：固定R15，长0/1/2/3与短A1/A2/A3/B1/B2/B3/B4/C0/C2，非受限集合、64前导、ZC/DFT、独立FFT/CP、BWP频域映射、短格式半毫秒CP扩展；实际MATLAB44波形+32序列边界例通过。接收为已知RO/可选已知CFO补偿、周期平均/64候选相关、样点峰值时延与多Rx合并；三UE带噪延迟例通过。无受限Type A/B、完整配置表调度、RAR/Msg3、盲CFO、SIC或分数采样。详见[验证边界](validation/NRPRACH_validation.md)。
 
 PDCCH首版：显式候选、六CRB对齐BWP、duration1/2/3、聚合等级1/2/4/8/16、两种REG映射、单端口DMRS/QPSK和完整DCI Polar/CRC时域收发。实际MATLAB15例通过。无CORESET0/完整SearchSpace盲搜调度、DCI字段打包、allContiguousRBs或SCL。见[验证](validation/NRPDCCH_validation.md)。
+
+100MHz/30kHz：全部已实现的10类信道/格式新增代表性时域用例，273PRB，PUSCH/PDSCH满带宽、SRS272RB、控制信道按规则局部分配。实际MATLAB10例活动RE/编码位/2048时域探针/整段能量独立比较通过；并非全参数/吞吐率测试。见validation/NR100MHz_30kHz_validation.md。

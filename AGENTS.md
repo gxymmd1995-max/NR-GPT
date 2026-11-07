@@ -125,3 +125,5 @@ PUSCH多层/DMRS定位：沿用src/pusch三类，支持1～4层及Type1/2单/双
 PRACH定位：src/prach/NRPRACH.py/.md及对应Transmitter/Receiver；_tables.py和_root_table.json保存固定R15格式/NCS/频率组合/长根表。examples/prach/包含三UE时域示例、MATLAB实际导出/比较/向量；tests/unit/test_NRPRACH*.py、tests/matlab/test_NRPRACH_matlab.py；验证documentation/validation/NRPRACH_validation.md。仅显式RO与非受限集合，独立PRACH FFT/CP，不能直接沿用普通NROFDM网格。
 
 PDCCH定位：src/pdcch/NRPDCCH.py/.md及对应Transmitter/Receiver；公共src/common/NRDCICode.py/.md；examples/pdcch/含时域示例、实际MATLAB导出/比较/向量；tests/unit/test_NRPDCCH*.py、test_NRDCICode.py及tests/matlab/test_NRPDCCH_matlab.py；验证documentation/validation/NRPDCCH_validation.md。显式候选/六CRB对齐BWP，SearchSpace盲搜调度待扩展。
+
+100MHz/30kHz定位：examples/<模块>/<类名>_100MHz_30kHz_demo.py及同目录参考/比较JSON；统一MATLAB导出/比较examples/common/export_NR100MHz_30kHz_reference.m、compare_NR100MHz_30kHz_reference.py；tests/integration/test_NR100MHz_30kHz.py、tests/matlab/test_NR100MHz_30kHz_matlab.py；矩阵documentation/validation/NR100MHz_30kHz_validation.md。FR1为273PRB，控制信道分配不等于占满载波。

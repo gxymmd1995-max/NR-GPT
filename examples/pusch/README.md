@@ -33,3 +33,11 @@
 | [NRPUSCH_mimo_comparison.json](NRPUSCH_mimo_comparison.json) | 网格/波形/信道误差、CRC、均衡状态和SHA256 |
 
 运行比较：`.venv\Scripts\python -X utf8 examples/pusch/compare_NRPUSCH_mimo_reference.py`。原单层示例保持兼容；当前单层也使用联合LS/ZF。详见[多层验证与边界](../../documentation/validation/NRPUSCH_mimo_validation.md)。不含动态TPMI预编码、DFT-s-OFDM或UCI复用。
+
+## 100MHz / 30kHz测试
+
+- [NRPUSCH_100MHz_30kHz_demo.py](NRPUSCH_100MHz_30kHz_demo.py)：PRB0～272，12符号，1024bit TB，单层QPSK。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。

@@ -153,3 +153,5 @@ PRACH已支持R15长/短13种格式、非受限集合64前导、根/循环移位
 当前全仓语句/分支覆盖率门限为100%；本轮1101项测试通过，3286条语句、982个分支全部覆盖。补齐内容、不可达逻辑依据及复现命令见[覆盖率验证](documentation/validation/coverage_validation.md)。
 
 PDCCH已实现CORESET/显式候选、聚合等级1/2/4/8/16、REG交织/非交织、CRC24C/RNTI及Polar、DMRS辅助时域收发。见[示例](examples/pdcch/NRPDCCH_demo.py)和[验证报告](documentation/validation/NRPDCCH_validation.md)。全仓1141项通过，覆盖率100%。
+
+全部已实现信道的100MHz/30kHz用例（273PRB、4096FFT、122.88MS/s）见[用例矩阵与运行入口](documentation/validation/NR100MHz_30kHz_validation.md)，包含10组带噪时域链路及真实MATLAB独立参考。

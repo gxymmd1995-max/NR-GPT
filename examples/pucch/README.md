@@ -164,3 +164,63 @@ F2当前56组参考包含Polar长UCI；此前36组/仅3～11位为历史首版�
 运行`python examples/pucch/NRPUCCH4_demo.py`：SF2/OCC1/32位Polar、SF4/OCC3/7位小块码两个案例，共享完整UCI编码→OCC扩频→12点DFT→OFDM→两Rx信道增益、延迟2采样点、CFO731Hz、SNR15dB→IDFT/OCC解扩/译码。main(log,plot_config=None)接收ExampleLogger及可选NRPlotConfig，默认显示，enabled=False禁用；返回两个案例结果list[dict]，包含sf/occ/bits_match及接收机输出。只显示，不保存图片或数值产物。
 
 [实际MATLAB导出](export_NRPUCCH4_reference.m)、[参考向量](NRPUCCH4_reference.json)、[比较脚本](compare_NRPUCCH4_reference.py)、[比较摘要](NRPUCCH4_comparison.json)。compare(write_report=True)默认写摘要JSON，False只比较；直接运行打印精简误差统计。132组覆盖全部OCC、两种调制及4～14符号。细节与未验证场景见[验证报告](../../documentation/validation/NRPUCCH4_validation.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRPUCCH0_100MHz_30kHz_demo.py](NRPUCCH0_100MHz_30kHz_demo.py)：PRB272，符号12/13，1bit HARQ。
+- [NRPUCCH1_100MHz_30kHz_demo.py](NRPUCCH1_100MHz_30kHz_demo.py)：PRB272，14符号，2bit UCI。
+- [NRPUCCH2_100MHz_30kHz_demo.py](NRPUCCH2_100MHz_30kHz_demo.py)：PRB269～272，2符号，7bit UCI。
+- [NRPUCCH3_100MHz_30kHz_demo.py](NRPUCCH3_100MHz_30kHz_demo.py)：PRB261～272，14符号，32bit Polar UCI。
+- [NRPUCCH4_100MHz_30kHz_demo.py](NRPUCCH4_100MHz_30kHz_demo.py)：PRB272，SF2/OCC1，32bit Polar UCI。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRPUCCH0_100MHz_30kHz_demo.py](NRPUCCH0_100MHz_30kHz_demo.py)：PRB272，符号12/13，1bit HARQ。
+- [NRPUCCH1_100MHz_30kHz_demo.py](NRPUCCH1_100MHz_30kHz_demo.py)：PRB272，14符号，2bit UCI。
+- [NRPUCCH2_100MHz_30kHz_demo.py](NRPUCCH2_100MHz_30kHz_demo.py)：PRB269～272，2符号，7bit UCI。
+- [NRPUCCH3_100MHz_30kHz_demo.py](NRPUCCH3_100MHz_30kHz_demo.py)：PRB261～272，14符号，32bit Polar UCI。
+- [NRPUCCH4_100MHz_30kHz_demo.py](NRPUCCH4_100MHz_30kHz_demo.py)：PRB272，SF2/OCC1，32bit Polar UCI。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRPUCCH0_100MHz_30kHz_demo.py](NRPUCCH0_100MHz_30kHz_demo.py)：PRB272，符号12/13，1bit HARQ。
+- [NRPUCCH1_100MHz_30kHz_demo.py](NRPUCCH1_100MHz_30kHz_demo.py)：PRB272，14符号，2bit UCI。
+- [NRPUCCH2_100MHz_30kHz_demo.py](NRPUCCH2_100MHz_30kHz_demo.py)：PRB269～272，2符号，7bit UCI。
+- [NRPUCCH3_100MHz_30kHz_demo.py](NRPUCCH3_100MHz_30kHz_demo.py)：PRB261～272，14符号，32bit Polar UCI。
+- [NRPUCCH4_100MHz_30kHz_demo.py](NRPUCCH4_100MHz_30kHz_demo.py)：PRB272，SF2/OCC1，32bit Polar UCI。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRPUCCH0_100MHz_30kHz_demo.py](NRPUCCH0_100MHz_30kHz_demo.py)：PRB272，符号12/13，1bit HARQ。
+- [NRPUCCH1_100MHz_30kHz_demo.py](NRPUCCH1_100MHz_30kHz_demo.py)：PRB272，14符号，2bit UCI。
+- [NRPUCCH2_100MHz_30kHz_demo.py](NRPUCCH2_100MHz_30kHz_demo.py)：PRB269～272，2符号，7bit UCI。
+- [NRPUCCH3_100MHz_30kHz_demo.py](NRPUCCH3_100MHz_30kHz_demo.py)：PRB261～272，14符号，32bit Polar UCI。
+- [NRPUCCH4_100MHz_30kHz_demo.py](NRPUCCH4_100MHz_30kHz_demo.py)：PRB272，SF2/OCC1，32bit Polar UCI。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRPUCCH0_100MHz_30kHz_demo.py](NRPUCCH0_100MHz_30kHz_demo.py)：PRB272，符号12/13，1bit HARQ。
+- [NRPUCCH1_100MHz_30kHz_demo.py](NRPUCCH1_100MHz_30kHz_demo.py)：PRB272，14符号，2bit UCI。
+- [NRPUCCH2_100MHz_30kHz_demo.py](NRPUCCH2_100MHz_30kHz_demo.py)：PRB269～272，2符号，7bit UCI。
+- [NRPUCCH3_100MHz_30kHz_demo.py](NRPUCCH3_100MHz_30kHz_demo.py)：PRB261～272，14符号，32bit Polar UCI。
+- [NRPUCCH4_100MHz_30kHz_demo.py](NRPUCCH4_100MHz_30kHz_demo.py)：PRB272，SF2/OCC1，32bit Polar UCI。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。

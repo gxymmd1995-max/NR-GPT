@@ -16,3 +16,11 @@
 导出：MATLAB调用`addpath('examples/prach'); export_NRPRACH_reference`；比较：`.venv\Scripts\python -X utf8 examples/prach/compare_NRPRACH_reference.py`。参考波形保留所选时机的CP及活动周期；MATLAB调度中的其他时机/空子帧不纳入Python显式时机接口，比较时按记录start补零对齐。C2的完整CP周期在Toolbox中被归为网格符号，比较总样点而非机械对齐CP字段。
 
 见[资源文档](../../src/prach/NRPRACH.md)、[发送机](../../src/prach/NRPRACHTransmitter.md)、[接收机](../../src/prach/NRPRACHReceiver.md)和[验证边界](../../documentation/validation/NRPRACH_validation.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRPRACH_100MHz_30kHz_demo.py](NRPRACH_100MHz_30kHz_demo.py)：A1，RA间隔30kHz，频域起点261，前导7。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。

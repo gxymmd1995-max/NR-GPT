@@ -101,3 +101,11 @@ with np.load("examples/srs/NRSRS_data.npz") as values:
 | `D` | 接收机因果tap窗宽度 | n_delay_taps正整数；当前demo为8，sample | 整数标量 |
 
 例如Nfft512、comb2、cs=2、cs_max8时origin=192采样点，delay=6时理论peak=198。相关窗仅在相同根/comb/资源组内比较；不同根或comb的用户使用独立图组。分离后的CIR则已经去掉用户循环移位，以delay为相对横坐标。完整符号约定见[公式变量阅读指南](../../documentation/formula_reference.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRSRS_100MHz_30kHz_demo.py](NRSRS_100MHz_30kHz_demo.py)：c_srs=63/b_srs=0，272RB，comb2/单端口，slot末符号。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。

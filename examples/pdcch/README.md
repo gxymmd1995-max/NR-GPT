@@ -15,3 +15,11 @@ NRPDCCH_demo.py的main(log,plot_config=None)使用24RB、聚合等级4、REG交�
 MATLAB运行`addpath('examples/pdcch');export_NRPDCCH_reference`；比较运行`.venv\Scripts\python -X utf8 examples/pdcch/compare_NRPDCCH_reference.py`。
 
 见[资源](../../src/pdcch/NRPDCCH.md)、[发射机](../../src/pdcch/NRPDCCHTransmitter.md)、[接收机](../../src/pdcch/NRPDCCHReceiver.md)、[DCI编码](../../src/common/NRDCICode.md)、[验证边界](../../documentation/validation/NRPDCCH_validation.md)。
+
+## 100MHz / 30kHz测试
+
+- [NRPDCCH_100MHz_30kHz_demo.py](NRPDCCH_100MHz_30kHz_demo.py)：45个六RB组/270RB CORESET，2符号，AL4显式候选，32bit DCI。
+
+统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
+
+共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
