@@ -18,7 +18,8 @@ $$
 |---|---|---|
 | k | 总有效循环移位索引；本图不加入公共Gold跳变 | 整数0..11，标量 |
 | n | RB内序列/频率索引；本图取1以观察完整12点圆 | 整数0..11，标量 |
-| r_k、r_0 | 根u=0的实际移位/零移位序列 | 归一化复幅度，每条[12]；合并[12,12]的轴为k、n |
+| r_k | 第k种循环移位后的12点序列，用于比较12种移位 | 范围：k=0..11；每点单位模复数；单位：归一化复幅度；维度：complex[12]，12种合并为[12,12] |
+| r_0 | 本例零循环移位的12点参考序列，用于去参考 | 范围：每点单位模复数，固定u=0；单位：归一化复幅度；维度：complex[12] |
 | alpha_k | 每频率索引的相位步进 | 0..11π/6，rad；全部移位[12] |
 | p_k | 去除基础序列后n=1处的相位因子 | 无量纲单位模复数；全部点[12] |
 | j | 虚数单位 | 无量纲标量 |
@@ -224,3 +225,15 @@ F2当前56组参考包含Polar长UCI；此前36组/仅3～11位为历史首版�
 统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
 
 共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
+
+- [NRPUCCH0新手导读](../../src/pucch/NRPUCCH0.md)：生成步骤、时频位置、配置差异、接收算法与图例。
+
+- [NRPUCCH1新手导读](../../src/pucch/NRPUCCH1.md)：生成步骤、时频位置、配置差异、接收算法与图例。
+
+- [NRPUCCH2新手导读](../../src/pucch/NRPUCCH2.md)：生成步骤、时频位置、配置差异、接收算法与图例。
+
+- [NRPUCCH3新手导读](../../src/pucch/NRPUCCH3.md)：生成步骤、时频位置、配置差异、接收算法与图例。
+
+- [NRPUCCH4新手导读](../../src/pucch/NRPUCCH4.md)：生成步骤、时频位置、配置差异、接收算法与图例。
+
+文档配图：[NRPUCCH0_documentation.png](NRPUCCH0_documentation.png)、[NRPUCCH1_documentation.png](NRPUCCH1_documentation.png)、[NRPUCCH2_documentation.png](NRPUCCH2_documentation.png)、[NRPUCCH3_documentation.png](NRPUCCH3_documentation.png)、[NRPUCCH4_documentation.png](NRPUCCH4_documentation.png)。由[公共绘图脚本](../common/plot_NRChannel_documentation.py)生成；默认只显示，显式`--save`才导出文档PNG。

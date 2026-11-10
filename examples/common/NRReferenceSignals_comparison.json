@@ -1,0 +1,610 @@
+{
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox_version": "24.1",
+  "cases": [
+    {
+      "case": 0,
+      "index_equal": true,
+      "max_error": 1.5700924586837752e-16,
+      "passed": true
+    },
+    {
+      "case": 1,
+      "index_equal": true,
+      "max_error": 1.5700924586837752e-16,
+      "passed": true
+    },
+    {
+      "case": 2,
+      "index_equal": true,
+      "max_error": 1.5700924586837752e-16,
+      "passed": true
+    },
+    {
+      "case": 3,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 4,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 5,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 6,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 7,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 8,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 9,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 10,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 11,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 12,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 13,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 14,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 15,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 16,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 17,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 18,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 19,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 20,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 21,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 22,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 23,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 24,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 25,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 26,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 27,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 28,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 29,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 30,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 31,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 32,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 33,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 34,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 35,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 36,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 37,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 38,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 39,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 40,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 41,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 42,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 43,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 44,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 45,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 46,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 47,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 48,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 49,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 50,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 51,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 52,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 53,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 54,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 55,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 56,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 57,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 58,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 59,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 60,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 61,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 62,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 63,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 64,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 65,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 66,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 67,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 68,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 69,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 70,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 71,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 72,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 73,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 74,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 75,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 76,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 77,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 78,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 79,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 80,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 81,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 82,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 83,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 84,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 85,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 86,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 87,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 88,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 89,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 90,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 91,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 92,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 93,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 94,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 95,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 96,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 97,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 98,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    }
+  ],
+  "passed": true,
+  "sha256": {
+    "src/csirs/NRCSIRS.py": "50b98ff61daa3d770108ffbfde4ceb524841faf733a0f196f6c95c04264be898",
+    "src/ptrs/NRUplinkPTRS.py": "0dd1a5d97f5f33e60377824aca921e300b0b8a4192fc03a78838cc959b8342bf",
+    "src/ptrs/NRDownlinkPTRS.py": "7952832ac54d85af4e51610b81f1a259378a69a3fc40bb94a71fcd81f326c556",
+    "src/ptrs/_core.py": "ceb5339ecee6492aed3e10b7a76c843500638b846ea206dc155b04a75a8ee41b",
+    "examples/common/export_NRReferenceSignals_reference.m": "d613f6a62d11fa9d319dca456cb09b6887f01ce96b94de485744acd8f4b91800",
+    "examples/common/compare_NRReferenceSignals_reference.py": "76b80cb4758c4eae5807ce55a9351c835144f3c117e034800c3baaf82ec2ff2e",
+    "examples/common/NRReferenceSignals_reference.json": "a14952eb4c425f4b2ebd9476bc12fa4070684e02b68f30c8e0ba977ae6f8cb26"
+  }
+}

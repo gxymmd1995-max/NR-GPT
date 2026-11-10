@@ -147,3 +147,20 @@ examples/srs/NRSRS_100MHz_30kHz_demo.py -text whitespace=cr-at-eol
 src/srs/NRSRS.py -text whitespace=cr-at-eol
 src/srs/_tables.py -text whitespace=cr-at-eol
 src/srs/__init__.py -text whitespace=cr-at-eol
+src/ssb/NRSSB.py -text whitespace=cr-at-eol
+src/ssb/NRSSBReceiver.py -text whitespace=cr-at-eol
+src/ssb/NRSSBTransmitter.py -text whitespace=cr-at-eol
+src/ssb/__init__.py -text whitespace=cr-at-eol
+src/common/NRBCHCode.py -text whitespace=cr-at-eol
+examples/ssb/compare_NRSSB_reference.py -text whitespace=cr-at-eol
+examples/ssb/export_NRSSB_reference.m -text whitespace=cr-at-eol
+examples/ssb/NRSSB_reference.json -text whitespace=cr-at-eol
+
+# Exact bytes for new independently traced reference signal sources.
+src/csirs/NRCSIRS.py -text whitespace=cr-at-eol
+src/ptrs/NRUplinkPTRS.py -text whitespace=cr-at-eol
+src/ptrs/NRDownlinkPTRS.py -text whitespace=cr-at-eol
+src/ptrs/_core.py -text whitespace=cr-at-eol
+examples/common/export_NRReferenceSignals_reference.m -text whitespace=cr-at-eol
+examples/common/compare_NRReferenceSignals_reference.py -text whitespace=cr-at-eol
+examples/common/NRReferenceSignals_reference.json -text whitespace=cr-at-eol

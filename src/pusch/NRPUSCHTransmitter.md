@@ -24,3 +24,9 @@ sent = NRPUSCHTransmitter(r).transmit([0,1]*128)
 ```
 
 多层层映射由NRPUSCH.generate完成，码字符号轮流分到各层；默认返回每层一个OFDM波形，未自动选择物理预编码矩阵。n_layers与逻辑端口数一致，与接收天线数不同。MIMO示例使用单位预编码，外部有效信道矩阵在时域混合各层波形。单码块时E=G，因此复用同一UL-SCH编码算子，G由资源保证是Qm*n_layers的整数倍。
+
+## 新手处理流程与资源图入口
+
+上行共享信道承载业务传输块：CRC → LDPC → 速率匹配/RV → 数据加扰 → QAM → 1～4层映射 → DMRS与数据RE映射 → 普通OFDM。编码位数由可用数据RE、层数与调制阶数决定，不能用整个RB矩形面积直接计算。当前传输块长度和目标码率显式输入，不自动执行MCS/TBS调度。
+
+[NRPUSCH的时频位置、长度、配置变化及图例](NRPUSCH.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

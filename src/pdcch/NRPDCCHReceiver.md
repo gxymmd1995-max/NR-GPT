@@ -29,3 +29,9 @@ assert out["crc_ok"] and out["bits"]==[0,1]*16
 ```
 
 详见[独立MATLAB验证](../../documentation/validation/NRPDCCH_validation.md)。
+
+## 新手处理流程与资源图入口
+
+OFDM解调后按所选候选提取REG。每REG用3个DMRS做平坦LS估计，对9个数据点跨Rx进行MRC，形成QPSK软值并解扰，再Polar SC译码、检查RNTI掩码CRC。当前需要知道候选位置、DCI长度和CRC RNTI；不是同时搜索全部长度/RNTI的盲解码器。
+
+[NRPDCCH的时频位置、长度、配置变化及图例](NRPDCCH.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

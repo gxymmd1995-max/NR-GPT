@@ -94,10 +94,13 @@ with np.load("examples/srs/NRSRS_data.npz") as values:
 
 | 变量 | 作用 | 范围/单位 | 维度 |
 |---|---|---|---|
-| `Nfft`、`Ktc` | 小区FFT长度、当前同组SRS的comb间隔 | Nfft为2的幂；Ktc2/4；Nfft/Ktc为相关图周期，单位NRCell采样点 | 两个整数标量 |
-| `cs`、`cs_max` | 当前端口循环移位号与可用移位数量 | cs=0..cs_max-1；cs_max为comb2的8或comb4的12；均无量纲 | 每端口标量 |
+| `Nfft` | 小区FFT长度，将相位斜坡换算成物理样点坐标 | 按NRCell规则取2的幂正整数；单位：采样点 | 整数标量 |
+| `Ktc` | 当前同组SRS梳齿间隔，决定相关谱周期Nfft/Ktc | 只能2或4；单位：子载波间隔数 | 整数标量 |
+| `cs` | 当前端口循环移位号，定位公共相关谱窗口原点 | 整数0..cs_max−1；单位：移位ID | 每端口整数标量 |
+| `cs_max` | 当前comb支持的循环移位数量，作为取模/相位分母 | comb2为8，comb4为12；单位：移位数 | 整数标量 |
 | `origin` | 未去循环移位前该端口相关窗原点 | [0,Nfft/Ktc)，NRCell采样点；可能不是整数，图上按连续位置标记 | 每端口实标量 |
-| `delay`、`peak` | 真实残余时延与循环周期内理论峰位置 | delay单位sample，正为延迟；peak落同一周期内 | 每用户/端口标量 |
+| `delay` | 真实残余传播延迟，用于解释窗口内峰偏移 | 本图因果整数延迟，须满足接收窗口约束，正值为晚到；单位：NRCell采样点 | 每用户/端口标量 |
+| `peak` | 公共相关周期内的理论峰位置，叠加CS窗口原点与真实延迟 | 取模后0≤peak<Nfft/Ktc，非整数原点时可为实数；单位：NRCell采样点 | 每用户/端口实标量 |
 | `D` | 接收机因果tap窗宽度 | n_delay_taps正整数；当前demo为8，sample | 整数标量 |
 
 例如Nfft512、comb2、cs=2、cs_max8时origin=192采样点，delay=6时理论peak=198。相关窗仅在相同根/comb/资源组内比较；不同根或comb的用户使用独立图组。分离后的CIR则已经去掉用户循环移位，以delay为相对横坐标。完整符号约定见[公式变量阅读指南](../../documentation/formula_reference.md)。
@@ -109,3 +112,7 @@ with np.load("examples/srs/NRSRS_data.npz") as values:
 统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
 
 共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
+
+- [NRSRS新手导读](../../src/srs/NRSRS.md)：生成步骤、时频位置、配置差异、接收算法与图例。
+
+文档配图：[NRSRS_documentation.png](NRSRS_documentation.png)。由[公共绘图脚本](../common/plot_NRChannel_documentation.py)生成；默认只显示，显式`--save`才导出文档PNG。

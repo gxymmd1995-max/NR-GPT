@@ -155,3 +155,9 @@ PRACH已支持R15长/短13种格式、非受限集合64前导、根/循环移位
 PDCCH已实现CORESET/显式候选、聚合等级1/2/4/8/16、REG交织/非交织、CRC24C/RNTI及Polar、DMRS辅助时域收发。见[示例](examples/pdcch/NRPDCCH_demo.py)和[验证报告](documentation/validation/NRPDCCH_validation.md)。全仓1141项通过，覆盖率100%。
 
 全部已实现信道的100MHz/30kHz用例（273PRB、4096FFT、122.88MS/s）见[用例矩阵与运行入口](documentation/validation/NR100MHz_30kHz_validation.md)，包含10组带噪时域链路及真实MATLAB独立参考。
+
+SSB首版已实现PSS/SSS/PBCH/DMRS、BCH载荷/CRC/Polar及完整时域收发；已知时频窗口内搜索PCI、SSB索引及Lmax4半帧位，恢复24位广播载荷和完整SFN。见[示例](examples/ssb/README.md)、[100MHz示例](examples/ssb/NRSSB_100MHz_30kHz_demo.py)及[验证报告](documentation/validation/NRSSB_validation.md)。实际MATLAB25例通过，全仓1276项/100%覆盖率。盲时间/CFO捕获、突发集调度和MIB字段打包待扩展。
+
+新手阅读入口：[物理信道新手阅读指南](documentation/channel_walkthrough.md)，包含各信道的信号生成、时频位置、配置对照与接收流程。
+
+参考信号首版：[NRCSIRS](src/csirs/NRCSIRS.md)（单端口Row1/2）、[NRUplinkPTRS](src/ptrs/NRUplinkPTRS.md)、[NRDownlinkPTRS](src/ptrs/NRDownlinkPTRS.md)（单层CP-OFDM资源与CPE测量）；[实际MATLAB验证及未覆盖项](documentation/validation/NRReferenceSignals_validation.md)。

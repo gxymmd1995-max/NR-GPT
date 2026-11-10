@@ -20,3 +20,9 @@ from pucch import NRPUCCH4, NRPUCCH4Transmitter
 r = NRPUCCH4(NRCell(n_size_grid=6), spreading_factor=2, occ_index=1)
 sent = NRPUCCH4Transmitter(r).transmit([0,1]*16)
 ```
+
+## 新手处理流程与资源图入口
+
+F4在编码/加扰和QPSK或π/2-BPSK之后，增加长度2/4的OCC扩展，形成每数据符号12点，再做12点DFT预编码。OCC用于同资源用户复用；不是把一个用户移到其他RB。
+
+[NRPUCCH4的时频位置、长度、配置变化及图例](NRPUCCH4.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

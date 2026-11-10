@@ -40,6 +40,9 @@ NR1024/
 │   ├── prach/                      # NRPRACH资源/Transmitter/Receiver及同级文档；固定R15非受限集合
 │   ├── pusch/                      # NRPUSCH资源/Transmitter/Receiver及同级文档
 │   ├── pucch/                      # NRPUCCH0/1/2/3/4资源、Transmitter、Receiver及同级文档
+│   ├── csirs/                      # NRCSIRS：R15 Row1/2单端口资源与LS测量
+│   ├── ptrs/                       # NRUplinkPTRS/NRDownlinkPTRS：单层CP-OFDM资源与CPE
+│   ├── ssb/                        # NRSSB资源/Transmitter/Receiver；公共NRBCHCode
 │   ├── srs/                        # NRSRS.py/.md、NRSRSReceiver.py/.md
 │   │                               # _tables.py：SRS协议参数表
 │   └── diagnostics/                # ExampleLogger、NRPlotConfig、NRStagePlotter及同级文档
@@ -53,6 +56,9 @@ NR1024/
 │   ├── prach/
 │   ├── pusch/
 │   ├── pucch/
+│   ├── csirs/
+│   ├── ptrs/
+│   ├── ssb/
 │   └── srs/
 │       # 各目录README.md：脚本和产物索引
 │       # <类名>_demo.py、plot_*.py：运行与绘图示例
@@ -67,6 +73,7 @@ NR1024/
 │   ├── integration/                # test_SRS_waveform_chain.py、test_PUCCH0_waveform_chain.py
 │   └── conftest.py                 # 测试选项与公共配置
 └── documentation/
+    ├── channel_walkthrough.md       # 新手入口：RE/RB、时频坐标、长度及各信道教程
     ├── architecture.md             # 总体设计、边界与坐标约定
     ├── feature_matrix.md           # 已实现/未实现能力
     ├── formula_reference.md        # 公式变量含义、范围、单位与维度
@@ -127,3 +134,11 @@ PRACH定位：src/prach/NRPRACH.py/.md及对应Transmitter/Receiver；_tables.py
 PDCCH定位：src/pdcch/NRPDCCH.py/.md及对应Transmitter/Receiver；公共src/common/NRDCICode.py/.md；examples/pdcch/含时域示例、实际MATLAB导出/比较/向量；tests/unit/test_NRPDCCH*.py、test_NRDCICode.py及tests/matlab/test_NRPDCCH_matlab.py；验证documentation/validation/NRPDCCH_validation.md。显式候选/六CRB对齐BWP，SearchSpace盲搜调度待扩展。
 
 100MHz/30kHz定位：examples/<模块>/<类名>_100MHz_30kHz_demo.py及同目录参考/比较JSON；统一MATLAB导出/比较examples/common/export_NR100MHz_30kHz_reference.m、compare_NR100MHz_30kHz_reference.py；tests/integration/test_NR100MHz_30kHz.py、tests/matlab/test_NR100MHz_30kHz_matlab.py；矩阵documentation/validation/NR100MHz_30kHz_validation.md。FR1为273PRB，控制信道分配不等于占满载波。
+
+SSB定位：src/ssb/NRSSB.py/.md及对应Transmitter/Receiver；公共src/common/NRBCHCode.py/.md；examples/ssb/含普通/100MHz示例、实际MATLAB25例及导出/比较入口；tests/unit/test_NRSSB*.py、test_NRBCHCode.py及tests/matlab/test_NRSSB_matlab.py；验证documentation/validation/NRSSB_validation.md。仅已知时频窗口内PCI/索引/半帧搜索，不等于盲时间/CFO捕获或Case A～E调度。
+
+信道文档配图入口：`examples/common/plot_NRChannel_documentation.py`；默认显示，`--save`显式导出到`examples/<模块>/<类名>_documentation.png`，供同名类文档引用。配图不是MATLAB独立参考。
+
+- 公式变量表必须每个变量单独一行；逐项解释用途、合法取值/关联约束、单位、维度/轴及适用示例。不得将多个变量的范围和形状合并后让读者按顺序猜测；同名符号按所在公式分别解释。协议原文与译文保持原状。
+
+参考信号首版定位：src/csirs/NRCSIRS.py/.md、src/ptrs/NRUplinkPTRS.py/.md和NRDownlinkPTRS.py/.md；共享_core.py；示例examples/csirs和examples/ptrs；统一MATLAB导出/比较/99例向量examples/common/NRReferenceSignals_*，验证documentation/validation/NRReferenceSignals_validation.md。当前单端口CSI-RS Row1/2、单层CP-OFDM PT-RS，不含共享信道自动数据避让集成。

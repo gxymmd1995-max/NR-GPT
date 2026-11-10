@@ -22,3 +22,9 @@ wave = NRPUCCH2Transmitter(r).transmit([1,0,1,1,0])['waveform']
 ```
 
 当前公共接口：NRUCICode按A自动选择小块码或Polar，不调用LDPC或经典RM替代标准小块基矩阵。接收增加crc_ok：Polar为bool，小块/未检测为None；CRC失败仍返回判决位，detected只表示信号检测，不表示CRC通过。完整链路见NRPUCCH2_Polar_demo.py。
+
+## 新手处理流程与资源图入口
+
+F2承载编码UCI：NRUCICode按载荷长度选择小块码/Polar等对应流程，输出速率匹配位；再数据加扰、QPSK，与独立Gold QPSK DMRS一起映射。参考信号不承载UCI，接收端用它估计信道。输入位数、编码长度和分配资源必须匹配，不能仅修改n_bits而保留不足的资源。
+
+[NRPUCCH2的时频位置、长度、配置变化及图例](NRPUCCH2.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

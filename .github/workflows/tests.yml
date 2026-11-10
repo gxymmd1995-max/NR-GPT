@@ -13,5 +13,5 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: python -m pip install -e ".[dev,plots]"
       # Require complete statement and branch coverage, plus all actual MATLAB references.
-      - run: python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov=channel --cov=pucch --cov=pusch --cov=pdsch --cov=prach --cov=pdcch --cov-branch --cov-fail-under=100
+      - run: python -m pytest --require-matlab --cov=cell --cov=grid --cov=diagnostics --cov=srs --cov=common --cov=channel --cov=pucch --cov=pusch --cov=pdsch --cov=prach --cov=pdcch --cov=ssb --cov=csirs --cov=ptrs --cov-branch --cov-fail-under=100
       - run: python -m coverage report --include="*/cell/*,*/grid/*,*/channel/*,*/diagnostics/*,*/srs/*,*/common/NRCommon.py,*/common/NROFDM.py,*/common/NRPhaseRotation.py,*/common/NRUplinkCodebook.py,*/common/_validation.py,*/pucch/NRPUCCH0*.py" --fail-under=100

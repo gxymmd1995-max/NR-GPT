@@ -59,3 +59,18 @@
 单码块UL-SCH参考：export_NRULSCHCode_reference.m实际生成NRULSCHCode_reference.json；运行compare_NRULSCHCode_reference.py比较CRC16/24A、BG1/BG2及RV速率匹配，compare(write_report=True)写摘要，False不写。5组实际向量通过，完整PUSCH示例在examples/pusch/。
 
 单码块DL-SCH参考：export_NRDLSCHCode_reference.m实际生成NRDLSCHCode_reference.json，compare_NRDLSCHCode_reference.py比较CRC16/24A、BG1/BG2及有限Nref的RV选择，5组实际向量通过；compare(write_report=True)写摘要，False不写。PDSCH完整时域示例见examples/pdsch/。
+
+## 各信道文档配图
+
+[plot_NRChannel_documentation.py](plot_NRChannel_documentation.py)从实际资源类生成11张图：PUCCH F0～F4、PUSCH、PDSCH、PDCCH、SRS、SSB和PRACH。统一52 RB/30 kHz小区，普通CP；PRACH自身间隔15 kHz。各图保存在对应模块examples目录，类文档直接引用。
+
+```powershell
+# 默认只显示，不保存
+.venv/Scripts/python -X utf8 examples/common/plot_NRChannel_documentation.py
+# 明确导出静态文档配图
+.venv/Scripts/python -X utf8 examples/common/plot_NRChannel_documentation.py --save
+```
+
+依赖项目plots可选依赖。优先使用Microsoft YaHei/SimHei显示中文；其他系统需安装中文字体。图中资源来自indices而非手画；CP时间轴由NRCell推导，PRACH相关来自真实时域叠加与接收算法；没有新增或替代MATLAB参考向量。
+
+参考信号独立比对：MATLAB运行`addpath('examples/common'); export_NRReferenceSignals_reference`；Python运行`examples/common/compare_NRReferenceSignals_reference.py`。99例配置/实际序列/索引保存在NRReferenceSignals_reference.json，环境和误差/SHA256见NRReferenceSignals_comparison.json。CSI-RS与PT-RS示例分别在examples/csirs、examples/ptrs。

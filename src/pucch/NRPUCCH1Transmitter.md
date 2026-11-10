@@ -18,3 +18,9 @@ from pucch import NRPUCCH1, NRPUCCH1Transmitter
 tx = NRPUCCH1Transmitter(NRPUCCH1(NRCell(n_size_grid=6)))
 result = tx.transmit([0, 1], beta=0.8)
 ```
+
+## 新手处理流程与资源图入口
+
+F1把1/2个UCI比特调成一个BPSK/QPSK符号，再乘12点低PAPR参考、循环移位和时域OCC进行扩展。参考和数据跨多个符号发送，DMRS用于消除未知信道。OCC不是给UCI增加新比特，而是为资源复用提供可区分的签名。
+
+[NRPUCCH1的时频位置、长度、配置变化及图例](NRPUCCH1.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

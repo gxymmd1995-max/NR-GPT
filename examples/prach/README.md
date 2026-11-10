@@ -1,5 +1,7 @@
 # PRACH时域收发与MATLAB参考
 
+新手建议先读[PRACH信号生成、时频位置与配置对照](../../src/prach/NRPRACH.md#新手导读先从一次敲门理解-prach)，再看[发射各阶段图](../../src/prach/NRPRACHTransmitter.md#各阶段图应该看什么)和[接收算法与相关峰](../../src/prach/NRPRACHReceiver.md#从接收数组到前导编号逐步解释)。文档包含采样点时间轴、频域占用图、不同格式/间隔对照和三UE检测窗解释。
+
 运行 `.venv\Scripts\python -X utf8 examples/prach/NRPRACH_demo.py`。
 
 [NRPRACH_demo.py](NRPRACH_demo.py)使用NRCell的52RB/30kHz/2Rx，PRACH A1/15kHz、逻辑根0、NCS=15。三个用户同一时频机会发送前导0/1/2，循环移位分别0/15/30，经3/7/12采样点延迟及不同双Rx复增益叠加，再加入731Hz频偏、0.23rad初相、25dB SNR噪声。接收端不知道发送编号和延迟，在64前导中搜索并恢复三个结果；无RAR/Msg3过程。
@@ -24,3 +26,5 @@
 统一使用FR1 273PRB/4096FFT/122.88MS/s；run_case(plot_config=None)关闭绘图，直接运行脚本默认显示。结果包含passed、公共元信息、resource、sent及result；图片不保存。每例独立MATLAB参考/比较文件同目录，名称为<类名>_100MHz_30kHz_reference.json和_comparison.json。
 
 共同入口：[MATLAB导出](../common/export_NR100MHz_30kHz_reference.m)、[独立比较](../common/compare_NR100MHz_30kHz_reference.py)、[用例矩阵及边界](../../documentation/validation/NR100MHz_30kHz_validation.md)。
+
+文档配图：[NRPRACH_documentation.png](NRPRACH_documentation.png)。由[公共绘图脚本](../common/plot_NRChannel_documentation.py)生成；默认只显示，显式`--save`才导出文档PNG。

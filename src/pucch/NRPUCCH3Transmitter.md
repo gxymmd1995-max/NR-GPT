@@ -20,3 +20,9 @@ from pucch import NRPUCCH3, NRPUCCH3Transmitter
 r = NRPUCCH3(NRCell(n_size_grid=24), n_prbs=3)
 out = NRPUCCH3Transmitter(r).transmit([0,1]*16)
 ```
+
+## 新手处理流程与资源图入口
+
+F3先UCI编码/速率匹配，再加扰，选择QPSK或π/2-BPSK；每个数据符号做12×n_prbs点单位化DFT预编码，再映射连续频率资源。这里的DFT预编码和之后的载波IFFT是两个不同操作，接收端必须在均衡后做IDFT恢复调制符号。
+
+[NRPUCCH3的时频位置、长度、配置变化及图例](NRPUCCH3.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

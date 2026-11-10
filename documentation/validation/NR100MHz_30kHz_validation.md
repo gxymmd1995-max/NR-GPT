@@ -21,7 +21,7 @@
 | NRPRACH | A1，RA间隔30kHz，频域起点261，前导7 | [NRPRACH_100MHz_30kHz_demo.py](../../examples/prach/NRPRACH_100MHz_30kHz_demo.py) |
 | NRSRS | c_srs=63/b_srs=0，272RB，comb2/单端口，slot末符号 | [NRSRS_100MHz_30kHz_demo.py](../../examples/srs/NRSRS_100MHz_30kHz_demo.py) |
 
-上述10例覆盖当前已实现的PUCCH F0～F4、PUSCH/PDSCH/PDCCH、PRACH和SRS。SSB/PBCH等尚未实现，不生成伪用例。PUCCH/PDCCH保持各自规范资源宽度；共享信道覆盖全部273RB，SRS带宽按固定R15原表6.4.1.4.3-1选272RB。PRACH有自己的FFT/间隔；本例显式选RA30kHz，并非从载波隐式继承。
+上述10例为新增SSB前已实现的PUCCH F0～F4、PUSCH/PDSCH/PDCCH、PRACH和SRS。后续SSB/PBCH已新增独立100MHz入口及真实MATLAB案例，见[SSB验证](NRSSB_validation.md)及examples/ssb/NRSSB_100MHz_30kHz_demo.py。PUCCH/PDCCH保持各自规范资源宽度；共享信道覆盖全部273RB，SRS带宽按固定R15原表6.4.1.4.3-1选272RB。PRACH有自己的FFT/间隔；本例显式选RA30kHz，并非从载波隐式继承。
 
 ## 运行与判定
 

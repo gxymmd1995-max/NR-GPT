@@ -27,3 +27,9 @@ r = NRPUCCH4(NRCell(n_size_grid=6), spreading_factor=4, occ_index=3)
 wave = NRPUCCH4Transmitter(r).transmit([1,0,1,1,0,0,1])['waveform']
 assert NRPUCCH4Receiver(r,7).receive(wave)['bits'] == [1,0,1,1,0,0,1]
 ```
+
+## 新手处理流程与资源图入口
+
+先按跳段用DMRS估计平坦增益、跨Rx合并，再12点IDFT；乘本用户OCC共轭，重排为[SF,12/SF]并沿SF维平均，恢复每用户调制符号，然后解调软值、解扰和UCI译码。配置不同OCC是可分离的必要设计之一，实际分离仍受信道时频变化、同步误差和近远效应影响。
+
+[NRPUCCH4的时频位置、长度、配置变化及图例](NRPUCCH4.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

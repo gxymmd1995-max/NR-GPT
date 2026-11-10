@@ -13,12 +13,12 @@
 | NRChannel | channel内整数TA、RAR/相对TA命令换算、复AWGN、连续CFO及已知逆旋转 | [类文档](../src/channel/NRChannel.md)、[时域SRS示例](../examples/channel/README.md) | 24组独立MATLAB模型；时域SRS集成测得3样点残余时延、RI2/TPMI0 |
 | NRUplinkCodebook | R15 1/2/4端口全部标准矩阵；互信息搜索上行RI/TPMI，支持外部rank/候选限制 | [类文档](../src/common/NRUplinkCodebook.md)、`tests/unit/test_NRUplinkCodebook.py` | 72个实际nrPUSCHCodebook矩阵；接收场景独立验证选择 |
 | NRSRSReceiver | 频域多用户联合FIR信道估计、静默RE/残差噪声、逐PRB噪声、首径/最强径/平均/RMS时延及上行RI/TPMI | [类文档](../src/srs/NRSRSReceiver.md)、`tests/unit/test_NRSRSReceiver.py`、[示例](../examples/srs/README.md) | 24组真实MATLAB输入、32用户结果，完整CIR/H/噪声/决策；[验证](validation/NRSRSReceiver_validation.md) |
-| SSB | 未实现 | 待实现时同时提供 | 必须提供 |
-| PDSCH | 未实现 | 待实现时同时提供 | 必须提供 |
-| PDCCH | 未实现 | 待实现时同时提供 | 必须提供 |
-| PUSCH | 未实现 | 待实现时同时提供 | 必须提供 |
+| SSB / PBCH | 已实现PSS/SSS、PBCH/DMRS及BCH编码，已知窗口接收 | [资源与收发文档](../src/ssb/NRSSB.md)、类单元测试 | 真实MATLAB25例；[边界](validation/NRSSB_validation.md) |
+| PDSCH | 已实现1～4层、Type-A DMRS Type1/2及DL-SCH时域收发 | [资源文档](../src/pdsch/NRPDSCH.md)、对应收发类与单元测试 | 单层32例、多层64例、DL-SCH5例；[边界](validation/NRPDSCH_mimo_validation.md) |
+| PDCCH | 已实现显式CORESET/候选、DCI编码及DMRS时域收发 | [资源文档](../src/pdcch/NRPDCCH.md)、对应收发类与单元测试 | 真实MATLAB15例；[边界](validation/NRPDCCH_validation.md) |
+| PUSCH | 已实现1～4层、Type-A DMRS Type1/2及UL-SCH时域收发 | [资源文档](../src/pusch/NRPUSCH.md)、对应收发类与单元测试 | 单层32例、多层64例、UL-SCH5例；[边界](validation/NRPUSCH_mimo_validation.md) |
 | PUCCH | Format0/1/2/3/4资源及完整时域收发已实现；F2/F3/F4公共小块/Polar UCI | [三类文档及示例](../examples/pucch/README.md)，每类单测+时域集成 | 960组序列/坐标、40组时域/候选/Toolbox UCI，扩展CP按固定R15显式适配 |
-| PRACH | 未实现 | 待实现时同时提供 | 必须提供 |
+| PRACH | 已实现13格式非受限前导、独立时序、检测及时延估计 | [资源文档](../src/prach/NRPRACH.md)、对应收发类与单元测试 | 真实MATLAB44波形+32序列边界例；[边界](validation/NRPRACH_validation.md) |
 | NRSRS | 已实现R15端口/梳齿/带宽/跳变/重复/候选时隙/NRGrid映射；接收由NRSRSReceiver、时域波形由NROFDM、信道作用由NRChannel负责，调度/功控待实现 | 109项发送单元测试、[NRSRS.md](../src/srs/NRSRS.md)、[示例](../examples/srs/README.md) | 832组发送参考及接收/时域链路独立对照；[记录](validation/NRSRS_validation.md) |
 
 NRCell 通过不代表全部 R15 射频配置或物理层一致性认证通过。具体信道的逐比特、序列、索引、网格、波形等对比须在对应模块实现时完成。
@@ -29,6 +29,8 @@ NRCell 通过不代表全部 R15 射频配置或物理层一致性认证通过�
 PUCCH F0多用户CDM：已支持通过完整候选集合互斥的循环移位配置，在共享时频资源上逐用户检测；三UE时域叠加与DTX已有实际MATLAB12例/36UE比对。要求共享已知同步、每RB内近似平坦信道，未实现联合均衡/SIC。见[验证报告](validation/NRPUCCH0_multiuser_validation.md)。
 
 PUCCH F1：已实现1/2bit UCI、4～14符号（受CP限制）、数据/DMRS、OCC、组跳变、slot内跳频、完整时域收发与DMRS辅助MRC。未实现SR资源选择、跨slot重复、盲同步、多用户联合均衡。实际MATLAB普通CP/QPSK68组通过；扩展CP和BPSK目前只有Python链路测试，尚未独立MATLAB验证。
+
+历史阶段记录（以下F2/编码核两段已由后文“当前更新”取代）：
 
 PUCCH F2：首版3～11位UCI小块编码/软ML，1/2符号、连续1～16RB、加扰QPSK、DMRS、slot内跳频及完整时域收发。实际MATLAB普通CP36组通过；扩展CP和噪声/CFO链路目前仅Python测试。12位以上Polar、CRC、字段语义组装和完整调度尚未实现；码率上限0.6，强频选/多用户联合均衡未实现。
 
@@ -47,3 +49,29 @@ PRACH：固定R15，长0/1/2/3与短A1/A2/A3/B1/B2/B3/B4/C0/C2，非受限集合
 PDCCH首版：显式候选、六CRB对齐BWP、duration1/2/3、聚合等级1/2/4/8/16、两种REG映射、单端口DMRS/QPSK和完整DCI Polar/CRC时域收发。实际MATLAB15例通过。无CORESET0/完整SearchSpace盲搜调度、DCI字段打包、allContiguousRBs或SCL。见[验证](validation/NRPDCCH_validation.md)。
 
 100MHz/30kHz：全部已实现的10类信道/格式新增代表性时域用例，273PRB，PUSCH/PDSCH满带宽、SRS272RB、控制信道按规则局部分配。实际MATLAB10例活动RE/编码位/2048时域探针/整段能量独立比较通过；并非全参数/吞吐率测试。见validation/NR100MHz_30kHz_validation.md。
+
+SSB：PSS/SSS/PBCH/DMRS、240×4含零保留、BCH 24+8位载荷/交织/选择性Gold/CRC24C/Polar与E864；普通CP，同numerology，FR1 Lmax4/8及FR2 Lmax64。已知窗口内PCI与DMRS索引/半帧搜索、LS/MRC/SC恢复MIB/SFN。实际MATLAB25例含100MHz/30kHz通过；15/240kHz尚无独立MATLAB案例。无盲时间/CFO、Case A～E调度、SCL、混合numerology、MIB语义打包或CORESET0。见validation/NRSSB_validation.md。
+
+## R15物理信道与参考信号完整性
+
+以下分类依据固定TS38.211 V15.2.0 §6.1.1/2、§7.1.1/2，是项目实现清单，不是规范原表。“存在实现”不表示覆盖该信道全部R15配置。
+
+| 标准类别 | 名称 | 实现位置与当前状态 |
+|---|---|---|
+| 上行物理信道 | PUSCH | 已实现，src/pusch；限制见上表及类文档 |
+| 上行物理信道 | PUCCH | 已实现F0～F4，src/pucch |
+| 上行物理信道 | PRACH | 已实现非受限集合，src/prach |
+| 下行物理信道 | PDSCH | 已实现，src/pdsch |
+| 下行物理信道 | PDCCH | 已实现显式候选，src/pdcch |
+| 下行物理信道 | PBCH | 已实现于src/ssb及common/NRBCHCode，并非缺少一个独立PBCH目录 |
+| 上下行参考信号 | DM-RS | 已在对应物理信道内实现；不宣称全部配置 |
+| 上行参考信号 | SRS | 已实现，src/srs |
+| 下行同步信号 | PSS | 已实现，src/ssb |
+| 下行同步信号 | SSS | 已实现，src/ssb |
+| 下行参考信号 | CSI-RS | 已实现单端口Row1/2、NZP/ZP、独立OFDM/平坦LS；多端口Row3～18待扩展 |
+| 上行参考信号 | PUSCH PT-RS | 已实现单层CP-OFDM资源、序列及已知信道CPE测量；变换预编码与业务链集成待扩展 |
+| 下行参考信号 | PDSCH PT-RS | 已实现单层资源、序列及已知信道CPE测量；业务链集成待扩展 |
+
+尚未覆盖的主要配置还包括：共享信道Type-B、多码块/HARQ合并、PDSCH双码字/5～8层、PUSCH变换预编码/UCI复用，以及PRACH受限集合/完整RO调度。它们是已有模块的能力缺口，不应通过新增空类或空文档标记为完成。新增实现仍须有单元测试、真实MATLAB参考与100%语句/分支覆盖。
+
+参考信号首版：真实R2024a/5G Toolbox99例序列/RE坐标通过；三个类和共享核心100%语句/分支覆盖。明确边界见[验证报告](validation/NRReferenceSignals_validation.md)。

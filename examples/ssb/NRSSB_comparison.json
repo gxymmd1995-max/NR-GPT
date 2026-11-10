@@ -1,0 +1,283 @@
+{
+  "status": "passed",
+  "case_count": 25,
+  "cases": [
+    {
+      "pci": 0,
+      "lmax": 4,
+      "half_frame": 0,
+      "sfn_lsb": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.7755575615628914e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1,
+      "lmax": 4,
+      "half_frame": 0,
+      "sfn_lsb": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.9079264368403834e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 2,
+      "lmax": 4,
+      "half_frame": 0,
+      "sfn_lsb": 4,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.8609792490763984e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1007,
+      "lmax": 4,
+      "half_frame": 0,
+      "sfn_lsb": 6,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.1031676915590914e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 0,
+      "lmax": 4,
+      "half_frame": 1,
+      "sfn_lsb": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.8609792490763984e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1,
+      "lmax": 4,
+      "half_frame": 1,
+      "sfn_lsb": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.177767360805209e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 2,
+      "lmax": 4,
+      "half_frame": 1,
+      "sfn_lsb": 4,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.538155541877298e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1007,
+      "lmax": 4,
+      "half_frame": 1,
+      "sfn_lsb": 6,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.841188977517478e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 0,
+      "lmax": 8,
+      "half_frame": 0,
+      "sfn_lsb": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.1031676915590914e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1,
+      "lmax": 8,
+      "half_frame": 0,
+      "sfn_lsb": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.2207643840401616e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 2,
+      "lmax": 8,
+      "half_frame": 0,
+      "sfn_lsb": 4,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.8609792490763984e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1007,
+      "lmax": 8,
+      "half_frame": 0,
+      "sfn_lsb": 6,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.8609792490763984e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 0,
+      "lmax": 8,
+      "half_frame": 1,
+      "sfn_lsb": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.198672041575565e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1,
+      "lmax": 8,
+      "half_frame": 1,
+      "sfn_lsb": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.273069708340169e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 2,
+      "lmax": 8,
+      "half_frame": 1,
+      "sfn_lsb": 4,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.9958528781297536e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1007,
+      "lmax": 8,
+      "half_frame": 1,
+      "sfn_lsb": 6,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.7809732887839817e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 0,
+      "lmax": 64,
+      "half_frame": 0,
+      "sfn_lsb": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.1031676915590914e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1,
+      "lmax": 64,
+      "half_frame": 0,
+      "sfn_lsb": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.8609792490763984e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 2,
+      "lmax": 64,
+      "half_frame": 0,
+      "sfn_lsb": 4,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.7367087251761353e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1007,
+      "lmax": 64,
+      "half_frame": 0,
+      "sfn_lsb": 6,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.8609792490763984e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 0,
+      "lmax": 64,
+      "half_frame": 1,
+      "sfn_lsb": 0,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.809234570782673e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1,
+      "lmax": 64,
+      "half_frame": 1,
+      "sfn_lsb": 2,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.8609792490763984e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 2,
+      "lmax": 64,
+      "half_frame": 1,
+      "sfn_lsb": 4,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 3.198672041575565e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 1007,
+      "lmax": 64,
+      "half_frame": 1,
+      "sfn_lsb": 6,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 2.964296775167217e-17,
+      "decoded_ok": true
+    },
+    {
+      "pci": 0,
+      "lmax": 8,
+      "half_frame": 1,
+      "sfn_lsb": 6,
+      "coding_errors": 0,
+      "grid_error": 1.5700924586837752e-16,
+      "wave_error": 4.84869951806108e-18,
+      "decoded_ok": true
+    }
+  ],
+  "matlab_version": "24.1.0.2537033 (R2024a)",
+  "toolbox": {
+    "Name": "5G Toolbox",
+    "Version": "24.1",
+    "Release": "(R2024a)",
+    "Date": "19-Nov-2023"
+  },
+  "hashes": {
+    "src/ssb/NRSSB.py": "8f9ba55d0a70d091a6f99717c5f5b59d1b80994c224a1d40999bb01968cb96b4",
+    "src/ssb/NRSSBReceiver.py": "72e1ff34cbf211bb837bf80075da379b76d12833adaa2c67094bae810c5eac50",
+    "src/ssb/NRSSBTransmitter.py": "3c691f9a9c1390980a6afe08481fabbe063b40b494f601520c86944d16b186c8",
+    "src/ssb/__init__.py": "97e9dc8d3c99a6361652404a88e9691c8ff352e6f6baece7041b00af7f7ec611",
+    "src/common/NRBCHCode.py": "a205bdd65c03102092a7c82582936d98aa8a6878fcb557ace06c6421739b59f8",
+    "src/common/NRPolarCode.py": "e05763484b81a5527c21ef614c5888186273b55208cd36e4e6da0b2607b7037d",
+    "src/common/NRUCICode.py": "469ced3bbd6ae2c95b30ee6e59b64fa984a3c83fe2d252e2b257c572e560f970",
+    "src/common/_coding_tables.json": "65dabf3a328d827618d9a53521fadd7392b2d3ef3d5252f1b188a8cbee774a46",
+    "src/common/NRCommon.py": "f337310818d7757019b90d991c7f5211970519fec4fb32fec42eb3f71977b2d1",
+    "src/common/NROFDM.py": "bc718b62fc2a8b766212f53cc808042775e3472529bda54573d3f5d462f4a282",
+    "src/cell/NRCell.py": "6b2d757dab79a64277814fd2631c94fe6418267aaee4b9f6f903a09566f4b1c5",
+    "examples/ssb/compare_NRSSB_reference.py": "6dcba5243e47248b4255db8eec2b09b0863e106e9dc2adaa5e5b0a8f4801e0f3",
+    "examples/ssb/export_NRSSB_reference.m": "170ba5b5bfa32ce71ec8ec56e144f86434dc57a478f495ba52f972ae92d14e97",
+    "examples/ssb/NRSSB_reference.json": "db3af4477b44fd26ca76950c539f234f6b8a1fa9ead84f0954e706f2d7f3ff53",
+    "src/common/NRPhaseRotation.py": "4f569c260120bdd5b5b83bd20fbe9fb0d77fea47f790db40650e0e4203a013af",
+    "src/common/_validation.py": "63a690ea4c777b877610cccde82b2e0c4605a4d9f1b5e651680e0f173aedc875",
+    "src/channel/NRChannel.py": "97f74be107977f8008e50c7fe953e0916f7f2b9a224dca18637082ddad1a8d74",
+    "src/grid/NRGrid.py": "cf89a1c690241a8b01d27326f3f0da6652eb3897bf73704fb6c76e23c9df0347"
+  }
+}

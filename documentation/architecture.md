@@ -51,9 +51,9 @@ flowchart BT
     G --> X[NRSRSReceiver 频域采样联合估计]
     C --> X
     B[NRUplinkCodebook R15码本] --> X
-    C --> H[SSB / PDSCH / PDCCH / 上行信道 后续实现]
+    C --> H[SSB / PDSCH / PDCCH / 上行信道]
     G --> H
-    A[公共算法 / 编码 / OFDM 后续实现] --> H
+    A[公共算法 / 编码 / OFDM] --> H
     H --> S[链路仿真与性能统计 后续实现]
     M[MATLAB 独立生成脚本] --> V[参考向量]
     V --> T[Python 比对测试]
@@ -124,3 +124,7 @@ PDSCH更新为1～4层单码字：QAM码字符号轮流映射各层，NRGrid/OFD
 PRACH采用src/prach独立模块，NRCell提供BWP、Fs及Rx数量，NRPRACH维护固定R15表和一次显式RO；RA间隔独立于UL间隔，不能用普通NRGrid/NROFDM替代。NRPRACHTransmitter生成ZC→DFT→独立PRACH IFFT→CP/重复，外部NRChannel施加样点TA/CFO/SNR噪声后，NRPRACHReceiver平均有效周期并按64前导相关检测。time_origin_samples与数组内occasion_start_samples分别表示物理时间原点和捕获偏移，共同决定短格式CP边界，避免FR2子slot的CP误加。
 
 PDCCH模块src/pdcch维护CORESET与单个显式候选，common/NRDCICode独立提供CRC24C/RNTI、输入交织Polar和速率匹配/SC译码。资源类负责REG/CCE、Gold/QPSK/DMRS，收发类复用NRGrid/NROFDM及NRChannel。每REG以3点参考估计[Rx,REG]平坦信道，MRC恢复9点QPSK及码字，不把SearchSpace调度隐式放入NRCell。
+
+SSB模块src/ssb复用NRCell/NRGrid/NROFDM及common/NRBCHCode；资源分离PSS、SSS、PBCH与DMRS，保留完整240×4含零RE。发送24位载荷经BCH时序追加/载荷加扰/CRC/Polar后物理加扰映射；接收已知时频窗口内搜索PCI/DMRS索引，按符号LS/MRC及SC还原载荷。SSB间隔须与载波一致；突发集/Case A～E/SSB raster和MIB语义不由NRCell隐式推导。
+
+面向初学者的逐信道讲解入口：[物理信道新手阅读指南](channel_walkthrough.md)，统一说明RE/RB、时频坐标、采样点长度和收发链路，并链接各资源/收发类教程。

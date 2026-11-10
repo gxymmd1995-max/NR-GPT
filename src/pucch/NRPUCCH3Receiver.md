@@ -23,10 +23,15 @@ $$
 
 | 变量 | 含义、范围、单位、维度 |
 |---|---|
-| r、s、k、m | Rx、数据符号、频率/IDFT输出索引；范围0..Rx-1、0..S-1、0..M-1 |
+| r | Rx分支号；取值范围/约束：0..Rx−1；单位：零基索引；维度/类型：整数标量 |
+| s | 数据符号索引，选择当前块；取值范围/约束：0..S−1；单位：零基索引；维度/类型：整数标量 |
+| k | 均衡频域点索引；取值范围/约束：0..M−1；单位：零基索引；维度/类型：整数标量 |
+| m | IDFT输出点索引，恢复调制符号；取值范围/约束：0..M−1；单位：零基索引；维度/类型：整数标量 |
 | a(s) | 当前数据符号的跳号0/1，标量 |
 | h_hat | DMRS估计有效信道，含beta；complex[Rx]每跳 |
-| Y、v、q | 接收频域数据[Rx,S,M]、MRC结果[S,M]、IDFT结果[S,M]，归一化复幅度 |
+| Y | 接收频域数据RE；取值范围/约束：有限复数；单位：归一化复幅度；维度/类型：complex[Rx,S,M] |
+| v | MRC后尚未IDFT的数据；取值范围/约束：有限复数；单位：归一化复幅度；维度/类型：complex[S,M] |
+| q | IDFT后恢复的调制数据，用于软解调；取值范围/约束：有限复数；单位：归一化复幅度；维度/类型：complex[S,M] |
 | M | 每数据符号子载波数12P，整数标量 |
 
 检测指标为每跳平坦DMRS重建能量/DMRS接收总能量，clip到0..1。它只表示参考信号一致性，不是CRC，也不保证恒定虚警率；detected与crc_ok必须区分。返回dict：bits为A位list或未检测None；crc_ok为Polar的bool或小块/未检测None；detected为bool；metric无量纲实数；soft_bits为float[E]；equalized_symbols为complex[S*M]；channel_estimates为complex[S,Rx]（按每个数据符号重复对应跳估计）；rx_grid为complex[Rx,slot符号数,载波子载波数]。
@@ -41,3 +46,9 @@ wave = NRPUCCH3Transmitter(r).transmit([0,1]*16)['waveform']
 out = NRPUCCH3Receiver(r,32).receive(wave)
 assert out['bits'] == [0,1]*16 and out['crc_ok']
 ```
+
+## 新手处理流程与资源图入口
+
+按跳段将DMRS去参考后在频率和参考符号间平均，估计每Rx一个平坦增益；MRC合并每个数据符号，再做单位化IDFT。QPSK取实虚部软值，π/2-BPSK先去交替相位旋转，再解扰并UCI译码。当前估计假设每跳占用带宽内近似平坦，不提供任意频选信道的逐子载波插值。
+
+[NRPUCCH3的时频位置、长度、配置变化及图例](NRPUCCH3.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。

@@ -23,3 +23,9 @@ assert out["crc_ok"] and out["bits"]==[0,1]*16
 ```
 
 详见[独立MATLAB验证](../../documentation/validation/NRPDCCH_validation.md)。
+
+## 新手处理流程与资源图入口
+
+DCI比特经CRC24C/RNTI掩码、Polar和速率匹配、加扰、QPSK后映射到所选CCE候选，另生成DMRS。CRC掩码RNTI和物理数据加扰RNTI是分别配置的用途，不应混成一个自动推断参数。
+
+[NRPDCCH的时频位置、长度、配置变化及图例](NRPDCCH.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。
