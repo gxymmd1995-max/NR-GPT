@@ -13,7 +13,9 @@ REFERENCE = Path(__file__).resolve().parents[2] / "examples/cell/NRCell_referenc
 @pytest.mark.matlab
 def test_matlab_carrier_reference(request):
     if not REFERENCE.exists():
-        message = "Run examples/cell/export_NRCell_reference.m using MATLAB 5G Toolbox first"
+        message = (
+            "Run examples/cell/export_NRCell_reference.m using MATLAB 5G Toolbox first"
+        )
         if request.config.getoption("--require-matlab"):
             pytest.fail(message)
         pytest.skip(message)
@@ -25,7 +27,9 @@ def test_matlab_carrier_reference(request):
     for case in reference["cases"]:
         cell = NRCell(**case["input"])
         for name, expected in case["expected"].items():
-            actual = cell.symbols_per_slot if name == "grid_symbols" else getattr(cell, name)
+            actual = (
+                cell.symbols_per_slot if name == "grid_symbols" else getattr(cell, name)
+            )
             if isinstance(expected, list):
                 actual = list(actual)
             assert actual == expected, (case["input"], name, actual, expected)

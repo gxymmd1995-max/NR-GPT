@@ -20,8 +20,12 @@
 | NRPDCCH | 45个六RB组/270RB CORESET，2符号，AL4显式候选，32bit DCI | [NRPDCCH_100MHz_30kHz_demo.py](../../examples/pdcch/NRPDCCH_100MHz_30kHz_demo.py) |
 | NRPRACH | A1，RA间隔30kHz，频域起点261，前导7 | [NRPRACH_100MHz_30kHz_demo.py](../../examples/prach/NRPRACH_100MHz_30kHz_demo.py) |
 | NRSRS | c_srs=63/b_srs=0，272RB，comb2/单端口，slot末符号 | [NRSRS_100MHz_30kHz_demo.py](../../examples/srs/NRSRS_100MHz_30kHz_demo.py) |
+| NRSSB | 20 RB的SS/PBCH块，双Rx、已知时延和CFO补偿，搜索PCI及SSB索引 | [NRSSB_100MHz_30kHz_demo.py](../../examples/ssb/NRSSB_100MHz_30kHz_demo.py) |
+| NRCSIRS | 272 RB的Row1密度3，双Rx平坦复增益、30 dB AWGN、LS测量 | [NRCSIRS_100MHz_30kHz_demo.py](../../examples/csirs/NRCSIRS_100MHz_30kHz_demo.py) |
+| NRUplinkPTRS | 载波上边缘17 RB、时间密度2，OFDM后恢复跨±π的CPE和示意数据RE | [NRUplinkPTRS_100MHz_30kHz_demo.py](../../examples/ptrs/NRUplinkPTRS_100MHz_30kHz_demo.py) |
+| NRDownlinkPTRS | 载波上边缘17 RB、时间密度2，OFDM后恢复跨±π的CPE和示意数据RE | [NRDownlinkPTRS_100MHz_30kHz_demo.py](../../examples/ptrs/NRDownlinkPTRS_100MHz_30kHz_demo.py) |
 
-上述10例为新增SSB前已实现的PUCCH F0～F4、PUSCH/PDSCH/PDCCH、PRACH和SRS。后续SSB/PBCH已新增独立100MHz入口及真实MATLAB案例，见[SSB验证](NRSSB_validation.md)及examples/ssb/NRSSB_100MHz_30kHz_demo.py。PUCCH/PDCCH保持各自规范资源宽度；共享信道覆盖全部273RB，SRS带宽按固定R15原表6.4.1.4.3-1选272RB。PRACH有自己的FFT/间隔；本例显式选RA30kHz，并非从载波隐式继承。
+统一时域回归覆盖上表14个入口。后续增加的SSB及三种参考信号使用各自独立的MATLAB向量，见[SSB验证](NRSSB_validation.md)及[参考信号验证](NRReferenceSignals_validation.md)。参考信号的5个新增MATLAB案例验证序列与RE坐标；时域测量和补偿由Python回归验证。PUCCH/PDCCH保持各自规范资源宽度；共享信道覆盖全部273RB，SRS带宽按固定R15原表6.4.1.4.3-1选272RB。PRACH有自己的FFT/间隔；本例显式选RA30kHz，并非从载波隐式继承。
 
 ## 运行与判定
 
@@ -41,8 +45,8 @@ PUSCH/PDSCH的1024bit TB是显式给定的单码块测试输入，不执行MCS/T
 
 真实MATLAB 24.1.0.2537033 (R2024a)/5G Toolbox24.1运行[共同导出脚本](../../examples/common/export_NR100MHz_30kHz_reference.m)，调用对应nrPUCCH、nrPUSCH/PDSCH、nrPDCCH、nrPRACH、nrSRS及编码/OFDM公开函数。固定上述载波、Nfft4096、Windowing=0，PRACH使用独立nrPRACHOFDMModulate。未用Python生成MATLAB向量。参数常量和payload构造保留在可复现脚本，各例参考另保存环境/输入位/编码位、网格及波形信息。
 
-每个模块目录保留<类名>_100MHz_30kHz_reference.json与_comparison.json。参考保留全部活动RE的零基MATLAB线性索引/复值、所有编码位、2048个均匀分布的时域样点探针、整段样点数及能量；**不保存完整时域波形**。比较完整非零RE集合和值、编码位、探针和总能量，不能将探针对齐表述为逐样点全波形验证或MATLAB接收机验证。带噪闭环来自Python独立时域测试，MATLAB向量为无扰动发送基准。
+原10例在对应模块目录保留同名参考和比较JSON。参考保留全部活动RE的零基MATLAB线性索引/复值、所有编码位、2048个均匀分布的时域样点探针、整段样点数及能量；**不保存完整时域波形**。比较完整非零RE集合和值、编码位、探针和总能量，不能将探针对齐表述为逐样点全波形验证或MATLAB接收机验证。带噪闭环来自Python独立时域测试，MATLAB向量为无扰动发送基准。
 
 10例全部通过：最大RE误差约4.75e-11，时域探针最大误差约2.81e-13；归一化RE容差1e-9、波形探针1e-10、整段能量相对误差1e-9。完整编码位与非零坐标必须精确相等。JSON报告保存环境、逐项指标及实现/输入SHA256。
 
-独立测试入口tests/matlab/test_NR100MHz_30kHz_matlab.py；--require-matlab要求真实参考存在，缺失不能冒充通过。原有其他带宽参考保持不变。本轮全仓1152项测试通过，3559条语句与1052个分支全部覆盖，综合覆盖率100.00%。本轮不创建Git提交或推送。
+独立测试入口tests/matlab/test_NR100MHz_30kHz_matlab.py；--require-matlab要求真实参考存在，缺失不能冒充通过。原有其他带宽参考保持不变。最新回归统计见[参考信号验证报告](NRReferenceSignals_validation.md)。

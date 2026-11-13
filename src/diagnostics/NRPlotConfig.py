@@ -18,15 +18,23 @@ class NRPlotConfig:
         if type(self.enabled) is not bool:
             raise TypeError("enabled must be bool")
         if self.stages is not None:
-            if not isinstance(self.stages, tuple) or any(not isinstance(x,str) or not x for x in self.stages):
-                raise ValueError("stages must be None or a tuple of nonempty glob patterns")
-        for name,lower in (("max_points",16),("panels_per_figure",1),("max_branches",1)):
-            value=getattr(self,name)
+            if not isinstance(self.stages, tuple) or any(
+                not isinstance(x, str) or not x for x in self.stages
+            ):
+                raise ValueError(
+                    "stages must be None or a tuple of nonempty glob patterns"
+                )
+        for name, lower in (
+            ("max_points", 16),
+            ("panels_per_figure", 1),
+            ("max_branches", 1),
+        ):
+            value = getattr(self, name)
             if type(value) is not int:
                 raise TypeError(f"{name} must be a Python int")
-            if value<lower:
+            if value < lower:
                 raise ValueError(f"{name} must be at least {lower}")
-        if self.panels_per_figure>9:
+        if self.panels_per_figure > 9:
             raise ValueError("panels_per_figure must be at most 9")
-        if not isinstance(self.channel,str) or not self.channel:
+        if not isinstance(self.channel, str) or not self.channel:
             raise ValueError("channel must be a nonempty physical-channel label")

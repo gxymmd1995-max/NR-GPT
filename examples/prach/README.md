@@ -8,6 +8,39 @@
 
 `main(log,plot_config=None)`接收ExampleLogger及可选NRPlotConfig，返回接收dict；默认显示绘图，传NRPlotConfig(enabled=False)关闭。图涵盖ZC、DFT、独立PRACH频谱、IFFT、CP/时域叠加、相关曲线和前导分数。图片只显示，不保存；重复tx阶段为逐UE真实结果。日志生成于本目录并Git忽略。若只关注检测可设置stages=('rx.*','channel.*')。
 
+## 对照 13 种 PRACH 格式的时域波形
+
+[NRPRACH_formats_demo.py](NRPRACH_formats_demo.py) 默认运行 16 组。先在上行载波 SCS 为 30 kHz、采样率为 30.72 MS/s 的条件下对照全部 13 种格式，再保持短格式 A1 不变，对照 RA SCS 为 15、30、60、120 kHz 时的周期和 CP。
+
+| 格式族 | 格式 | RA SCS（kHz） | 对应可选的 UL SCS（kHz） |
+|---|---|---:|---|
+| 长格式 | 0、1、2 | 1.25 | 15、30、60 |
+| 长格式 | 3 | 5 | 15、30、60 |
+| 短格式 | A1～A3、B1～B4、C0、C2 | 15 或 30 | 15、30、60 |
+| 短格式 | A1～A3、B1～B4、C0、C2 | 60 或 120 | 60、120 |
+
+此表按 TS 38.211 V15.2.0 §6.3.3 的原表 6.3.3.1-1、6.3.3.1-2 和 6.3.3.2-1 归纳显式时机示例。载波 SCS 用于建立 `NRCell` 的采样率，PRACH SCS 决定一个有用重复周期。实际部署时还需按频率范围、双工模式和 PRACH Configuration Index 查可用时机。[协议索引](../../documentation/spec_manifest.md)
+
+在仓库根目录运行：
+
+```powershell
+# 16 个代表案例，显示图形
+.venv\Scripts\python.exe -X utf8 examples/prach/NRPRACH_formats_demo.py
+# 长格式 0～3，保持上行载波为 30 kHz
+.venv\Scripts\python.exe -X utf8 examples/prach/NRPRACH_formats_demo.py --group long
+# 短格式 A1，分别以 60 kHz 或 120 kHz RA SCS 运行
+.venv\Scripts\python.exe -X utf8 examples/prach/NRPRACH_formats_demo.py --format A1 --ra-scs 60 --ul-scs 60
+.venv\Scripts\python.exe -X utf8 examples/prach/NRPRACH_formats_demo.py --format A1 --ra-scs 120 --ul-scs 120
+# 批量执行全部 102 组，只输出数值
+.venv\Scripts\python.exe -X utf8 examples/prach/NRPRACH_formats_demo.py --all-pairs --no-plot
+```
+
+左图是发射波形的 I 分量，橙色为 CP，虚线分隔有用重复周期，末尾灰区是为延迟仿真添加的 32 个补零样点。右图是接收相关曲线，实线对应发送的前导 7，另一条曲线是每个延迟点上其余 63 个候选中的最高分。每例经 3 样点延迟、731 Hz CFO、0.23 rad 初相及 25 dB SNR 噪声后，在已知 CFO 和初相的条件下搜索全部 64 个候选，期望只在前导 7 的第 3 个样点检出。不同采样率下，3 样点对应的微秒数不同。
+
+终端表给出采样率、PRACH FFT 长度、CP 样点和微秒数、重复次数及活动时长。先对比长格式 0 与 1 的 CP，再对比同为两次重复的短格式 A1 与 B1。短格式采用显式时机起点 0，CP 样点含 §5.3.2 的边界扩展。图只显示，使用 `--no-plot` 可直接检查终端结果。
+
+全部 102 组是 Python 时域演示。真实 MATLAB 比对覆盖范围见下表及[验证报告](../../documentation/validation/NRPRACH_validation.md)。
+
 | 文件 | 用途 |
 |---|---|
 | [export_NRPRACH_reference.m](export_NRPRACH_reference.m) | 在真实MATLAB R2024a/5G Toolbox24.1生成44个时域案例及32个序列边界案例 |

@@ -19,6 +19,10 @@ plots = ["matplotlib>=3.9"]
 where = ["src"]
 namespaces = false
 
+[tool.black]
+target-version = ["py311"]
+extend-exclude = '(^|/)_.*table.*\.py$'
+
 [tool.setuptools.package-data]
 cell = ["NRCell.md"]
 diagnostics = ["ExampleLogger.md", "NRPlotConfig.md", "NRStagePlotter.md"]

@@ -24,29 +24,75 @@ class NRPUCCH0Transmitter:
         NROFDM(self.resource.cell, self.carrier_frequency_hz)
         NRStagePlotter(self.plot_config)
 
-    def transmit(self, harq_ack=(), sr: int | None = None, beta: float = 1.0, *, plotter=None) -> dict:
+    def transmit(
+        self, harq_ack=(), sr: int | None = None, beta: float = 1.0, *, plotter=None
+    ) -> dict:
         """输入0..2个HARQ位及可选SR，输出完整单slot波形[1,T]及发送诊断数据。
 
         负SR-only输出全零波形、无占用网格，不假造负SR参考。beta含义见resource.map_to_grid。
         """
         trace = NRStagePlotter(self.plot_config) if plotter is None else plotter
-        symbols = self.resource.generate(harq_ack,sr)
-        shift = self.resource.cyclic_shift_offset(harq_ack,sr)
+        symbols = self.resource.generate(harq_ack, sr)
+        shift = self.resource.cyclic_shift_offset(harq_ack, sr)
         if trace.config.enabled:
-            trace.record("tx.uci_shift",[] if shift is None else [shift],kind="metric",title="HARQ/SR -> m_cs; empty means DTX",xlabel="UCI candidate",ylabel="Cyclic-shift offset")
+            trace.record(
+                "tx.uci_shift",
+                [] if shift is None else [shift],
+                kind="metric",
+                title="HARQ/SR -> m_cs; empty means DTX",
+                xlabel="UCI candidate",
+                ylabel="Cyclic-shift offset",
+            )
             if shift is not None:
-                params=self.resource.sequence_parameters(shift)
-                base=np.array([NRCommon.low_papr_sequence_12(int(u)) for u in params['u']])
-                trace.record("tx.base_sequence",base,kind="sequence",title="Diagnostic base sequences: same u, zero cyclic shift",xlabel="Sequence point")
-                trace.record("tx.cyclic_shift",symbols.reshape(self.resource.n_symbols,12),kind="sequence",title="Actual cyclic-shifted sequences, one branch per symbol",xlabel="Sequence point")
-                trace.record("tx.alpha",params['alpha'],kind="metric",title="Cyclic-shift phase step per PUCCH symbol",xlabel="PUCCH symbol",ylabel="Phase step (rad / point)")
+                params = self.resource.sequence_parameters(shift)
+                base = np.array(
+                    [NRCommon.low_papr_sequence_12(int(u)) for u in params["u"]]
+                )
+                trace.record(
+                    "tx.base_sequence",
+                    base,
+                    kind="sequence",
+                    title="Diagnostic base sequences: same u, zero cyclic shift",
+                    xlabel="Sequence point",
+                )
+                trace.record(
+                    "tx.cyclic_shift",
+                    symbols.reshape(self.resource.n_symbols, 12),
+                    kind="sequence",
+                    title="Actual cyclic-shifted sequences, one branch per symbol",
+                    xlabel="Sequence point",
+                )
+                trace.record(
+                    "tx.alpha",
+                    params["alpha"],
+                    kind="metric",
+                    title="Cyclic-shift phase step per PUCCH symbol",
+                    xlabel="PUCCH symbol",
+                    ylabel="Phase step (rad / point)",
+                )
         grid = NRGrid(self.resource.cell, 1)
         count = self.resource.map_to_grid(grid, harq_ack, sr, beta)
         if trace.config.enabled:
-            trace.record("tx.mapped_grid",grid.data,kind="grid",title="Actual beta-scaled PUCCH resource grid",xlabel="Slot symbol",ylabel="Carrier-local subcarrier")
-        waveform = NROFDM(self.resource.cell, self.carrier_frequency_hz).modulate(grid.data,plotter=trace)
+            trace.record(
+                "tx.mapped_grid",
+                grid.data,
+                kind="grid",
+                title="Actual beta-scaled PUCCH resource grid",
+                xlabel="Slot symbol",
+                ylabel="Carrier-local subcarrier",
+            )
+        waveform = NROFDM(self.resource.cell, self.carrier_frequency_hz).modulate(
+            grid.data, plotter=trace
+        )
         if plotter is None:
             trace.show()
-        return {"waveform":waveform, "grid":grid, "symbols":symbols,
-                "indices":self.resource.indices(), "n_mapped_re":count,
-                "m_cs":shift, "active":count > 0, "plot_stages":list(trace.stages)}
+        return {
+            "waveform": waveform,
+            "grid": grid,
+            "symbols": symbols,
+            "indices": self.resource.indices(),
+            "n_mapped_re": count,
+            "m_cs": shift,
+            "active": count > 0,
+            "plot_stages": list(trace.stages),
+        }

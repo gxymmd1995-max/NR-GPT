@@ -22,22 +22,52 @@ from grid import NRGrid, encode_owners
 def plot_grid(grid: NRGrid, output: Path) -> None:
     """按逻辑端口绘制占用标签，BWP 边界使用载波局部子载波坐标。"""
     codes, labels, colors = encode_owners(grid.owners)
-    fig, axes = plt.subplots(1, grid.n_ports, figsize=(12, 5.5), squeeze=False, layout="constrained")
+    fig, axes = plt.subplots(
+        1, grid.n_ports, figsize=(12, 5.5), squeeze=False, layout="constrained"
+    )
     fig.get_layout_engine().set(rect=(0, 0.16, 1, 0.84))
-    fig.suptitle(f"NRGrid | {grid.shape} [port, symbol, subcarrier] | "
-                 f"{grid.occupied_re_count}/{grid.total_re_count} occupied REs", fontsize=14)
+    fig.suptitle(
+        f"NRGrid | {grid.shape} [port, symbol, subcarrier] | "
+        f"{grid.occupied_re_count}/{grid.total_re_count} occupied REs",
+        fontsize=14,
+    )
     start = (grid.cell.bwp_start - grid.cell.n_start_grid) * 12
     for port, ax in enumerate(axes[0]):
-        ax.imshow(codes[port].T, origin="lower", aspect="auto", interpolation="nearest",
-                  cmap=ListedColormap(colors), vmin=-0.5, vmax=len(colors) - 0.5)
+        ax.imshow(
+            codes[port].T,
+            origin="lower",
+            aspect="auto",
+            interpolation="nearest",
+            cmap=ListedColormap(colors),
+            vmin=-0.5,
+            vmax=len(colors) - 0.5,
+        )
         for boundary in (start - 0.5, start + grid.cell.bwp_size * 12 - 0.5):
             ax.axhline(boundary, color="#0F172A", linestyle="--", linewidth=1)
-        ax.set(title=f"Logical port {port}", xlabel="Symbol within slot", ylabel="Carrier-local subcarrier",
-               xticks=range(grid.n_symbols), yticks=range(0, grid.n_subcarriers, 12))
-    legend = [Patch(facecolor=color, label=label) for label, color in zip(labels, colors)]
-    fig.legend(handles=legend, loc="lower center", bbox_to_anchor=(0.5, 0.065), ncols=min(5, len(labels)))
-    fig.text(0.5, 0.02, "TS 38.211 V15.2.0 4.4.1-5; dashed lines = active BWP. "
-             "Tags and values are synthetic mapping examples, not physical-channel waveforms.", ha="center", fontsize=9)
+        ax.set(
+            title=f"Logical port {port}",
+            xlabel="Symbol within slot",
+            ylabel="Carrier-local subcarrier",
+            xticks=range(grid.n_symbols),
+            yticks=range(0, grid.n_subcarriers, 12),
+        )
+    legend = [
+        Patch(facecolor=color, label=label) for label, color in zip(labels, colors)
+    ]
+    fig.legend(
+        handles=legend,
+        loc="lower center",
+        bbox_to_anchor=(0.5, 0.065),
+        ncols=min(5, len(labels)),
+    )
+    fig.text(
+        0.5,
+        0.02,
+        "TS 38.211 V15.2.0 4.4.1-5; dashed lines = active BWP. "
+        "Tags and values are synthetic mapping examples, not physical-channel waveforms.",
+        ha="center",
+        fontsize=9,
+    )
     for suffix in ("png", "svg"):
         fig.savefig(output / f"NRGrid_overview.{suffix}", dpi=150)
     plt.close(fig)
@@ -45,7 +75,9 @@ def plot_grid(grid: NRGrid, output: Path) -> None:
 
 def main(log: ExampleLogger) -> None:
     """演示预留、两端口映射、零值占用、冲突检查及导出。"""
-    cell = NRCell(n_size_grid=6, n_start_grid=10, bwp_start=11, bwp_size=4, n_tx_antennas=4)
+    cell = NRCell(
+        n_size_grid=6, n_start_grid=10, bwp_start=11, bwp_size=4, n_tx_antennas=4
+    )
     grid = NRGrid(cell, n_ports=2)
     log.dump_state(cell, "cell")
     reserved = grid.bwp_indices(range(4), [0])
@@ -65,9 +97,17 @@ def main(log: ExampleLogger) -> None:
         log.dump_state(grid, "grid")
     output = Path(__file__).resolve().parent
     summary = grid.summary()
-    (output / "NRGrid_summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
-    np.savez_compressed(output / "NRGrid_data.npz", data=grid.data, owners=grid.owners,
-                        reserved_indices=reserved, stream_a_indices=stream_a, stream_b_indices=stream_b)
+    (output / "NRGrid_summary.json").write_text(
+        json.dumps(summary, indent=2) + "\n", encoding="utf-8"
+    )
+    np.savez_compressed(
+        output / "NRGrid_data.npz",
+        data=grid.data,
+        owners=grid.owners,
+        reserved_indices=reserved,
+        stream_a_indices=stream_a,
+        stream_b_indices=stream_b,
+    )
     plot_grid(grid, output)
     log.logger.info("Grid summary: %s", summary)
     log.logger.info("Saved grid JSON/NPZ/PNG/SVG in %s", output)

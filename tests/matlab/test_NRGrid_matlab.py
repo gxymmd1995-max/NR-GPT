@@ -15,7 +15,9 @@ REFERENCE = Path(__file__).resolve().parents[2] / "examples/grid/NRGrid_referenc
 @pytest.mark.matlab
 def test_matlab_grid_reference(request):
     if not REFERENCE.exists():
-        message = "Run examples/grid/export_NRGrid_reference.m using MATLAB 5G Toolbox first"
+        message = (
+            "Run examples/grid/export_NRGrid_reference.m using MATLAB 5G Toolbox first"
+        )
         if request.config.getoption("--require-matlab"):
             pytest.fail(message)
         pytest.skip(message)
@@ -26,17 +28,24 @@ def test_matlab_grid_reference(request):
         selection, expected = case["selection"], case["expected"]
         grid = NRGrid(NRCell(**case["input"]), selection["n_ports"])
         # MATLAB 将单元素向量编码为标量，入口统一还原一维选择。
-        indices = grid.bwp_indices(np.atleast_1d(selection["prbs"]), np.atleast_1d(selection["symbols"]),
-                                   np.atleast_1d(selection["ports"]))
+        indices = grid.bwp_indices(
+            np.atleast_1d(selection["prbs"]),
+            np.atleast_1d(selection["symbols"]),
+            np.atleast_1d(selection["ports"]),
+        )
         np.testing.assert_array_equal(indices, expected["indices"])
-        values = np.array(expected["values_real"]) + 1j * np.array(expected["values_imag"])
+        values = np.array(expected["values_real"]) + 1j * np.array(
+            expected["values_imag"]
+        )
         grid.map(indices, values, "MAPPED")
         grid.reserve([expected["reserve_index"]], "RESERVED")
         np.testing.assert_array_equal(grid.extract(indices), values)
         assert list(grid.shape) == expected["python_shape"]
         matlab = grid.to_matlab()
         assert list(matlab.shape) == expected["matlab_shape"]
-        linear = np.ravel_multi_index((indices[:, 2], indices[:, 1], indices[:, 0]), matlab.shape, order="F")
+        linear = np.ravel_multi_index(
+            (indices[:, 2], indices[:, 1], indices[:, 0]), matlab.shape, order="F"
+        )
         np.testing.assert_array_equal(linear + 1, expected["linear_indices_1based"])
         flat = matlab.ravel(order="F")
         np.testing.assert_array_equal(flat[linear], values)

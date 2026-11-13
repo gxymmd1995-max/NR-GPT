@@ -23,8 +23,13 @@ def build_data():
     sequences = np.array([NRCommon.low_papr_sequence_12(0, int(k)) for k in shifts])
     base = NRCommon.low_papr_sequence_12(0)
     factors = sequences / base[None, :]
-    return dict(shifts=shifts, alpha_rad=2*np.pi*shifts/12,
-                sequences=sequences, phase_factors=factors, points=factors[:, 1])
+    return dict(
+        shifts=shifts,
+        alpha_rad=2 * np.pi * shifts / 12,
+        sequences=sequences,
+        phase_factors=factors,
+        points=factors[:, 1],
+    )
 
 
 def main(log=None, plot_config=None):
@@ -35,39 +40,54 @@ def main(log=None, plot_config=None):
     """
     data = build_data()
     if log is not None:
-        log.logger.info('12 cyclic shifts, n=1 after base-sequence removal; angles_deg=%s',
-                        np.rad2deg(data['alpha_rad']).tolist())
+        log.logger.info(
+            "12 cyclic shifts, n=1 after base-sequence removal; angles_deg=%s",
+            np.rad2deg(data["alpha_rad"]).tolist(),
+        )
     config = NRPlotConfig(enabled=True) if plot_config is None else plot_config
     if not config.enabled:
         return data
 
     import matplotlib.pyplot as plt
 
-    fig, ax = plt.subplots(figsize=(9, 9), layout='constrained')
-    angle = np.linspace(0, 2*np.pi, 361)
-    ax.plot(np.cos(angle), np.sin(angle), color='#94a3b8', linewidth=1)
-    colors = plt.get_cmap('hsv')(np.arange(12)/12)
-    for k, point, color in zip(data['shifts'], data['points'], colors):
-        ax.plot([0, point.real], [0, point.imag], color=color, alpha=.35, linewidth=1)
-        ax.scatter(point.real, point.imag, color=color, edgecolor='#334155', s=95, zorder=3)
-        ax.text(1.18*point.real, 1.18*point.imag, f'k={k}\n{30*k} deg',
-                ha='center', va='center', fontsize=10)
-    ax.axhline(0, color='#94a3b8', linewidth=.7)
-    ax.axvline(0, color='#94a3b8', linewidth=.7)
-    ax.set(xlim=(-1.42, 1.42), ylim=(-1.42, 1.42),
-           xlabel='I (dimensionless)', ylabel='Q (dimensionless)',
-           title='PUCCH F0: all 12 cyclic-shift phase factors\n'
-                 r'$r_k[1]/r_0[1]=e^{j2\pi k/12}$; base sequence removed, n=1')
-    ax.set_aspect('equal')
-    ax.grid(alpha=.2)
+    fig, ax = plt.subplots(figsize=(9, 9), layout="constrained")
+    angle = np.linspace(0, 2 * np.pi, 361)
+    ax.plot(np.cos(angle), np.sin(angle), color="#94a3b8", linewidth=1)
+    colors = plt.get_cmap("hsv")(np.arange(12) / 12)
+    for k, point, color in zip(data["shifts"], data["points"], colors):
+        ax.plot([0, point.real], [0, point.imag], color=color, alpha=0.35, linewidth=1)
+        ax.scatter(
+            point.real, point.imag, color=color, edgecolor="#334155", s=95, zorder=3
+        )
+        ax.text(
+            1.18 * point.real,
+            1.18 * point.imag,
+            f"k={k}\n{30*k} deg",
+            ha="center",
+            va="center",
+            fontsize=10,
+        )
+    ax.axhline(0, color="#94a3b8", linewidth=0.7)
+    ax.axvline(0, color="#94a3b8", linewidth=0.7)
+    ax.set(
+        xlim=(-1.42, 1.42),
+        ylim=(-1.42, 1.42),
+        xlabel="I (dimensionless)",
+        ylabel="Q (dimensionless)",
+        title="PUCCH F0: all 12 cyclic-shift phase factors\n"
+        r"$r_k[1]/r_0[1]=e^{j2\pi k/12}$; base sequence removed, n=1",
+    )
+    ax.set_aspect("equal")
+    ax.grid(alpha=0.2)
     plt.show(block=False)
     return data
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     plot_config = NRPlotConfig(enabled=True)
     with ExampleLogger(__file__) as run:
         main(run, plot_config)
     if plot_config.enabled:
         import matplotlib.pyplot as plt
+
         plt.show()

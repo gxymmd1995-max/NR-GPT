@@ -2,4 +2,8 @@
 
 
 def pytest_addoption(parser):
-    parser.addoption("--require-matlab", action="store_true", help="Fail if MATLAB reference data is missing")
+    parser.addoption(
+        "--require-matlab",
+        action="store_true",
+        help="Fail if MATLAB reference data is missing",
+    )

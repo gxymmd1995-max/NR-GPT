@@ -93,3 +93,10 @@ assert out['equalizer_ok'] and out['crc_ok'] and out['bits']==[0,1]*64
 接收端补偿给定同步量后OFDM解调。逐RB将各层DMRS的实际频域/时域OCC组成联合设计矩阵，LS估计[Rx,层,RB]信道；假定同一RB及分配时间内近似恒定。逐RB检查信道秩与条件数，用伪逆ZF分离各层；按发送顺序还原调制符号，计算距离软值、解扰、LDPC速率恢复/迭代译码并检查CRC。ZF不是MMSE，病态信道可能放大噪声；均衡失败不会仅凭DMRS检测通过就宣称业务恢复成功。
 
 [NRPDSCH的时频位置、长度、配置变化及图例](NRPDSCH.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。
+
+
+## PT-RS 相位补偿
+
+资源设置 `ptrs_config` 后，接收机以单个 DM-RS 符号的相位为零点，用每 RB 的 DM-RS 信道估计对同 RB 的 PT-RS 作匹配合并。将参考符号相位解缠、插值，首尾保持，再在生成软比特之前对均衡数据逐符号反旋。相邻有效参考的真实相位变化应小于 π rad。
+
+`receive(..., correct_ptrs=False)` 可对同一段接收波形关闭反旋，仍按既定资源跳过 PT-RS RE。`ptrs_phase_rad` 是长度为 `cell.symbols_per_slot` 的实数数组，单位 rad。未配置或关闭时为 `None`。在阶段图中可选择 `rx.ptrs_phase` 查看估计。

@@ -3,4 +3,6 @@
 - [NRUplinkPTRS_demo.py](NRUplinkPTRS_demo.py)：直接运行显示资源网格和接收测量；run_case(False)关闭绘图；[类文档](../../src/ptrs/NRUplinkPTRS.md)。
 - [NRDownlinkPTRS_demo.py](NRDownlinkPTRS_demo.py)：直接运行显示资源网格和接收测量；run_case(False)关闭绘图；[类文档](../../src/ptrs/NRDownlinkPTRS.md)。
 
+- 100 MHz / 30 kHz示例：[上行](NRUplinkPTRS_100MHz_30kHz_demo.py)、[下行](NRDownlinkPTRS_100MHz_30kHz_demo.py)。展示相位跨±π时的解缠、插值及无PT-RS符号上的数据RE反旋。
+
 实际MATLAB导出：[统一脚本](../common/export_NRReferenceSignals_reference.m)；[输入及向量](../common/NRReferenceSignals_reference.json)；[比较](../common/compare_NRReferenceSignals_reference.py)；[结果](../common/NRReferenceSignals_comparison.json)。这是共享参考文件，不是Python自生成的MATLAB结果。

@@ -38,9 +38,23 @@ def test_default_configuration_and_copy_contract():
     assert srs.cell.n_cell_id == 1
 
 
-INTEGER_FIELDS = ["n_ports", "n_symbols", "start_position", "c_srs", "b_srs", "b_hop", "k_tc",
-                  "frequency_shift", "frequency_position", "sequence_id", "repetition", "periodicity",
-                  "slot_offset", "comb_offset", "cyclic_shift"]
+INTEGER_FIELDS = [
+    "n_ports",
+    "n_symbols",
+    "start_position",
+    "c_srs",
+    "b_srs",
+    "b_hop",
+    "k_tc",
+    "frequency_shift",
+    "frequency_position",
+    "sequence_id",
+    "repetition",
+    "periodicity",
+    "slot_offset",
+    "comb_offset",
+    "cyclic_shift",
+]
 
 
 @pytest.mark.parametrize("name", INTEGER_FIELDS)
@@ -50,22 +64,51 @@ def test_strict_integer_types(name, value):
         NRSRS(NRCell(), **{name: value})
 
 
-@pytest.mark.parametrize("name,value", [("n_ports", 0), ("n_ports", 3), ("n_ports", 8),
-    ("n_symbols", 3), ("n_symbols", 8), ("start_position", -1), ("start_position", 6),
-    ("c_srs", 64), ("b_srs", 4), ("b_hop", -1), ("k_tc", 3), ("k_tc", 8),
-    ("comb_offset", 2), ("cyclic_shift", 8), ("frequency_shift", 269),
-    ("frequency_position", 68), ("sequence_id", 1024), ("repetition", 3),
-    ("periodicity", 3), ("periodicity", 2561), ("slot_offset", 1)])
+@pytest.mark.parametrize(
+    "name,value",
+    [
+        ("n_ports", 0),
+        ("n_ports", 3),
+        ("n_ports", 8),
+        ("n_symbols", 3),
+        ("n_symbols", 8),
+        ("start_position", -1),
+        ("start_position", 6),
+        ("c_srs", 64),
+        ("b_srs", 4),
+        ("b_hop", -1),
+        ("k_tc", 3),
+        ("k_tc", 8),
+        ("comb_offset", 2),
+        ("cyclic_shift", 8),
+        ("frequency_shift", 269),
+        ("frequency_position", 68),
+        ("sequence_id", 1024),
+        ("repetition", 3),
+        ("periodicity", 3),
+        ("periodicity", 2561),
+        ("slot_offset", 1),
+    ],
+)
 def test_r15_ranges(name, value):
     with pytest.raises(ValueError):
         NRSRS(NRCell(), **{name: value})
 
 
-@pytest.mark.parametrize("kwargs,error", [({"cell": None}, TypeError),
-    ({"n_symbols": 4, "start_position": 2}, ValueError), ({"repetition": 2}, ValueError),
-    ({"group_seq_hopping": False}, TypeError), ({"group_seq_hopping": "random"}, ValueError),
-    ({"resource_type": None}, TypeError), ({"resource_type": "off"}, ValueError),
-    ({"resource_type": "aperiodic", "periodicity": 2}, ValueError), ({"enabled": 1}, TypeError)])
+@pytest.mark.parametrize(
+    "kwargs,error",
+    [
+        ({"cell": None}, TypeError),
+        ({"n_symbols": 4, "start_position": 2}, ValueError),
+        ({"repetition": 2}, ValueError),
+        ({"group_seq_hopping": False}, TypeError),
+        ({"group_seq_hopping": "random"}, ValueError),
+        ({"resource_type": None}, TypeError),
+        ({"resource_type": "off"}, ValueError),
+        ({"resource_type": "aperiodic", "periodicity": 2}, ValueError),
+        ({"enabled": 1}, TypeError),
+    ],
+)
 def test_joint_constraints(kwargs, error):
     config = {"cell": NRCell(), **kwargs}
     with pytest.raises(error):
@@ -77,7 +120,9 @@ def test_joint_constraints(kwargs, error):
 def test_last_six_symbols_and_extended_cp(cp, n_symbols):
     cell = NRCell(subcarrier_spacing_khz=60, cyclic_prefix=cp)
     srs = NRSRS(cell, n_symbols=n_symbols, start_position=5)
-    expected = np.arange(cell.symbols_per_slot - 6, cell.symbols_per_slot - 6 + n_symbols)
+    expected = np.arange(
+        cell.symbols_per_slot - 6, cell.symbols_per_slot - 6 + n_symbols
+    )
     np.testing.assert_array_equal(np.unique(srs.indices()[:, 1]), expected)
 
 
@@ -85,26 +130,41 @@ def test_last_six_symbols_and_extended_cp(cp, n_symbols):
 @pytest.mark.parametrize("comb,shift", [(2, 0), (2, 7), (4, 0), (4, 11)])
 def test_cyclic_shift_port_orthogonality_comb_and_power(ports, comb, shift):
     cell = NRCell(n_size_grid=24)
-    srs = NRSRS(cell, n_ports=ports, k_tc=comb, cyclic_shift=shift, comb_offset=comb-1,
-                n_symbols=2, start_position=2, c_srs=6)
+    srs = NRSRS(
+        cell,
+        n_ports=ports,
+        k_tc=comb,
+        cyclic_shift=shift,
+        comb_offset=comb - 1,
+        n_symbols=2,
+        start_position=2,
+        c_srs=6,
+    )
     sequence = srs.generate().reshape(2, srs.sequence_length, ports)
     for symbol in sequence:
-        np.testing.assert_allclose(symbol.conj().T @ symbol,
-                                   np.eye(ports)*srs.sequence_length, atol=2e-10)
+        np.testing.assert_allclose(
+            symbol.conj().T @ symbol, np.eye(ports) * srs.sequence_length, atol=2e-10
+        )
     coordinates = srs.indices().reshape(ports, 2, srs.sequence_length, 3)
     assert np.all(np.diff(coordinates[:, :, :, 2], axis=2) == comb)
-    expected = np.full(ports, comb-1)
-    if ports == 4 and shift >= srs.max_cyclic_shifts//2:
-        expected[1::2] = (comb-1+comb//2) % comb
+    expected = np.full(ports, comb - 1)
+    if ports == 4 and shift >= srs.max_cyclic_shifts // 2:
+        expected[1::2] = (comb - 1 + comb // 2) % comb
     np.testing.assert_array_equal(coordinates[:, 0, 0, 2], expected)
-    grid = NRGrid(cell, ports+1)  # 允许额外未使用的逻辑端口。
+    grid = NRGrid(cell, ports + 1)  # 允许额外未使用的逻辑端口。
     count = srs.map_to_grid(grid, beta=0.7, owner="SRS:UE0")
-    assert count == ports*2*srs.sequence_length
+    assert count == ports * 2 * srs.sequence_length
     assert grid.occupied_re_count == count
-    np.testing.assert_allclose(np.sum(np.abs(grid.data)**2), 0.7**2*2*srs.sequence_length, atol=1e-10)
+    np.testing.assert_allclose(
+        np.sum(np.abs(grid.data) ** 2), 0.7**2 * 2 * srs.sequence_length, atol=1e-10
+    )
     assert not np.any(grid.occupancy[-1])
     # 提取顺序须对应 generate 的 Fortran 扁平化顺序。
-    np.testing.assert_allclose(grid.extract(srs.indices()), srs.generate().ravel(order="F")*0.7/np.sqrt(ports), atol=1e-14)
+    np.testing.assert_allclose(
+        grid.extract(srs.indices()),
+        srs.generate().ravel(order="F") * 0.7 / np.sqrt(ports),
+        atol=1e-14,
+    )
 
 
 def test_frequency_hopping_hand_calculated_even_permutation_and_repetition():
@@ -112,10 +172,16 @@ def test_frequency_hopping_hand_calculated_even_permutation_and_repetition():
     cell = NRCell(n_size_grid=16)
     srs = NRSRS(cell, c_srs=3, b_srs=1, b_hop=0, n_symbols=4, start_position=3)
     np.testing.assert_array_equal(srs._frequency_indices()[1], [[0, 96, 48, 144]])
-    np.testing.assert_array_equal(replace(srs, repetition=2)._frequency_indices()[1], [[0, 0, 96, 96]])
-    np.testing.assert_array_equal(replace(srs, repetition=4)._frequency_indices()[1], [[0, 0, 0, 0]])
+    np.testing.assert_array_equal(
+        replace(srs, repetition=2)._frequency_indices()[1], [[0, 0, 96, 96]]
+    )
+    np.testing.assert_array_equal(
+        replace(srs, repetition=4)._frequency_indices()[1], [[0, 0, 0, 0]]
+    )
     periodic_next = replace(srs, cell=cell.with_slot_offset(1), repetition=2)
-    np.testing.assert_array_equal(periodic_next._frequency_indices()[1], [[48, 48, 144, 144]])
+    np.testing.assert_array_equal(
+        periodic_next._frequency_indices()[1], [[48, 48, 144, 144]]
+    )
     # 非周期只在资源内部计数，在另一帧重新触发仍得到同样的频率图案。
     aperiodic = replace(periodic_next, resource_type="aperiodic")
     np.testing.assert_array_equal(aperiodic._frequency_indices()[1], [[0, 0, 96, 96]])
@@ -126,7 +192,7 @@ def test_bwp_and_crb_coordinates_do_not_silently_clip():
     good = NRSRS(cell, frequency_shift=4)
     assert good.indices()[0, 2] == 48
     assert good.indices()[-1, 2] == 94
-    assert cell.n_start_grid + good.indices()[0, 2]//12 == 14
+    assert cell.n_start_grid + good.indices()[0, 2] // 12 == 14
     for shift in (0, 9):
         bad = replace(good, frequency_shift=shift)
         grid = NRGrid(cell)
@@ -164,12 +230,20 @@ def test_periodic_candidate_uses_frame_and_resets_at_sfn_wrap():
     edge = NRSRS(NRCell(n_frame=1023, n_slot=19), periodicity=2, slot_offset=1)
     assert edge.is_active
     assert not replace(edge, cell=edge.cell.with_slot_offset(1)).is_candidate_slot
-    assert replace(srs, resource_type="aperiodic", periodicity=1, slot_offset=0).is_candidate_slot
+    assert replace(
+        srs, resource_type="aperiodic", periodicity=1, slot_offset=0
+    ).is_candidate_slot
 
 
 def test_hopping_seed_independent_from_pci_and_frame_reinitialization():
-    srs = NRSRS(NRCell(n_frame=5, n_slot=3), c_srs=6, sequence_id=1023,
-                group_seq_hopping="groupHopping", n_symbols=4, start_position=3)
+    srs = NRSRS(
+        NRCell(n_frame=5, n_slot=3),
+        c_srs=6,
+        sequence_id=1023,
+        group_seq_hopping="groupHopping",
+        n_symbols=4,
+        start_position=3,
+    )
     other = replace(srs, cell=replace(srs.cell, n_frame=6, n_cell_id=999))
     np.testing.assert_array_equal(srs.generate(), other.generate())
     assert len(np.unique(srs.sequence_parameters()["u"])) > 1
@@ -179,10 +253,18 @@ def test_hopping_seed_independent_from_pci_and_frame_reinitialization():
     np.testing.assert_array_equal(short.sequence_parameters()["v"], 0)
 
 
-@pytest.mark.parametrize("grid,beta,error", [(None, 1, TypeError),
-    (NRGrid(NRCell(n_cell_id=2)), 1, ValueError), (NRGrid(NRCell()), True, TypeError),
-    (NRGrid(NRCell()), 1j, TypeError), (NRGrid(NRCell()), -1, ValueError),
-    (NRGrid(NRCell()), float("inf"), ValueError), (NRGrid(NRCell()), float("nan"), ValueError)])
+@pytest.mark.parametrize(
+    "grid,beta,error",
+    [
+        (None, 1, TypeError),
+        (NRGrid(NRCell(n_cell_id=2)), 1, ValueError),
+        (NRGrid(NRCell()), True, TypeError),
+        (NRGrid(NRCell()), 1j, TypeError),
+        (NRGrid(NRCell()), -1, ValueError),
+        (NRGrid(NRCell()), float("inf"), ValueError),
+        (NRGrid(NRCell()), float("nan"), ValueError),
+    ],
+)
 def test_invalid_mapping(grid, beta, error):
     with pytest.raises(error):
         NRSRS(NRCell()).map_to_grid(grid, beta=beta)

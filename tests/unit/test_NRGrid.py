@@ -22,14 +22,22 @@ def test_empty_grid_and_metadata():
     assert grid.total_re_count == grid.free_re_count == 8736
     assert grid.occupied_re_count == 0
     assert grid.summary() == {
-        "cell": cell.to_dict(), "n_ports": 1, "domain": "port",
-        "axis_order": ("port", "symbol", "subcarrier"), "shape": (1, 14, 624),
-        "dtype": "complex128", "total_re_count": 8736, "occupied_re_count": 0, "free_re_count": 8736,
+        "cell": cell.to_dict(),
+        "n_ports": 1,
+        "domain": "port",
+        "axis_order": ("port", "symbol", "subcarrier"),
+        "shape": (1, 14, 624),
+        "dtype": "complex128",
+        "total_re_count": 8736,
+        "occupied_re_count": 0,
+        "free_re_count": 8736,
     }
 
 
 def test_extended_cp_and_read_only_configuration():
-    grid = NRGrid(NRCell(subcarrier_spacing_khz=60, cyclic_prefix="extended"), n_ports=2)
+    grid = NRGrid(
+        NRCell(subcarrier_spacing_khz=60, cyclic_prefix="extended"), n_ports=2
+    )
     assert grid.shape == (2, 12, 624)
     with pytest.raises(AttributeError):
         grid.cell = NRCell()
@@ -37,9 +45,16 @@ def test_extended_cp_and_read_only_configuration():
         grid.n_ports = 3
 
 
-@pytest.mark.parametrize("cell,ports,error", [(None, 1, TypeError), (NRCell(), True, TypeError),
-                                            (NRCell(), 1.0, TypeError), (NRCell(), 0, ValueError),
-                                            (NRCell(), -1, ValueError)])
+@pytest.mark.parametrize(
+    "cell,ports,error",
+    [
+        (None, 1, TypeError),
+        (NRCell(), True, TypeError),
+        (NRCell(), 1.0, TypeError),
+        (NRCell(), 0, ValueError),
+        (NRCell(), -1, ValueError),
+    ],
+)
 def test_invalid_constructor(cell, ports, error):
     with pytest.raises(error):
         NRGrid(cell, ports)
@@ -58,19 +73,28 @@ def test_bwp_coordinate_origins_and_order():
     assert grid.bwp_indices([0], [0]).shape == (24, 3)
 
 
-@pytest.mark.parametrize("prbs,symbols,ports,error", [
-    ([[0]], [0], None, ValueError), ([0.0], [0], None, TypeError),
-    ([True, 0], [0], None, TypeError), ([-1], [0], None, ValueError),
-    ([52], [0], None, ValueError), ([0, 0], [0], None, ValueError),
-    ([0], [14], None, ValueError), ([0], [0], [1], ValueError),
-    ([0], [0], [True], TypeError),
-])
+@pytest.mark.parametrize(
+    "prbs,symbols,ports,error",
+    [
+        ([[0]], [0], None, ValueError),
+        ([0.0], [0], None, TypeError),
+        ([True, 0], [0], None, TypeError),
+        ([-1], [0], None, ValueError),
+        ([52], [0], None, ValueError),
+        ([0, 0], [0], None, ValueError),
+        ([0], [14], None, ValueError),
+        ([0], [0], [1], ValueError),
+        ([0], [0], [True], TypeError),
+    ],
+)
 def test_bad_bwp_selection(prbs, symbols, ports, error):
     with pytest.raises(error):
         NRGrid(NRCell()).bwp_indices(prbs, symbols, ports)
 
 
-@pytest.mark.parametrize("prbs,symbols,ports", [([], [0], None), ([0], [], None), ([0], [0], [])])
+@pytest.mark.parametrize(
+    "prbs,symbols,ports", [([], [0], None), ([0], [], None), ([0], [0], [])]
+)
 def test_empty_bwp_selection(prbs, symbols, ports):
     assert NRGrid(NRCell()).bwp_indices(prbs, symbols, ports).shape == (0, 3)
 
@@ -80,7 +104,9 @@ def test_scalar_and_vector_mapping_and_copy_isolation():
     indices = [[0, 0, 0], [1, 13, 23]]
     assert grid.map(indices, [1 + 2j, 3 - 4j], "DATA") == 2
     np.testing.assert_array_equal(grid.extract(indices[::-1]), [3 - 4j, 1 + 2j])
-    np.testing.assert_array_equal(grid.extract([indices[0], indices[0]]), [1 + 2j, 1 + 2j])
+    np.testing.assert_array_equal(
+        grid.extract([indices[0], indices[0]]), [1 + 2j, 1 + 2j]
+    )
     assert grid.map([[0, 1, 1], [0, 1, 2]], 2j, "SCALAR") == 2
     for value in (grid.data, grid.owners, grid.occupancy, grid.extract(indices)):
         value[...] = 0
@@ -104,19 +130,29 @@ def test_zero_values_and_reservation_are_occupied():
     assert grid.occupied_re_count == 2
 
 
-@pytest.mark.parametrize("indices,error", [
-    ([0, 0, 0], ValueError), ([[0, 0]], ValueError),
-    ([[False, 0, 0]], TypeError), ([[0, 0, 0.0]], TypeError),
-    ([[0, 0, -1]], ValueError), ([[0, 0, 624]], ValueError),
-    ([[1, 0, 0]], ValueError), ([[0, 14, 0]], ValueError),
-    (np.array([[0, 0, 2**64 - 1]], dtype=np.uint64), ValueError),
-])
+@pytest.mark.parametrize(
+    "indices,error",
+    [
+        ([0, 0, 0], ValueError),
+        ([[0, 0]], ValueError),
+        ([[False, 0, 0]], TypeError),
+        ([[0, 0, 0.0]], TypeError),
+        ([[0, 0, -1]], ValueError),
+        ([[0, 0, 624]], ValueError),
+        ([[1, 0, 0]], ValueError),
+        ([[0, 14, 0]], ValueError),
+        (np.array([[0, 0, 2**64 - 1]], dtype=np.uint64), ValueError),
+    ],
+)
 def test_invalid_indices(indices, error):
     with pytest.raises(error):
         NRGrid(NRCell()).extract(indices)
 
 
-@pytest.mark.parametrize("owner,error", [(None, TypeError), ("", ValueError), ("  ", ValueError), ("X" * 65, ValueError)])
+@pytest.mark.parametrize(
+    "owner,error",
+    [(None, TypeError), ("", ValueError), ("  ", ValueError), ("X" * 65, ValueError)],
+)
 def test_invalid_owner(owner, error):
     with pytest.raises(error):
         NRGrid(NRCell()).map([[0, 0, 0]], 1, owner)

@@ -6,6 +6,7 @@
 - 类文件和类文档使用准确类名（`NRCell.py` / `NRCell.md`）；相关示例、测试、MATLAB 脚本和产物统一保留 `NRCell` 大小写，如 `NRCell_demo.py`、`test_NRCell.py`、`export_NRCell_reference.m`、`NRCell_reference.json`。模块目录使用小写，变量及方法使用 snake_case。
 - 示例目录与源码模块对应，如 `examples/cell/`；该模块示例生成的中间文件、MATLAB 参考 JSON、图片均保存在对应示例目录中。
 - 安装生成的 `*.egg-info/` 是可删除的元数据，不是源码，不提交 Git。
+- Python 源码、示例和测试使用 Black 的 Python 3.11 目标格式，配置在 `pyproject.toml`。可用 `python -m black --check src examples tests` 检查。协议数值表保留按原表分行的布局。
 - 类文档须解释用途、边界、每个字段/属性/方法，并提供可运行示例；适合时附图。
 - 协议参数表必须注明规范编号、版本、原文章节和原表号；派生表注明推导依据。
 - 公式必须标注规范版本与章节。自定义公式编号必须明确为文档自编号，不冒充原文编号。
@@ -73,6 +74,7 @@ NR1024/
 │   ├── integration/                # test_SRS_waveform_chain.py、test_PUCCH0_waveform_chain.py
 │   └── conftest.py                 # 测试选项与公共配置
 └── documentation/
+    ├── learning_path.md             # 学习顺序、实操示例、信道关联与协议章节
     ├── channel_walkthrough.md       # 新手入口：RE/RB、时频坐标、长度及各信道教程
     ├── architecture.md             # 总体设计、边界与坐标约定
     ├── feature_matrix.md           # 已实现/未实现能力
@@ -141,4 +143,4 @@ SSB定位：src/ssb/NRSSB.py/.md及对应Transmitter/Receiver；公共src/common
 
 - 公式变量表必须每个变量单独一行；逐项解释用途、合法取值/关联约束、单位、维度/轴及适用示例。不得将多个变量的范围和形状合并后让读者按顺序猜测；同名符号按所在公式分别解释。协议原文与译文保持原状。
 
-参考信号首版定位：src/csirs/NRCSIRS.py/.md、src/ptrs/NRUplinkPTRS.py/.md和NRDownlinkPTRS.py/.md；共享_core.py；示例examples/csirs和examples/ptrs；统一MATLAB导出/比较/99例向量examples/common/NRReferenceSignals_*，验证documentation/validation/NRReferenceSignals_validation.md。当前单端口CSI-RS Row1/2、单层CP-OFDM PT-RS，不含共享信道自动数据避让集成。
+参考信号定位：src/csirs/NRCSIRS.py/.md、src/ptrs/NRUplinkPTRS.py/.md和NRDownlinkPTRS.py/.md；共享_core.py；示例examples/csirs和examples/ptrs；统一MATLAB导出/比较及向量examples/common/NRReferenceSignals_*，验证documentation/validation/NRReferenceSignals_validation.md。当前单端口CSI-RS Row1/2、单层CP-OFDM PT-RS含可选CPE插值，支持单层单DM-RS符号共享信道自动避让与相位补偿，入口examples/common/NRSharedChannel_PTRS_demo.py；100MHz入口在对应示例目录，回归在tests/integration/test_NR100MHz_30kHz.py。

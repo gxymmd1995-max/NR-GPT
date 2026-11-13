@@ -1,5 +1,7 @@
 # 物理信道新手阅读指南：坐标、长度与链路
 
+按顺序读各信道并动手练习，见 [NR Release 15 物理层学习路线](learning_path.md)。
+
 各信道教程入口：[PUCCH F0](../src/pucch/NRPUCCH0.md)、[F1](../src/pucch/NRPUCCH1.md)、[F2](../src/pucch/NRPUCCH2.md)、[F3](../src/pucch/NRPUCCH3.md)、[F4](../src/pucch/NRPUCCH4.md)、[PUSCH](../src/pusch/NRPUSCH.md)、[PDSCH](../src/pdsch/NRPDSCH.md)、[PDCCH](../src/pdcch/NRPDCCH.md)、[SRS](../src/srs/NRSRS.md)、[SSB](../src/ssb/NRSSB.md)、[PRACH](../src/prach/NRPRACH.md)。各类文档的“新手导读”串起信号生成、资源位置、配置差异和接收算法；原有字段表保留为API参考。
 
 ## 一格RE是什么
@@ -87,6 +89,16 @@ flowchart LR
 逻辑层/端口、物理发送天线、接收天线是三个概念。多层发射数组要通过明确的信道矩阵变成接收分支；cell.n_tx_antennas不会自动生成预编码。普通OFDM信道收发类输入输出完整slot，SRSReceiver直接输入已解调频域网格；PRACH独立处理时序。
 
 已知CFO、时延补偿参数是仿真调用者提供的同步信息，不代表接收机自动估计了它们。CRC通过、检测门限通过、LDPC收敛也不是同一判断。幅度/功率未做射频标定时不应解释成dBm。
+
+## CSI-RS 和 PT-RS 分别测什么
+
+| 参考信号 | 如何选位置 | 接收端如何使用 | 运行示例 |
+|---|---|---|---|
+| CSI-RS | 先选slot符号和CRB区间；Row1每RB放3个点，Row2每RB放1个点，半密度时只选偶数或奇数CRB | 用已知序列估计每个接收分支的平坦复增益，同时报告参考点的平均接收功率 | [100 MHz CSI-RS](../examples/csirs/NRCSIRS_100MHz_30kHz_demo.py) |
+| 上行PT-RS | 以PUSCH分配为范围，从关联DMRS序列取参考；按时域密度选符号、按频域密度选RB | 用已知信道合并参考点，测量每个参考符号的公共相位；可在参考之间插值后反旋数据点 | [100 MHz上行PT-RS](../examples/ptrs/NRUplinkPTRS_100MHz_30kHz_demo.py) |
+| 下行PT-RS | 以PDSCH分配为范围，同样按密度选符号及RB，采用下行规范的偏移表 | 同样测量并补偿公共相位 | [100 MHz下行PT-RS](../examples/ptrs/NRDownlinkPTRS_100MHz_30kHz_demo.py) |
+
+例如两个参考分别落在符号1和6，其相位由3.00 rad变到3.90 rad。直接测到的第二个相角约为−2.38 rad，因为相角会在±π折返；先解缠再插值，才能正确补偿中间符号。独立示例用一个普通数据 RE 演示这个过程。完整业务链示例可比较同一段接收波形在开启和关闭补偿时的星座与 CRC。[共享信道 PT-RS 对照](../examples/common/NRSharedChannel_PTRS_demo.py)
 
 ## 看图的顺序
 

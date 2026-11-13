@@ -7,15 +7,28 @@ from types import MappingProxyType
 
 import numpy as np
 
-
-CHANNEL_COLORS = MappingProxyType({
-    "FREE": "#F8FAFC", "RESERVED": "#94A3B8",
-    "SSB": "#E69F00", "PDCCH": "#0072B2", "PDSCH": "#009E73",
-    "PUSCH": "#9467BD", "PUCCH": "#D55E00", "PRACH": "#56B4E9", "SRS": "#8C564B",
-    "DMRS": "#F0E442", "PTRS": "#E377C2", "CSI_RS": "#17BECF",
-    "PSS": "#B8860B", "SSS": "#BCBD22", "PBCH": "#FF7F0E",
-    "STREAM_A": "#3B82F6", "STREAM_B": "#10B981", "ZERO": "#EF4444",
-})
+CHANNEL_COLORS = MappingProxyType(
+    {
+        "FREE": "#F8FAFC",
+        "RESERVED": "#94A3B8",
+        "SSB": "#E69F00",
+        "PDCCH": "#0072B2",
+        "PDSCH": "#009E73",
+        "PUSCH": "#9467BD",
+        "PUCCH": "#D55E00",
+        "PRACH": "#56B4E9",
+        "SRS": "#8C564B",
+        "DMRS": "#F0E442",
+        "PTRS": "#E377C2",
+        "CSI_RS": "#17BECF",
+        "PSS": "#B8860B",
+        "SSS": "#BCBD22",
+        "PBCH": "#FF7F0E",
+        "STREAM_A": "#3B82F6",
+        "STREAM_B": "#10B981",
+        "ZERO": "#EF4444",
+    }
+)
 UNKNOWN_COLOR = "#6B7280"
 _ALIASES = {"DM_RS": "DMRS", "PT_RS": "PTRS", "SS/PBCH": "SSB", "SS_PBCH": "SSB"}
 
@@ -36,7 +49,9 @@ def channel_color(owner: str) -> str:
     return CHANNEL_COLORS.get(_channel_name(owner), UNKNOWN_COLOR)
 
 
-def encode_owners(owners: np.ndarray) -> tuple[np.ndarray, tuple[str, ...], tuple[str, ...]]:
+def encode_owners(
+    owners: np.ndarray,
+) -> tuple[np.ndarray, tuple[str, ...], tuple[str, ...]]:
     """将二维/三维 Unicode owner 数组转为离散颜色索引、标签和颜色表。
 
     不修改输入。别名与 UE 后缀归并到同一类别，已知类别按固定表排序，未知

@@ -79,4 +79,4 @@ y = NROFDM(r.cell).demodulate(r.waveform())
 print(r.estimate(y)['channel_estimates'])  # 理想单支路约为1+0j
 ```
 
-[时域示例与绘图](../../examples/csirs/NRCSIRS_demo.py)，[实际MATLAB验证](../../documentation/validation/NRReferenceSignals_validation.md)。生成器只占自身参考资源；与PDSCH共存时须先按位置排除对应数据RE，当前PDSCH类尚未自动执行该速率匹配。
+[时域示例与绘图](../../examples/csirs/NRCSIRS_demo.py)、[100 MHz / 30 kHz示例](../../examples/csirs/NRCSIRS_100MHz_30kHz_demo.py)，[实际MATLAB验证](../../documentation/validation/NRReferenceSignals_validation.md)。生成器只占自身参考资源；与PDSCH共存时须先按位置排除对应数据RE，当前PDSCH类尚未自动执行该速率匹配。

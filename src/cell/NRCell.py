@@ -85,7 +85,9 @@ class NRCell:
         _integer("n_cell_id", self.n_cell_id, 0, 1007)
         _integer("subcarrier_spacing_khz", self.subcarrier_spacing_khz, 15, 240)
         if self.subcarrier_spacing_khz not in (15, 30, 60, 120, 240):
-            raise ValueError("R15 subcarrier_spacing_khz must be 15, 30, 60, 120 or 240")
+            raise ValueError(
+                "R15 subcarrier_spacing_khz must be 15, 30, 60, 120 or 240"
+            )
         if not isinstance(self.cyclic_prefix, str):
             raise TypeError("cyclic_prefix must be a str")
         if self.cyclic_prefix not in ("normal", "extended"):
@@ -113,8 +115,10 @@ class NRCell:
         _integer("bwp_start", self.bwp_start, 0, 2473)
         _integer("bwp_size", self.bwp_size, 1, 275)
         # TS 38.211 §4.4.5：BWP 的整个半开区间必须包含在载波内。
-        if (self.bwp_start < self.n_start_grid
-                or self.bwp_start + self.bwp_size > self.n_start_grid + self.n_size_grid):
+        if (
+            self.bwp_start < self.n_start_grid
+            or self.bwp_start + self.bwp_size > self.n_start_grid + self.n_size_grid
+        ):
             raise ValueError("BWP must be fully contained in the carrier grid")
 
     @property
@@ -254,8 +258,10 @@ class NRCell:
             return ((512 * self.KAPPA) >> self.numerology,) * self.symbols_per_subframe
         short_cp = (144 * self.KAPPA) >> self.numerology
         second_long = 7 * self.slots_per_subframe
-        return tuple(short_cp + (16 * self.KAPPA if symbol in (0, second_long) else 0)
-                     for symbol in range(self.symbols_per_subframe))
+        return tuple(
+            short_cp + (16 * self.KAPPA if symbol in (0, second_long) else 0)
+            for symbol in range(self.symbols_per_subframe)
+        )
 
     @property
     def symbol_lengths_tc(self) -> tuple[int, ...]:
@@ -281,7 +287,7 @@ class NRCell:
     def slot_cp_lengths_samples(self) -> tuple[int, ...]:
         """当前 n_slot 各符号的 CP 采样点数，数量为 symbols_per_slot。"""
         start = self.slot_in_subframe * self.symbols_per_slot
-        return self.cp_lengths_samples[start:start + self.symbols_per_slot]
+        return self.cp_lengths_samples[start : start + self.symbols_per_slot]
 
     @property
     def slot_symbol_lengths_samples(self) -> tuple[int, ...]:
@@ -329,7 +335,8 @@ class NRCell:
         index = self.slot_in_subframe * self.symbols_per_slot + symbol
         start_sample = self.symbol_start_samples[index]
         return {
-            "symbol": symbol, "symbol_in_subframe": index,
+            "symbol": symbol,
+            "symbol_in_subframe": index,
             "cp_length_tc": self.cp_lengths_tc[index],
             "useful_length_tc": self.useful_symbol_length_tc,
             "total_length_tc": self.symbol_lengths_tc[index],
@@ -383,7 +390,11 @@ class NRCell:
             ValueError: 索引超出当前载波网格。
         """
         _integer("grid_subcarrier", grid_subcarrier, 0, self.n_subcarriers - 1)
-        return (self.n_start_grid * self.SUBCARRIERS_PER_RB + grid_subcarrier) * self.subcarrier_spacing_khz * 1000
+        return (
+            (self.n_start_grid * self.SUBCARRIERS_PER_RB + grid_subcarrier)
+            * self.subcarrier_spacing_khz
+            * 1000
+        )
 
     def with_slot_offset(self, offset: int = 1) -> "NRCell":
         """返回前进/后退 offset 个时隙的新配置，跨帧时 SFN 模 1024。
@@ -400,7 +411,9 @@ class NRCell:
         if type(offset) is not int:
             raise TypeError("offset must be an int (bool is not accepted)")
         frame_delta, slot = divmod(self.n_slot + offset, self.slots_per_frame)
-        return replace(self, n_frame=(self.n_frame + frame_delta) % self.SFN_MODULUS, n_slot=slot)
+        return replace(
+            self, n_frame=(self.n_frame + frame_delta) % self.SFN_MODULUS, n_slot=slot
+        )
 
     def to_dict(self) -> dict[str, int | str]:
         """返回十二个初始化字段的独立字典；可用 NRCell(**result) 重建。

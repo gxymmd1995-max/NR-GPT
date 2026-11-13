@@ -30,7 +30,9 @@ def test_matlab_gold_bits(request):
     assert len(reference["cases"]) == 20
     for case in reference["cases"]:
         actual = NRCommon.gold_sequence(**case["input"])
-        np.testing.assert_array_equal(actual, np.asarray(case["bits"], dtype=np.uint8).reshape(-1))
+        np.testing.assert_array_equal(
+            actual, np.asarray(case["bits"], dtype=np.uint8).reshape(-1)
+        )
 
 
 @pytest.mark.matlab
@@ -41,8 +43,14 @@ def test_matlab_srs_uv_common_interface(request):
         if not expected["active"]:
             continue
         cell = NRCell(**config["cell"])
-        uv = NRCommon.srs_sequence_uv(config["sequence_id"], cell.n_slot,
-            cell.symbols_per_slot-1-config["start_position"], config["n_symbols"],
-            expected["sequence_length"], config["group_seq_hopping"], cell.symbols_per_slot)
+        uv = NRCommon.srs_sequence_uv(
+            config["sequence_id"],
+            cell.n_slot,
+            cell.symbols_per_slot - 1 - config["start_position"],
+            config["n_symbols"],
+            expected["sequence_length"],
+            config["group_seq_hopping"],
+            cell.symbols_per_slot,
+        )
         np.testing.assert_array_equal(uv["u"], np.atleast_1d(expected["seq_group"]))
         np.testing.assert_array_equal(uv["v"], np.atleast_1d(expected["n_seq"]))

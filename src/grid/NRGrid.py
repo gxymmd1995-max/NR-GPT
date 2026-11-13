@@ -106,7 +106,10 @@ class NRGrid:
             raise ValueError(f"{name} must be one-dimensional")
         if array.size == 0:
             return np.empty(0, dtype=np.int64)
-        if array.dtype.kind not in "iu" or any(isinstance(value, (bool, np.bool_)) for value in np.asarray(values, dtype=object).flat):
+        if array.dtype.kind not in "iu" or any(
+            isinstance(value, (bool, np.bool_))
+            for value in np.asarray(values, dtype=object).flat
+        ):
             raise TypeError(f"{name} must contain integers, not bool or float")
         if np.any(array < 0) or np.any(array >= size):
             raise ValueError(f"{name} must be in [0, {size - 1}]")
@@ -120,8 +123,13 @@ class NRGrid:
         if array.shape == (0,):
             return np.empty((0, 3), dtype=np.int64)
         if array.ndim != 2 or array.shape[1] != 3:
-            raise ValueError("indices must have shape (N, 3): [port, symbol, subcarrier]")
-        if array.dtype.kind not in "iu" or any(isinstance(value, (bool, np.bool_)) for value in np.asarray(indices, dtype=object).flat):
+            raise ValueError(
+                "indices must have shape (N, 3): [port, symbol, subcarrier]"
+            )
+        if array.dtype.kind not in "iu" or any(
+            isinstance(value, (bool, np.bool_))
+            for value in np.asarray(indices, dtype=object).flat
+        ):
             raise TypeError("indices must contain integers, not bool or float")
         if np.any(array < 0) or np.any(array >= np.asarray(self.shape)):
             raise ValueError(f"indices are outside grid shape {self.shape}")
@@ -132,10 +140,14 @@ class NRGrid:
         if not isinstance(owner, str):
             raise TypeError("owner must be a str")
         if not owner.strip() or len(owner) > self.OWNER_MAX_LENGTH:
-            raise ValueError(f"owner must contain 1..{self.OWNER_MAX_LENGTH} nonblank characters")
+            raise ValueError(
+                f"owner must contain 1..{self.OWNER_MAX_LENGTH} nonblank characters"
+            )
         return owner
 
-    def _write_indices(self, indices: Sequence[Sequence[int]], owner: str, overwrite: bool) -> np.ndarray:
+    def _write_indices(
+        self, indices: Sequence[Sequence[int]], owner: str, overwrite: bool
+    ) -> np.ndarray:
         """在修改前检查标签、坐标唯一性与已占用冲突，不修改数据。"""
         self._owner(owner)
         if type(overwrite) is not bool:
@@ -147,8 +159,12 @@ class NRGrid:
             raise ValueError("resource collision: RE is already mapped or reserved")
         return array
 
-    def bwp_indices(self, prbs: Sequence[int], symbols: Sequence[int],
-                    ports: Sequence[int] | None = None) -> np.ndarray:
+    def bwp_indices(
+        self,
+        prbs: Sequence[int],
+        symbols: Sequence[int],
+        ports: Sequence[int] | None = None,
+    ) -> np.ndarray:
         """生成活动 BWP 内 RB 的全部 RE 坐标，依据 §4.4.4.4/§4.4.5。
 
         prbs 是 BWP 内 PRB 编号；symbols 是当前时隙符号编号；ports 为局部
@@ -157,14 +173,28 @@ class NRGrid:
         """
         prbs = self._axis(prbs, "prbs", self.cell.bwp_size)
         symbols = self._axis(symbols, "symbols", self.n_symbols)
-        ports = self._axis(range(self.n_ports) if ports is None else ports, "ports", self.n_ports)
-        start = (self.cell.bwp_start - self.cell.n_start_grid) * self.cell.SUBCARRIERS_PER_RB
-        rows = [(int(port), int(symbol), start + int(prb) * 12 + subcarrier)
-                for port in ports for symbol in symbols for prb in prbs for subcarrier in range(12)]
+        ports = self._axis(
+            range(self.n_ports) if ports is None else ports, "ports", self.n_ports
+        )
+        start = (
+            self.cell.bwp_start - self.cell.n_start_grid
+        ) * self.cell.SUBCARRIERS_PER_RB
+        rows = [
+            (int(port), int(symbol), start + int(prb) * 12 + subcarrier)
+            for port in ports
+            for symbol in symbols
+            for prb in prbs
+            for subcarrier in range(12)
+        ]
         return np.asarray(rows, dtype=np.int64).reshape(-1, 3)
 
-    def map(self, indices: Sequence[Sequence[int]], values: object, owner: str,
-            overwrite: bool = False) -> int:
+    def map(
+        self,
+        indices: Sequence[Sequence[int]],
+        values: object,
+        owner: str,
+        overwrite: bool = False,
+    ) -> int:
         """原子写入复数值并标记占用；全部验证通过后才修改网格。
 
         values 可为可转换为复数的标量（广播）或与 N 个坐标等长的一维向量。
@@ -178,7 +208,9 @@ class NRGrid:
         if symbols.ndim == 0:
             symbols = np.full(len(array), symbols, dtype=self.DATA_DTYPE)
         if symbols.shape != (len(array),):
-            raise ValueError("values must be a finite scalar or a finite vector of length N")
+            raise ValueError(
+                "values must be a finite scalar or a finite vector of length N"
+            )
         key = tuple(array.T)
         self._data[key] = symbols
         self._owners[key] = owner
@@ -209,8 +241,14 @@ class NRGrid:
 
     def summary(self) -> dict[str, object]:
         """返回配置、轴顺序、数据类型、尺寸和占用数量，不复制整个网格。"""
-        return {"cell": self.cell.to_dict(), "n_ports": self.n_ports,
-                "domain": self.DOMAIN, "axis_order": self.AXIS_ORDER,
-                "shape": self.shape, "dtype": str(self._data.dtype),
-                "total_re_count": self.total_re_count, "occupied_re_count": self.occupied_re_count,
-                "free_re_count": self.free_re_count}
+        return {
+            "cell": self.cell.to_dict(),
+            "n_ports": self.n_ports,
+            "domain": self.DOMAIN,
+            "axis_order": self.AXIS_ORDER,
+            "shape": self.shape,
+            "dtype": str(self._data.dtype),
+            "total_re_count": self.total_re_count,
+            "occupied_re_count": self.occupied_re_count,
+            "free_re_count": self.free_re_count,
+        }

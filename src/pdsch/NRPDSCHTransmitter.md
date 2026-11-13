@@ -31,3 +31,6 @@ sent = NRPDSCHTransmitter(r,n_ref=1440).transmit([0,1]*128)
 下行共享信道承载业务传输块：CRC → LDPC → 速率匹配/RV → 数据加扰 → QAM → 1～4层映射 → DMRS与数据RE映射 → 普通OFDM。编码位数由可用数据RE、层数与调制阶数决定，不能用整个RB矩形面积直接计算。当前传输块长度和目标码率显式输入，不自动执行MCS/TBS调度。
 
 [NRPDSCH的时频位置、长度、配置变化及图例](NRPDSCH.md)与[统一坐标/采样点换算](../../documentation/channel_walkthrough.md)提供完整阅读顺序。当前类的输入输出单位、形状及异常约束以上文字段/API节为准。
+
+
+资源配置 `ptrs_config` 后，`transmit()` 按扣除 PT-RS RE 后的 `coded_length` 编码，并在同一网格中写入数据、DM-RS 和 PT-RS。`beta` 对三者统一缩放。位置及允许的配置见资源类文档。

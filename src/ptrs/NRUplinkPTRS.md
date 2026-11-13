@@ -52,19 +52,23 @@ $$
 | indices | int[RE,3]，列为本地端口0、slot符号、载波局部k；按时间后频率排序 |
 | generate | complex[RE]单位模参考，不含beta，不执行数据加扰 |
 | map_to_grid(grid,beta=1) | 写入同cell单端口NRGrid，beta有限非负线性幅度，返回点数；已有占用冲突时报错 |
-| estimate_phase(rx_grid,channel_estimates) | 有限complex[Rx,L,K]网格及非零有限complex[Rx]平坦信道；返回下面字段 |
+| estimate_phase(rx_grid, channel_estimates, *, interpolate=False) | 有限complex[Rx,L,K]网格及非零有限complex[Rx]平坦信道；interpolate是布尔标量，True时对分配内全部符号补偿；返回下表字段 |
 
 | 输出 | 含义 | 范围/单位 | 维度 |
 |---|---|---|---|
 | symbols | 实际PT-RS符号号，解释相位数组顺序 | 0..L−1，符号索引 | int[S] |
 | phase_rad | 每参考符号跨Rx/频率合并的相角估计 | −π..π，rad | float[S] |
-| corrected_grid | 在上述参考符号上按估计相角反旋后的新网格 | 归一化复幅度 | complex[Rx,L,K] |
+| corrected_grid | 反旋后的网格副本，输入网格不修改 | 归一化复幅度 | complex[Rx,L,K] |
+| correction_symbols | 实际应用反旋的符号号；默认等于symbols，开启插值后覆盖共享信道分配；无参考时为空 | 0..L−1，符号索引 | int[C] |
+| correction_phase_rad | 对应每个补偿符号的相位；默认等于phase_rad，插值模式下允许超出±π | 有限实数，rad | float[C] |
 
-接收算法为工程方案，非规范强制：合并量为sum(conj(H)×Y×conj(r))，相位取angle。H必须由外部DMRS估计等获得，不能把未知真实信道偷传为接收机估计；示例明确使用已知H=1来隔离相位验证。全零相关拒绝输出无依据相位。不同参考符号间不做时间插值/解缠绕，非PT-RS符号保留原值；频选信道应先在外部均衡。
+接收算法为工程方案，非规范强制：合并量为sum(conj(H)×Y×conj(r))，相位取angle。H必须由外部DMRS估计等获得，不能把未知真实信道偷传为接收机估计；示例明确使用已知H=1来隔离相位验证。全零相关拒绝输出无依据相位。默认保持原行为：只对有PT-RS的符号反旋，作用于这些符号的全部子载波。开启 `interpolate=True` 时先按时间解缠，再在相邻参考之间按符号索引线性插值；首尾采用最近参考的相位。插值模式只反旋本资源的符号和RB，保留其他用户的资源。无参考时返回空相位数组和未修改的网格副本。频选信道应先在外部均衡。
+
+例如参考符号1和6的相位分别为3.00 rad和−2.38 rad；解缠后第二个参考约为3.90 rad，符号4的插值约为3.54 rad。相邻参考之间的真实相位变化需要小于π，稀疏参考无法区分更大的跳变。首尾保持只提供近似估计，不保证追踪快速变化。此补偿为项目算法，TS 38.211 V15.2.0只规定PT-RS资源与序列。
 
 ## 与数据共存的当前边界
 
-本资源可映射到空网格或已正确避让的网格，不覆盖共享信道数据。现有NRPUSCHTransmitter/Receiver尚未自动插入、排除PT-RS数据RE或自动调用相位补偿，因此**不能先发送完整数据，再用overwrite强行替换PT-RS**；那会造成编码位预算不匹配。本首版提供独立资源/序列/相位测量接口及参考专用时域演示，不宣称完成业务链路的PT-RS集成。
+业务链可在 [NRPUSCH](../pusch/NRPUSCH.md) 上设置 `ptrs_config=(1, 2, 0)`，自动扣除数据 RE、插入参考并在接收机生成软比特前校正相位。集成模式支持单层 CP-OFDM 和一个 DM-RS 符号。独立接口仍可用于空网格上的参考生成与测量。
 
 ```python
 from cell import NRCell
@@ -74,4 +78,4 @@ r = NRUplinkPTRS(NRPUSCH(NRCell(n_size_grid=52)), time_density=2)
 print(r.indices()[:3], r.generate()[:3])
 ```
 
-[时域相位演示](../../examples/ptrs/NRUplinkPTRS_demo.py)，[实际MATLAB验证](../../documentation/validation/NRReferenceSignals_validation.md)。图仅显示、不保存。
+[时域相位演示](../../examples/ptrs/NRUplinkPTRS_demo.py)、[100 MHz / 30 kHz示例](../../examples/ptrs/NRUplinkPTRS_100MHz_30kHz_demo.py)，[实际MATLAB验证](../../documentation/validation/NRReferenceSignals_validation.md)。图仅显示、不保存。

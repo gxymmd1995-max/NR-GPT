@@ -595,16 +595,84 @@
       "index_equal": true,
       "max_error": 0.0,
       "passed": true
+    },
+    {
+      "case": 99,
+      "index_equal": true,
+      "max_error": 1.5700924586837752e-16,
+      "passed": true
+    },
+    {
+      "case": 100,
+      "index_equal": true,
+      "max_error": 1.5700924586837752e-16,
+      "passed": true
+    },
+    {
+      "case": 101,
+      "index_equal": true,
+      "max_error": 1.5700924586837752e-16,
+      "passed": true
+    },
+    {
+      "case": 102,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 103,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true
+    },
+    {
+      "case": 104,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true,
+      "data_index_equal": true,
+      "coded_length_equal": true,
+      "data_max_error": 1.5700924586837752e-16
+    },
+    {
+      "case": 105,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true,
+      "data_index_equal": true,
+      "coded_length_equal": true,
+      "data_max_error": 1.5700924586837752e-16
+    },
+    {
+      "case": 106,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true,
+      "data_index_equal": true,
+      "coded_length_equal": true,
+      "data_max_error": 1.5700924586837752e-16
+    },
+    {
+      "case": 107,
+      "index_equal": true,
+      "max_error": 0.0,
+      "passed": true,
+      "data_index_equal": true,
+      "coded_length_equal": true,
+      "data_max_error": 1.5700924586837752e-16
     }
   ],
   "passed": true,
   "sha256": {
-    "src/csirs/NRCSIRS.py": "50b98ff61daa3d770108ffbfde4ceb524841faf733a0f196f6c95c04264be898",
-    "src/ptrs/NRUplinkPTRS.py": "0dd1a5d97f5f33e60377824aca921e300b0b8a4192fc03a78838cc959b8342bf",
-    "src/ptrs/NRDownlinkPTRS.py": "7952832ac54d85af4e51610b81f1a259378a69a3fc40bb94a71fcd81f326c556",
-    "src/ptrs/_core.py": "ceb5339ecee6492aed3e10b7a76c843500638b846ea206dc155b04a75a8ee41b",
-    "examples/common/export_NRReferenceSignals_reference.m": "d613f6a62d11fa9d319dca456cb09b6887f01ce96b94de485744acd8f4b91800",
-    "examples/common/compare_NRReferenceSignals_reference.py": "76b80cb4758c4eae5807ce55a9351c835144f3c117e034800c3baaf82ec2ff2e",
-    "examples/common/NRReferenceSignals_reference.json": "a14952eb4c425f4b2ebd9476bc12fa4070684e02b68f30c8e0ba977ae6f8cb26"
+    "src/csirs/NRCSIRS.py": "fbb2f44dec3f9ebc64ac16009a9da03a0fb95b0d78c31231dd94cec53ca55636",
+    "src/ptrs/NRUplinkPTRS.py": "09507f8e4850ab9f9418f37ca1d3afcbc8dc6c4c02b91a7fdff4b6ee0de3c04b",
+    "src/ptrs/NRDownlinkPTRS.py": "30abc04ddc60bb9e8e79e94897d0ac43eb0bf523a9c13dbb9d2a1eb46fdacbb8",
+    "src/ptrs/_core.py": "54520b11cb8945ddc31eb87150018ec0183390d9a478b636c796bfb3469c012d",
+    "src/pdsch/NRPDSCH.py": "3b3c540cad9c9b9f761dd0cc98d9c77e840087ed7d8f6c173e8ba23da2a685c9",
+    "src/pusch/NRPUSCH.py": "35fee7755ee08df69bd9082cbcdce4f25a09ba5f36fbd9c08c64b8199e69bc8c",
+    "examples/common/export_NRReferenceSignals_reference.m": "72d7cc9a8a493e346ac05994f4aa7593ba3a413be2db2ac3221ed834cad0f99a",
+    "examples/common/compare_NRReferenceSignals_reference.py": "2beb13a6742a4b3135e95d3420346bb57a321962f981b4a580ee1d76f8b0cdf8",
+    "examples/common/NRReferenceSignals_reference.json": "7fde965ab01f33429e43944516a62fe780dab8c76a1d3432fc26d3f057bab3de"
   }
 }

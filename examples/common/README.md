@@ -1,5 +1,45 @@
 # NRCommon 序列示例
 
+## 各信道和参考信号的配置对照
+
+[NRChannel_learning_demo.py](NRChannel_learning_demo.py) 汇集 8 组、23 个可运行的对照案例。每组用同一张图并排显示资源网格和发射波形的 I 分量。终端报告 CRC、参考 RE 数、增益误差或相位误差。
+
+```powershell
+# 每次打开一个主题，先看 PDCCH 的 CORESET
+.venv\Scripts\python.exe -X utf8 examples/common/NRChannel_learning_demo.py pdcch
+# 比较下行共享信道的时域长度
+.venv\Scripts\python.exe -X utf8 examples/common/NRChannel_learning_demo.py pdsch
+# 固定 PDSCH 分配和 TB，对照均衡星座和 CRC
+.venv\Scripts\python.exe -X utf8 examples/common/NRChannel_learning_demo.py pdsch-snr
+# 批量验证全部例子
+.venv\Scripts\python.exe -X utf8 examples/common/NRChannel_learning_demo.py all --no-plot
+```
+
+| 命令中的主题 | 改变的设置 | 看什么 | 深入阅读或练习 |
+|---|---|---|---|
+| `pdcch` | CORESET 占 1、2、3 个符号，固定 AL4 | 同一个候选的时频形状变化，数据 RE 始终为 216，编码长度始终为 432 bit | [PDCCH 资源与 CCE 映射](../../src/pdcch/NRPDCCH.md) |
+| `pdsch`、`pusch` | Type-A 分配 4、7、14 个符号，固定 4 RB、QPSK 和 64-bit TB | 数据 RE 数分别为 168、312、624。观察附加 DM-RS 随分配长度出现的位置 | [PDSCH 示例](../pdsch/README.md) · [PUSCH 示例](../pusch/README.md) |
+| `ssb` | PCI 17、18，使用同一个已知时频窗口 | 区分 PSS、SSS、PBCH 和 PBCH DM-RS，比较两种 PCI 的 DM-RS 子载波偏移 | [SSB 搜索示例](../ssb/README.md) |
+| `srs` | SRS 1、2、4 个符号，固定 comb 2，同频重复 | 每符号占 24 个梳齿 RE。符号数增加时，观察资源向时隙前部延伸 | [SRS 多用户估计示例](../srs/README.md) |
+| `csirs` | Row 1 密度 3、Row 2 密度 1 和 0.5，固定 24 RB | 对照 72、24、12 个参考 RE。半密度只在偶数 CRB 上有参考点 | [CSI-RS 测量示例](../csirs/README.md) |
+| `ul-ptrs`、`dl-ptrs` | 时间密度参数 1、2、4，固定 8 RB、频率密度参数 2 | 比较参考符号列表，观察遇到 DM-RS 后参考符号位置的变化 | [上下行 PT-RS 补偿示例](../ptrs/README.md) |
+
+表内案例为项目配置，RE 数由实际资源映射得出。协议依据为 TS 38.211 V15.2.0 §7.3.2 和原表 7.3.2.1-1（PDCCH）、§7.3.1 / §6.3.1 和 §7.4.1.1 / §6.4.1.1（共享信道与 DM-RS）、§7.4.3 和原表 7.4.3.1-1（SSB）、§6.4.1.4（SRS）、§7.4.1.5 和原表 7.4.1.5.3-1（CSI-RS）、§6.4.1.2 / §7.4.1.2（PT-RS）。[协议索引](../../documentation/spec_manifest.md)
+
+PDCCH、PDSCH、PUSCH 用带噪时域收发验证数据位和 CRC。SSB 在给定时频窗口内搜索 PCI 并验证广播载荷。SRS 和 CSI-RS 在固定复增益下演示参考信号估计，PT-RS 在已知平坦信道下对照注入的逐符号相位。右图统一画发射波形。新增对照由 Python 回归验证，各模块的 MATLAB 覆盖范围见[功能矩阵](../../documentation/feature_matrix.md)。
+
+PUCCH 和 PRACH 有独立的长度及格式对照入口。[PUCCH 符号数](../pucch/README.md#不同符号数的时域对照) · [PRACH 长短格式及间隔](../prach/README.md#对照-13-种-prach-格式的时域波形)
+
+配置对照图用同一组 OFDM 符号边界标出网格列和时域样点，终端按类别列出 RE 数。`pdsch-snr` 固定 7 个符号、4 RB、QPSK、64-bit TB 与噪声随机种子，只改 `NRChannel` 的时域样点 SNR。25 dB 案例通过 CRC，−20 dB 案例仍检测到信号但 CRC 失败。此结果对应示例的固定配置与种子，SNR 包含全时隙样点的功率口径。
+
+## 共享信道的 PT-RS 补偿
+
+[NRSharedChannel_PTRS_demo.py](NRSharedChannel_PTRS_demo.py) 固定同一段接收波形，对照补偿前后的星座、CRC 及逐符号相位。将命令末尾的 `dl` 换成 `ul` 即可观察 PUSCH。
+
+```powershell
+.venv\Scripts\python.exe -X utf8 examples/common/NRSharedChannel_PTRS_demo.py dl
+```
+
 ## OFDM和逐符号相位
 
 [NROFDM](../../src/common/NROFDM.md)进行单时隙OFDM调制/解调，[NRPhaseRotation](../../src/common/NRPhaseRotation.md)提供R15逐符号载频补偿和提前FFT窗口/定时相位因子。TA/噪声/CFO在 [channel示例](../channel/README.md)。

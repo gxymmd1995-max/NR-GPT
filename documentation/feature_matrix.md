@@ -40,15 +40,15 @@ PUCCH F2：首版3～11位UCI小块编码/软ML，1/2符号、连续1～16RB、�
 
 PUCCH F4：已实现固定1RB、SF2/4及全部OCC、QPSK/π/2-BPSK、DMRS/额外DMRS/跳频、公共小块/Polar UCI及完整时域收发。实际MATLAB普通CP单用户132组通过；普通/扩展CP带噪链路、四用户OCC复用有Python测试，尚无独立MATLAB该类多用户/扩展CP向量。接收平坦每跳信道，非联合均衡或SCL。
 
-PUSCH已扩展1～4层单码字CP-OFDM、连续RB、QPSK/16/64/256QAM、Type-A位置2/3、DMRS Type1/2单/双符号、附加位置与频域/时域OCC端口；每RB联合LS估计有效MIMO信道并ZF均衡、逆层映射及UL-SCH解码。实际MATLAB新增64例MIMO及原32例单层通过；公共UL-SCH5例保留。见[验证报告](validation/NRPUSCH_mimo_validation.md)。扩展CP/噪声/CFO/延迟仅Python链路验证；不含多码块、HARQ合并、DFT-s-OFDM、动态TPMI预编码、UCI/PTRS、Type-B、跳频或时变信道插值。
+PUSCH已扩展1～4层单码字CP-OFDM、连续RB、QPSK/16/64/256QAM、Type-A位置2/3、DMRS Type1/2单/双符号、附加位置与频域/时域OCC端口；每RB联合LS估计有效MIMO信道并ZF均衡、逆层映射及UL-SCH解码。实际MATLAB新增64例MIMO及原32例单层通过；公共UL-SCH5例保留。见[验证报告](validation/NRPUSCH_mimo_validation.md)。扩展CP/噪声/CFO/延迟仅Python链路验证；不含多码块、HARQ合并、DFT-s-OFDM、动态TPMI预编码、UCI、Type-B、跳频或时变信道插值。
 
-PDSCH当前：1～4层单码字、Type-A DMRS Type1/2、单/双符号、附加位置及端口OCC；单码块DL-SCH/Nref、联合LS信道估计与ZF均衡。实际MATLAB：原单层32例+多层64例、DL-SCH5例；普通/扩展CP带噪MIMO、秩亏拒绝有Python测试。5～8层/双码字、Type-B、多码块、动态预编码、频选/时间插值、MMSE、PTRS/预留RE及HARQ合并仍待扩展。
+PDSCH当前：1～4层单码字、Type-A DMRS Type1/2、单/双符号、附加位置及端口OCC；单码块DL-SCH/Nref、联合LS信道估计与ZF均衡。实际MATLAB：原单层32例+多层64例、DL-SCH5例；普通/扩展CP带噪MIMO、秩亏拒绝有Python测试。5～8层/双码字、Type-B、多码块、动态预编码、频选/时间插值、MMSE、通用预留RE及HARQ合并仍待扩展。
 
 PRACH：固定R15，长0/1/2/3与短A1/A2/A3/B1/B2/B3/B4/C0/C2，非受限集合、64前导、ZC/DFT、独立FFT/CP、BWP频域映射、短格式半毫秒CP扩展；实际MATLAB44波形+32序列边界例通过。接收为已知RO/可选已知CFO补偿、周期平均/64候选相关、样点峰值时延与多Rx合并；三UE带噪延迟例通过。无受限Type A/B、完整配置表调度、RAR/Msg3、盲CFO、SIC或分数采样。详见[验证边界](validation/NRPRACH_validation.md)。
 
 PDCCH首版：显式候选、六CRB对齐BWP、duration1/2/3、聚合等级1/2/4/8/16、两种REG映射、单端口DMRS/QPSK和完整DCI Polar/CRC时域收发。实际MATLAB15例通过。无CORESET0/完整SearchSpace盲搜调度、DCI字段打包、allContiguousRBs或SCL。见[验证](validation/NRPDCCH_validation.md)。
 
-100MHz/30kHz：全部已实现的10类信道/格式新增代表性时域用例，273PRB，PUSCH/PDSCH满带宽、SRS272RB、控制信道按规则局部分配。实际MATLAB10例活动RE/编码位/2048时域探针/整段能量独立比较通过；并非全参数/吞吐率测试。见validation/NR100MHz_30kHz_validation.md。
+100 MHz / 30 kHz：14个代表性时域用例，包含SSB和CSI-RS/上下行PT-RS。273 PRB载波上，PUSCH/PDSCH满带宽，SRS和CSI-RS示例使用272 RB，控制信道按规则局部分配。各类独立参考的比较范围见[用例矩阵](validation/NR100MHz_30kHz_validation.md)。
 
 SSB：PSS/SSS/PBCH/DMRS、240×4含零保留、BCH 24+8位载荷/交织/选择性Gold/CRC24C/Polar与E864；普通CP，同numerology，FR1 Lmax4/8及FR2 Lmax64。已知窗口内PCI与DMRS索引/半帧搜索、LS/MRC/SC恢复MIB/SFN。实际MATLAB25例含100MHz/30kHz通过；15/240kHz尚无独立MATLAB案例。无盲时间/CFO、Case A～E调度、SCL、混合numerology、MIB语义打包或CORESET0。见validation/NRSSB_validation.md。
 
@@ -69,9 +69,11 @@ SSB：PSS/SSS/PBCH/DMRS、240×4含零保留、BCH 24+8位载荷/交织/选择�
 | 下行同步信号 | PSS | 已实现，src/ssb |
 | 下行同步信号 | SSS | 已实现，src/ssb |
 | 下行参考信号 | CSI-RS | 已实现单端口Row1/2、NZP/ZP、独立OFDM/平坦LS；多端口Row3～18待扩展 |
-| 上行参考信号 | PUSCH PT-RS | 已实现单层CP-OFDM资源、序列及已知信道CPE测量；变换预编码与业务链集成待扩展 |
-| 下行参考信号 | PDSCH PT-RS | 已实现单层资源、序列及已知信道CPE测量；业务链集成待扩展 |
+| 上行参考信号 | PUSCH PT-RS | 已实现单层CP-OFDM资源、序列及已知信道CPE测量及可选插值补偿；已接入单层单DM-RS符号业务链，变换预编码待扩展 |
+| 下行参考信号 | PDSCH PT-RS | 已实现单层资源、序列及已知信道CPE测量及可选插值补偿；已接入单层单DM-RS符号业务链 |
 
 尚未覆盖的主要配置还包括：共享信道Type-B、多码块/HARQ合并、PDSCH双码字/5～8层、PUSCH变换预编码/UCI复用，以及PRACH受限集合/完整RO调度。它们是已有模块的能力缺口，不应通过新增空类或空文档标记为完成。新增实现仍须有单元测试、真实MATLAB参考与100%语句/分支覆盖。
 
-参考信号首版：真实R2024a/5G Toolbox99例序列/RE坐标通过；三个类和共享核心100%语句/分支覆盖。明确边界见[验证报告](validation/NRReferenceSignals_validation.md)。
+参考信号：真实R2024a/5G Toolbox共108例通过，含4例集成数据坐标、位数及QPSK；三个类和共享核心100%语句/分支覆盖。明确边界见[验证报告](validation/NRReferenceSignals_validation.md)。
+
+PT-RS 业务链已支持单层单 DM-RS 符号的自动数据 RE 避让、编码位预算和接收相位补偿。可继续扩展CSI-RS多端口CDM、SSB盲捕获、PRACH受限集合及PDCCH SearchSpace调度；当前独立参考信号和显式资源配置不等同于这些功能已实现。

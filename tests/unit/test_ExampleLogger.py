@@ -33,7 +33,10 @@ def test_call_chain_and_complete_snapshot(tmp_path, capsys):
     assert "CALL NRCell.symbol_timing" in text
     assert "path=NRCell.symbol_timing -> NRCell.symbol_start_samples" in text
     assert "elapsed_ms=" in text
-    assert "STATE cell.properties.cp_lengths_samples = " + repr(cell.cp_lengths_samples) in text
+    assert (
+        "STATE cell.properties.cp_lengths_samples = " + repr(cell.cp_lengths_samples)
+        in text
+    )
     assert "FINISH status=OK" in text
     assert "A useful message" in text
     console = capsys.readouterr().out
@@ -125,7 +128,9 @@ def test_property_errors_and_plain_instance(tmp_path, monkeypatch):
 
 def test_example_scope_arguments_and_noise_filter(tmp_path):
     example = tmp_path / "example.py"
-    code = compile("def operation(a, *args, **kwargs):\n    return a\n", str(example), "exec")
+    code = compile(
+        "def operation(a, *args, **kwargs):\n    return a\n", str(example), "exec"
+    )
     namespace = {"__file__": str(example)}
     exec(code, namespace)
     with ExampleLogger(example, console_level="ERROR") as log:
@@ -148,17 +153,22 @@ def test_profile_events_directly_with_coverage(tmp_path):
     handler = logging.StreamHandler(stream)
     log.logger.addHandler(handler)
     namespace = {"__file__": str(example), "log": log, "inspect": inspect}
-    exec(compile(
-        "def outer(a, *args, **kwargs):\n"
-        "    frame = inspect.currentframe()\n"
-        "    log._profile(frame, 'call', None)\n"
-        "    inner()\n"
-        "    log._profile(frame, 'return', a)\n"
-        "def inner(self=None):\n"
-        "    frame = inspect.currentframe()\n"
-        "    log._profile(frame, 'call', None)\n"
-        "    log._profile(frame, 'return', None)\n",
-        str(example), "exec"), namespace)
+    exec(
+        compile(
+            "def outer(a, *args, **kwargs):\n"
+            "    frame = inspect.currentframe()\n"
+            "    log._profile(frame, 'call', None)\n"
+            "    inner()\n"
+            "    log._profile(frame, 'return', a)\n"
+            "def inner(self=None):\n"
+            "    frame = inspect.currentframe()\n"
+            "    log._profile(frame, 'call', None)\n"
+            "    log._profile(frame, 'return', None)\n",
+            str(example),
+            "exec",
+        ),
+        namespace,
+    )
     namespace["outer"](7, 8, note="hello")
     namespace["outer"](9)  # 第二次调用覆盖代码信息缓存命中。
     assert not log._stack
@@ -178,7 +188,17 @@ def test_profile_events_directly_with_coverage(tmp_path):
     assert next(log._describe_code(inspect.currentframe()) for _ in range(1)) is None
     # 独立生成类构造器，验证 <string> 定位，而不是把生成代码位置当作源码行号。
     generated = {"__file__": str(example), "log": log, "inspect": inspect}
-    exec(compile("def created(self):\n    return log._describe_code(inspect.currentframe())\n", "<string>", "exec"), generated)
-    assert generated["created"](NRCell()) == ("NRCell.created", "<generated:example.py>")
+    exec(
+        compile(
+            "def created(self):\n    return log._describe_code(inspect.currentframe())\n",
+            "<string>",
+            "exec",
+        ),
+        generated,
+    )
+    assert generated["created"](NRCell()) == (
+        "NRCell.created",
+        "<generated:example.py>",
+    )
     log.logger.removeHandler(handler)
     handler.close()

@@ -1,5 +1,7 @@
 # PUCCH Format 0完整时域收发示例
 
+比较 F0～F4 的占用时长与 DM-RS 位置，见[不同符号数的时域对照](#不同符号数的时域对照)。
+
 ## 12种循环移位同图显示
 
 运行[plot_NRPUCCH0_cyclic_shifts.py](plot_NRPUCCH0_cyclic_shifts.py)：
@@ -237,3 +239,26 @@ F2当前56组参考包含Polar长UCI；此前36组/仅3～11位为历史首版�
 - [NRPUCCH4新手导读](../../src/pucch/NRPUCCH4.md)：生成步骤、时频位置、配置差异、接收算法与图例。
 
 文档配图：[NRPUCCH0_documentation.png](NRPUCCH0_documentation.png)、[NRPUCCH1_documentation.png](NRPUCCH1_documentation.png)、[NRPUCCH2_documentation.png](NRPUCCH2_documentation.png)、[NRPUCCH3_documentation.png](NRPUCCH3_documentation.png)、[NRPUCCH4_documentation.png](NRPUCCH4_documentation.png)。由[公共绘图脚本](../common/plot_NRChannel_documentation.py)生成；默认只显示，显式`--save`才导出文档PNG。
+## 不同符号数的时域对照
+
+[NRPUCCH_symbol_counts_demo.py](NRPUCCH_symbol_counts_demo.py) 默认运行 13 组。所有案例使用 60 kHz SCS，把资源放在 slot 末尾，固定 PRB 与 UCI、关闭跳频，便于逐组比较符号数的影响。
+
+| 格式 | 普通 CP 可演示的符号数 | 扩展 CP 可演示的符号数 | 默认对照 |
+|---|---|---|---|
+| F0、F2 | 1、2 | 1、2 | 1 和 2 |
+| F1、F3、F4 | 4～14 | 4～12 | 4、7 和当前 slot 的最大值 |
+
+此表依据 TS 38.211 V15.2.0 §6.3.2.1 原表 6.3.2.1-1，扩展 CP 的上限由同版本 §4.3.2 原表 4.3.2-2 的 12 符号 slot 推得。见[协议索引](../../documentation/spec_manifest.md)。
+
+```powershell
+# 五种格式，普通 CP，直接显示图形
+.venv\Scripts\python.exe -X utf8 examples/pucch/NRPUCCH_symbol_counts_demo.py
+# 只看 Format 3 的 7 符号波形
+.venv\Scripts\python.exe -X utf8 examples/pucch/NRPUCCH_symbol_counts_demo.py --format 3 --symbols 7
+# 扫描扩展 CP 下的全部符号数，只显示终端结果
+.venv\Scripts\python.exe -X utf8 examples/pucch/NRPUCCH_symbol_counts_demo.py --cp extended --all-lengths --no-plot
+```
+
+左图以蓝色标记承载 UCI 的 RE、橙色标记 DM-RS。F0 通过序列循环移位携带 UCI，图中没有独立的 DM-RS。F1 的 DM-RS 和数据按符号交替，F2 在同一符号内按子载波分开，F3/F4 的 DM-RS 占整符号。右图画出发射波形 I 分量，阴影覆盖分配时段，虚线按实际 CP 加有用部分的样点数标出符号边界。图直接显示。
+
+每个案例经过 2 样点延迟、731 Hz CFO 和 22 dB SNR 噪声，在已知延迟和 CFO 条件下解码。终端会列出起始符号、占用时长、两类 RE 数量和解码结果。新增矩阵是 Python 收发回归，独立 MATLAB 覆盖见各格式的验证报告。

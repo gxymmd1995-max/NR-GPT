@@ -4,6 +4,8 @@
 
 ## 快速开始
 
+第一次学习 NR 物理层，可以按[学习路线](documentation/learning_path.md)依次阅读公共基础、六种物理信道和参考信号，并运行对应示例。
+
 ```powershell
 python -m venv .venv
 .venv\Scripts\python -m pip install -e ".[dev,plots]"
@@ -125,7 +127,7 @@ NRGrid 示例同样生成 `examples/grid/NRGrid_demo.log`，完整打印该演�
 2026-10-26测量接口更新：NRChannel仅通过`snr_db`添加噪声；NRSRSReceiver输出每UE的SNR、RSSI和SRS-RSRP（项目工程指标，归一化功率与dB）。[信道参数](src/channel/NRChannel.md)、[接收指标口径](src/srs/NRSRSReceiver.md)。
 
 
-PUCCH Format 0已实现HARQ-ACK/SR→OFDM→时域TA/CFO/SNR信道→相关接收与DTX，运行入口[examples/pucch](examples/pucch/README.md)。[资源](src/pucch/NRPUCCH0.md)、[发射机](src/pucch/NRPUCCH0Transmitter.md)、[接收机](src/pucch/NRPUCCH0Receiver.md)；960组序列/坐标及40组时域用例已与真实MATLAB独立比对。扩展CP的固定R15寻址适配见[验证报告](documentation/validation/NRPUCCH0_validation.md)，其余PUCCH格式尚未实现。
+PUCCH Format 0已实现HARQ-ACK/SR→OFDM→时域TA/CFO/SNR信道→相关接收与DTX，运行入口[examples/pucch](examples/pucch/README.md)。[资源](src/pucch/NRPUCCH0.md)、[发射机](src/pucch/NRPUCCH0Transmitter.md)、[接收机](src/pucch/NRPUCCH0Receiver.md)；960组序列/坐标及40组时域用例已与真实MATLAB独立比对。扩展CP的固定R15寻址适配见[验证报告](documentation/validation/NRPUCCH0_validation.md)。
 
 
 PUCCH阶段绘图使用[NRPlotConfig](src/diagnostics/NRPlotConfig.md)的enabled/stages字段，默认示例直接显示case0全部28阶段、5个分页图窗；不保存图片。发送序列、OFDM内部、时域信道、接收补偿及候选判决均可按阶段名筛选，详见[运行与显示说明](examples/pucch/README.md)。
@@ -134,30 +136,30 @@ PUCCH F0新增[三UE循环移位复用示例](examples/pucch/NRPUCCH0_multiuser_
 
 PUCCH Format 1已增加[完整时域收发示例](examples/pucch/NRPUCCH1_demo.py)及[验证报告](documentation/validation/NRPUCCH1_validation.md)，支持1/2bit、DMRS、时域OCC、slot内跳频和DMRS辅助接收。
 
-PUCCH F2首版支持3～11位UCI小块编码、速率匹配、加扰QPSK、DMRS、1/2符号、连续1～16RB及slot内跳频。见[时域示例](examples/pucch/NRPUCCH2_demo.py)和[MATLAB验证](documentation/validation/NRPUCCH2_validation.md)。12位以上Polar尚未实现，接口明确拒绝。
+PUCCH F2支持加扰QPSK、DMRS、1/2符号、连续1～16RB及slot内跳频。见[时域示例](examples/pucch/NRPUCCH2_demo.py)。
 
 Common新增[Polar母码](src/common/NRPolarCode.md)、[NR LDPC码块](src/common/NRLDPCCode.md)、[经典RM](src/common/NRRMCode.md)及对应解码；CRC和完整信道速率匹配边界见类文档。
 
-当前PUCCH2/3均接入[公共UCI编码链](src/common/NRUCICode.md)，包含小块码与Polar CRC/PC/速率匹配/分段；新增[F3示例](examples/pucch/NRPUCCH3_demo.py)和[F2长UCI示例](examples/pucch/NRPUCCH2_Polar_demo.py)。当前验证见[报告](documentation/validation/NRPUCCH3_validation.md)。早期“F2仅3～11位”的限制已解除，实际长度仍受资源和码率约束。
+当前PUCCH2/3均接入[公共UCI编码链](src/common/NRUCICode.md)，包含小块码与Polar CRC/PC/速率匹配/分段；新增[F3示例](examples/pucch/NRPUCCH3_demo.py)和[F2长UCI示例](examples/pucch/NRPUCCH2_Polar_demo.py)。当前验证见[报告](documentation/validation/NRPUCCH3_validation.md)。实际UCI长度受资源和码率约束。
 
 PUCCH Format4已实现：固定1RB，SF2/4全部OCC、QPSK/π/2-BPSK、完整时域收发、小块/Polar及CRC。见[示例](examples/pucch/NRPUCCH4_demo.py)、[资源文档](src/pucch/NRPUCCH4.md)、[MATLAB验证](documentation/validation/NRPUCCH4_validation.md)。
 
-PUSCH支持1～4层CP-OFDM、QPSK至256QAM、Type-A DMRS Type1/2单/双符号及附加位置；接收端联合DMRS信道估计、ZF均衡和单码块UL-SCH解码。见[4层时域示例](examples/pusch/NRPUSCH_mimo_demo.py)、[资源文档](src/pusch/NRPUSCH.md)、[MATLAB验证报告](documentation/validation/NRPUSCH_mimo_validation.md)。多码块、DFT-s-OFDM、动态TPMI预编码、UCI/PTRS及HARQ合并待扩展。
+PUSCH支持1～4层CP-OFDM、QPSK至256QAM、Type-A DMRS Type1/2单/双符号及附加位置；接收端联合DMRS信道估计、ZF均衡和单码块UL-SCH解码。见[4层时域示例](examples/pusch/NRPUSCH_mimo_demo.py)、[资源文档](src/pusch/NRPUSCH.md)、[MATLAB验证报告](documentation/validation/NRPUSCH_mimo_validation.md)。多码块、DFT-s-OFDM、动态TPMI预编码、UCI复用及HARQ合并待扩展。
 
-PDSCH首版已实现单层CP-OFDM、QPSK至256QAM、Type-A/Type-1单符号DMRS，以及单码块DL-SCH CRC/LDPC/RV0～3有限缓冲速率匹配。见[示例](examples/pdsch/NRPDSCH_demo.py)、[类文档](src/pdsch/NRPDSCH.md)、[独立验证](documentation/validation/NRPDSCH_validation.md)。多层/多码块、预留RE、PTRS及自动调度仍待扩展。
-
-PDSCH现支持1～4层单码字、DMRS Type1/2单/双符号及附加位置，端口频域/时域OCC联合估计后ZF均衡。[4层MIMO示例](examples/pdsch/NRPDSCH_mimo_demo.py)、[独立验证](documentation/validation/NRPDSCH_mimo_validation.md)。
+PDSCH支持1～4层单码字CP-OFDM、QPSK至256QAM、Type-A DMRS Type1/2单/双符号及附加位置、OCC联合估计和ZF均衡，以及单码块DL-SCH CRC/LDPC/RV0～3有限缓冲速率匹配。见[类文档](src/pdsch/NRPDSCH.md)、[4层MIMO示例](examples/pdsch/NRPDSCH_mimo_demo.py)和[独立验证](documentation/validation/NRPDSCH_mimo_validation.md)。双码字、多码块、预留RE及自动调度待扩展。
 
 PRACH已支持R15长/短13种格式、非受限集合64前导、根/循环移位分配和独立PRACH时域收发。接收端输出前导编号及采样点时延，支持多Rx和不同移位多用户。见[三UE示例](examples/prach/NRPRACH_demo.py)、[资源文档](src/prach/NRPRACH.md)、[MATLAB验证](documentation/validation/NRPRACH_validation.md)。发送RO显式给定；受限集合及ConfigurationIndex调度、RAR/Msg3待扩展。
 
-当前全仓语句/分支覆盖率门限为100%；本轮1101项测试通过，3286条语句、982个分支全部覆盖。补齐内容、不可达逻辑依据及复现命令见[覆盖率验证](documentation/validation/coverage_validation.md)。
+CI要求全仓语句和分支覆盖率均为100%，并执行真实MATLAB参考数据的比较测试。覆盖率规则和复现命令见[覆盖率验证](documentation/validation/coverage_validation.md)。
 
-PDCCH已实现CORESET/显式候选、聚合等级1/2/4/8/16、REG交织/非交织、CRC24C/RNTI及Polar、DMRS辅助时域收发。见[示例](examples/pdcch/NRPDCCH_demo.py)和[验证报告](documentation/validation/NRPDCCH_validation.md)。全仓1141项通过，覆盖率100%。
+PDCCH已实现CORESET/显式候选、聚合等级1/2/4/8/16、REG交织/非交织、CRC24C/RNTI及Polar、DMRS辅助时域收发。见[示例](examples/pdcch/NRPDCCH_demo.py)和[验证报告](documentation/validation/NRPDCCH_validation.md)。
 
-全部已实现信道的100MHz/30kHz用例（273PRB、4096FFT、122.88MS/s）见[用例矩阵与运行入口](documentation/validation/NR100MHz_30kHz_validation.md)，包含10组带噪时域链路及真实MATLAB独立参考。
+全部已实现信道的100MHz/30kHz用例（273PRB、4096FFT、122.88MS/s）见[用例矩阵与运行入口](documentation/validation/NR100MHz_30kHz_validation.md)，涵盖物理信道、SSB、SRS、CSI-RS及上下行PT-RS，并区分时域回归与MATLAB独立比较。
 
-SSB首版已实现PSS/SSS/PBCH/DMRS、BCH载荷/CRC/Polar及完整时域收发；已知时频窗口内搜索PCI、SSB索引及Lmax4半帧位，恢复24位广播载荷和完整SFN。见[示例](examples/ssb/README.md)、[100MHz示例](examples/ssb/NRSSB_100MHz_30kHz_demo.py)及[验证报告](documentation/validation/NRSSB_validation.md)。实际MATLAB25例通过，全仓1276项/100%覆盖率。盲时间/CFO捕获、突发集调度和MIB字段打包待扩展。
+SSB首版已实现PSS/SSS/PBCH/DMRS、BCH载荷/CRC/Polar及完整时域收发；已知时频窗口内搜索PCI、SSB索引及Lmax4半帧位，恢复24位广播载荷和完整SFN。见[示例](examples/ssb/README.md)、[100MHz示例](examples/ssb/NRSSB_100MHz_30kHz_demo.py)及[验证报告](documentation/validation/NRSSB_validation.md)。实际MATLAB25例通过。盲时间/CFO捕获、突发集调度和MIB字段打包待扩展。
 
-新手阅读入口：[物理信道新手阅读指南](documentation/channel_walkthrough.md)，包含各信道的信号生成、时频位置、配置对照与接收流程。
+新手阅读入口：[物理信道新手阅读指南](documentation/channel_walkthrough.md)，介绍时频坐标、接收流程及各模块教程入口。
 
-参考信号首版：[NRCSIRS](src/csirs/NRCSIRS.md)（单端口Row1/2）、[NRUplinkPTRS](src/ptrs/NRUplinkPTRS.md)、[NRDownlinkPTRS](src/ptrs/NRDownlinkPTRS.md)（单层CP-OFDM资源与CPE测量）；[实际MATLAB验证及未覆盖项](documentation/validation/NRReferenceSignals_validation.md)。
+单层、单 DM-RS 符号的 PDSCH/PUSCH 已支持 PT-RS 自动映射和接收相位补偿。[补偿前后时域对照](examples/common/NRSharedChannel_PTRS_demo.py)
+
+参考信号：[NRCSIRS](src/csirs/NRCSIRS.md)（单端口Row1/2）、[NRUplinkPTRS](src/ptrs/NRUplinkPTRS.md)、[NRDownlinkPTRS](src/ptrs/NRDownlinkPTRS.md)（单层CP-OFDM资源、CPE测量与可选插值补偿）；[实际MATLAB验证及未覆盖项](documentation/validation/NRReferenceSignals_validation.md)。

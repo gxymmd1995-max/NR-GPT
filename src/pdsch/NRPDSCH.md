@@ -131,7 +131,7 @@ $$
 
 其中c_init为0..2^31-1整数；N_symb_slot为14/12，n_slot为帧内slot，l为上述DMRS符号，N_ID为已选DMRS ID0..65535，n_SCID为0/1；均无量纲标量。
 
-边界：无5～8层/双码字、Type-B、VRB交织、动态预编码/码本、PTRS、SSB/PBCH/CORESET预留RE速率匹配、MCS/TBS/Nref自动选择或PDCCH调度。接收联合估计假设每RB整个分配内近似恒定，附加DMRS用于联合观测，不等于已实现时变信道插值。
+边界：无5～8层/双码字、Type-B、VRB交织、动态预编码/码本、SSB/PBCH/CORESET预留RE速率匹配、MCS/TBS/Nref自动选择或PDCCH调度。接收联合估计假设每RB整个分配内近似恒定，附加DMRS用于联合观测，不等于已实现时变信道插值。
 
 ### 可复现的位置对照
 
@@ -152,3 +152,12 @@ print("坐标形状：", idx.shape, "前3行：", idx[:3])
 ```
 
 这里只打印少量坐标。要查看频率和持续时间，使用统一指南READ-1/2换算；改变slot或CP后重新计算，不能照抄表中位置。
+
+
+## 在业务链中配置 PT-RS
+
+- `ptrs_config` 是三个整数的元组 `(time_density, frequency_density, re_offset)`，默认 `None`。例如 `NRPDSCH(cell, n_prbs=8, ptrs_config=(1, 2, 0))` 表示每个符合条件的符号发送参考，频域间隔为 2 RB，RE 偏移列为 00。支持单层 CP-OFDM 且只有一个 DM-RS 符号的分配。
+- `ptrs` 返回关联的 `NRDownlinkPTRS` 资源，未启用时为 `None`。可从该资源查询位置和序列。
+- 启用时 `indices()` 只返回扣除 DM-RS 保留点和 PT-RS 之后的数据坐标。`coded_length` 随剩余数据 RE 数变化。`map_to_grid()` 一次写入数据、DM-RS 和 PT-RS，三者使用同一发送幅度 `beta`。
+
+[相位补偿前后对照示例](../../examples/common/NRSharedChannel_PTRS_demo.py)可用参数 `dl` 运行。

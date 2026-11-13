@@ -51,39 +51,64 @@ class NRSRS:
     """
 
     cell: NRCell
-    n_ports: int = 1                 # 协议端口 1000..；不等于物理天线数。
-    n_symbols: int = 1               # 连续 OFDM 符号数 1/2/4。
-    start_position: int = 0          # 从时隙末端倒数的 l_offset，0..5。
-    c_srs: int = 0                   # 带宽配置表的行 0..63。
-    b_srs: int = 0                   # 带宽配置表的层级 0..3。
-    b_hop: int = 0                   # 小于 b_srs 时开启频率跳频。
-    k_tc: int = 2                    # 梳齿间隔，单位：子载波，2/4。
-    comb_offset: int = 0             # 梳齿内偏移，0..k_tc-1。
-    cyclic_shift: int = 0            # 基础循环移位编号，comb2:0..7；comb4:0..11。
-    frequency_shift: int = 0         # n_shift，载波内 RB 单位，R15 范围 0..268。
-    frequency_position: int = 0      # n_RRC，0..67，以 4RB 为基本位置步进。
-    sequence_id: int = 0             # 10 bit R15 sequenceId，独立于 PCI。
+    n_ports: int = 1  # 协议端口 1000..；不等于物理天线数。
+    n_symbols: int = 1  # 连续 OFDM 符号数 1/2/4。
+    start_position: int = 0  # 从时隙末端倒数的 l_offset，0..5。
+    c_srs: int = 0  # 带宽配置表的行 0..63。
+    b_srs: int = 0  # 带宽配置表的层级 0..3。
+    b_hop: int = 0  # 小于 b_srs 时开启频率跳频。
+    k_tc: int = 2  # 梳齿间隔，单位：子载波，2/4。
+    comb_offset: int = 0  # 梳齿内偏移，0..k_tc-1。
+    cyclic_shift: int = 0  # 基础循环移位编号，comb2:0..7；comb4:0..11。
+    frequency_shift: int = 0  # n_shift，载波内 RB 单位，R15 范围 0..268。
+    frequency_position: int = 0  # n_RRC，0..67，以 4RB 为基本位置步进。
+    sequence_id: int = 0  # 10 bit R15 sequenceId，独立于 PCI。
     group_seq_hopping: str = "neither"
-    repetition: int = 1              # 同一频率位置上的符号重复数 1/2/4。
+    repetition: int = 1  # 同一频率位置上的符号重复数 1/2/4。
     resource_type: str = "periodic"
-    periodicity: int = 1             # 时隙单位，固定 R15 的 17 种取值。
-    slot_offset: int = 0             # 周期内时隙偏移。
-    enabled: bool = True             # 软件调度许可，不是 RRC 原始字段。
+    periodicity: int = 1  # 时隙单位，固定 R15 的 17 种取值。
+    slot_offset: int = 0  # 周期内时隙偏移。
+    enabled: bool = True  # 软件调度许可，不是 RRC 原始字段。
 
     SPEC_BASELINE: ClassVar[str] = "TS 38.211 V15.2.0; TS 38.331 V15.2.1"
-    PERIODICITIES: ClassVar[tuple[int, ...]] = (1, 2, 4, 5, 8, 10, 16, 20, 32, 40, 64, 80,
-                                               160, 320, 640, 1280, 2560)
+    PERIODICITIES: ClassVar[tuple[int, ...]] = (
+        1,
+        2,
+        4,
+        5,
+        8,
+        10,
+        16,
+        20,
+        32,
+        40,
+        64,
+        80,
+        160,
+        320,
+        640,
+        1280,
+        2560,
+    )
 
     def __post_init__(self) -> None:
         """校验固定 R15 范围及联合约束；实际频域越界在 indices/map 时检查。"""
         if not isinstance(self.cell, NRCell):
             raise TypeError("cell must be an NRCell instance")
-        for name, lower, upper in (("n_ports", 1, 4), ("n_symbols", 1, 4),
-                                   ("start_position", 0, 5), ("c_srs", 0, 63),
-                                   ("b_srs", 0, 3), ("b_hop", 0, 3), ("k_tc", 2, 4),
-                                   ("frequency_shift", 0, 268), ("frequency_position", 0, 67),
-                                   ("sequence_id", 0, 1023), ("repetition", 1, 4),
-                                   ("periodicity", 1, 2560)):
+        for name, lower, upper in (
+            ("n_ports", 1, 4),
+            ("n_symbols", 1, 4),
+            ("start_position", 0, 5),
+            ("c_srs", 0, 63),
+            ("b_srs", 0, 3),
+            ("b_hop", 0, 3),
+            ("k_tc", 2, 4),
+            ("frequency_shift", 0, 268),
+            ("frequency_position", 0, 67),
+            ("sequence_id", 0, 1023),
+            ("repetition", 1, 4),
+            ("periodicity", 1, 2560),
+        ):
             _integer(name, getattr(self, name), lower, upper)
         for name in ("n_ports", "n_symbols", "repetition"):
             if getattr(self, name) not in (1, 2, 4):
@@ -99,14 +124,21 @@ class NRSRS:
         if self.periodicity not in self.PERIODICITIES:
             raise ValueError("periodicity is outside the fixed R15 set")
         _integer("slot_offset", self.slot_offset, 0, self.periodicity - 1)
-        for name, allowed in (("group_seq_hopping", ("neither", "groupHopping", "sequenceHopping")),
-                              ("resource_type", ("periodic", "semi-persistent", "aperiodic"))):
+        for name, allowed in (
+            ("group_seq_hopping", ("neither", "groupHopping", "sequenceHopping")),
+            ("resource_type", ("periodic", "semi-persistent", "aperiodic")),
+        ):
             if not isinstance(getattr(self, name), str):
                 raise TypeError(f"{name} must be a str")
             if getattr(self, name) not in allowed:
                 raise ValueError(f"{name} must be one of {allowed}")
-        if self.resource_type == "aperiodic" and (self.periodicity, self.slot_offset) != (1, 0):
-            raise ValueError("aperiodic uses enabled as trigger permission; periodicity/offset must be 1/0")
+        if self.resource_type == "aperiodic" and (
+            self.periodicity,
+            self.slot_offset,
+        ) != (1, 0):
+            raise ValueError(
+                "aperiodic uses enabled as trigger permission; periodicity/offset must be 1/0"
+            )
         if type(self.enabled) is not bool:
             raise TypeError("enabled must be a bool")
 
@@ -143,7 +175,10 @@ class NRSRS:
     @property
     def is_candidate_slot(self) -> bool:
         """§6.4.1.4.4 的候选时隙；不表示已获得 TDD/触发/激活许可。"""
-        return self.resource_type == "aperiodic" or (self.absolute_slot - self.slot_offset) % self.periodicity == 0
+        return (
+            self.resource_type == "aperiodic"
+            or (self.absolute_slot - self.slot_offset) % self.periodicity == 0
+        )
 
     @property
     def is_active(self) -> bool:
@@ -159,13 +194,16 @@ class NRSRS:
         for l_prime in range(self.n_symbols):
             counter = l_prime // self.repetition
             if self.resource_type != "aperiodic":
-                counter += ((self.absolute_slot - self.slot_offset) // self.periodicity
-                            * (self.n_symbols // self.repetition))
+                counter += (
+                    (self.absolute_slot - self.slot_offset)
+                    // self.periodicity
+                    * (self.n_symbols // self.repetition)
+                )
             for b in range(self.b_srs + 1):
                 position = 4 * self.frequency_position // ms[b]
                 if self.b_hop < b:
                     # N_bhop 在 F_b 的连乘中强制为 1；在原始 n_b 的模中仍用表值。
-                    prior = prod(ns[self.b_hop + 1:b])
+                    prior = prod(ns[self.b_hop + 1 : b])
                     if ns[b] % 2 == 0:
                         quotient = (counter % (prior * ns[b])) // prior
                         hopping = ns[b] // 2 * quotient + quotient // 2
@@ -176,8 +214,11 @@ class NRSRS:
         comb = np.full(self.n_ports, self.comb_offset, dtype=np.int64)
         if self.n_ports == 4 and self.cyclic_shift >= self.max_cyclic_shifts // 2:
             comb[1::2] = (self.comb_offset + self.k_tc // 2) % self.k_tc
-        k0 = (12 * self.frequency_shift + comb[:, None]
-              + np.sum(12 * np.asarray(ms[:self.b_srs + 1])[:, None] * nb, axis=0))
+        k0 = (
+            12 * self.frequency_shift
+            + comb[:, None]
+            + np.sum(12 * np.asarray(ms[: self.b_srs + 1])[:, None] * nb, axis=0)
+        )
         return nb, k0
 
     def indices(self) -> np.ndarray:
@@ -193,9 +234,13 @@ class NRSRS:
         low = 12 * (self.cell.bwp_start - self.cell.n_start_grid)
         high = low + 12 * self.cell.bwp_size
         if np.any(k < low) or np.any(k >= high):
-            raise ValueError("SRS allocation is outside the active BWP; check frequency_shift and hopping bandwidth")
+            raise ValueError(
+                "SRS allocation is outside the active BWP; check frequency_shift and hopping bandwidth"
+            )
         ports = np.broadcast_to(np.arange(self.n_ports)[:, None, None], k.shape)
-        symbols = np.broadcast_to((self.symbol_start + np.arange(self.n_symbols))[None, :, None], k.shape)
+        symbols = np.broadcast_to(
+            (self.symbol_start + np.arange(self.n_symbols))[None, :, None], k.shape
+        )
         return np.stack((ports, symbols, k), axis=-1).reshape(-1, 3)
 
     def sequence_parameters(self) -> dict[str, np.ndarray]:
@@ -205,9 +250,18 @@ class NRSRS:
         PRBS 每帧重新初始化，索引使用帧内 n_slot 而非 absolute_slot。
         """
         params = NRCommon.srs_sequence_uv(
-            self.sequence_id, self.cell.n_slot, self.symbol_start, self.n_symbols,
-            self.sequence_length, self.group_seq_hopping, self.cell.symbols_per_slot)
-        shifts = (self.cyclic_shift + self.max_cyclic_shifts * np.arange(self.n_ports) // self.n_ports)
+            self.sequence_id,
+            self.cell.n_slot,
+            self.symbol_start,
+            self.n_symbols,
+            self.sequence_length,
+            self.group_seq_hopping,
+            self.cell.symbols_per_slot,
+        )
+        shifts = (
+            self.cyclic_shift
+            + self.max_cyclic_shifts * np.arange(self.n_ports) // self.n_ports
+        )
         alpha = 2 * np.pi * (shifts % self.max_cyclic_shifts) / self.max_cyclic_shifts
         return {**params, "alpha": alpha}
 
@@ -222,11 +276,21 @@ class NRSRS:
         params = self.sequence_parameters()
         n = np.arange(self.sequence_length)
         rotation = np.exp(1j * n[:, None] * params["alpha"])
-        return np.concatenate([_base_sequence(self.sequence_length, int(u), int(v))[:, None] * rotation
-                               for u, v in zip(params["u"], params["v"])], axis=0)
+        return np.concatenate(
+            [
+                _base_sequence(self.sequence_length, int(u), int(v))[:, None] * rotation
+                for u, v in zip(params["u"], params["v"])
+            ],
+            axis=0,
+        )
 
-    def map_to_grid(self, grid: NRGrid, beta: float = 1.0, owner: str = "SRS",
-                    overwrite: bool = False) -> int:
+    def map_to_grid(
+        self,
+        grid: NRGrid,
+        beta: float = 1.0,
+        owner: str = "SRS",
+        overwrite: bool = False,
+    ) -> int:
         """§6.4.1.4.3：写 beta/sqrt(P)*r，使用 NRGrid 原子冲突检查；返回 RE 数。
 
         beta 是调用者给定的非负有限线性幅度，不是 dB；不实现闭环功控。
@@ -245,8 +309,14 @@ class NRSRS:
 
     def to_dict(self) -> dict[str, object]:
         """返回可 JSON 编码的完整输入快照；cell 使用其 to_dict，保留 enabled。"""
-        return {field.name: self.cell.to_dict() if field.name == "cell" else getattr(self, field.name)
-                for field in fields(self)}
+        return {
+            field.name: (
+                self.cell.to_dict()
+                if field.name == "cell"
+                else getattr(self, field.name)
+            )
+            for field in fields(self)
+        }
 
     def to_matlab_config(self) -> dict[str, object]:
         """返回 nrSRSConfig 的固定 R15 字段；carrier 用 cell.to_matlab_config 单独建立。
@@ -255,16 +325,38 @@ class NRSRS:
         carrier 直接使用 cell.to_matlab_config 的 NFrame 与帧内 NSlot；
         不要同时把 NSlot 换成 absolute_slot，否则 MATLAB 将重复累计帧号。
         """
-        return {"NumSRSPorts": self.n_ports, "NumSRSSymbols": self.n_symbols,
-                "SymbolStart": self.symbol_start, "CSRS": self.c_srs, "BSRS": self.b_srs,
-                "BHop": self.b_hop, "KTC": self.k_tc, "KBarTC": self.comb_offset,
-                "CyclicShift": self.cyclic_shift, "FrequencyStart": self.frequency_shift,
-                "NRRC": self.frequency_position, "NSRSID": self.sequence_id,
-                "GroupSeqHopping": self.group_seq_hopping, "Repetition": self.repetition,
-                "ResourceType": self.resource_type,
-                "SRSPeriod": ([self.periodicity, self.slot_offset] if self.resource_type != "aperiodic" else "on")
-                if self.enabled else "off",
-                "SRSPositioning": False, "FrequencyScalingFactor": 1, "StartRBIndex": 0,
-                "EnableStartRBHopping": False, "EnableEightPortTDM": False,
-                "CyclicShiftHopping": False, "CombOffsetHopping": False,
-                "HoppingFinerGranularity": False, "HoppingWithRepetition": False}
+        return {
+            "NumSRSPorts": self.n_ports,
+            "NumSRSSymbols": self.n_symbols,
+            "SymbolStart": self.symbol_start,
+            "CSRS": self.c_srs,
+            "BSRS": self.b_srs,
+            "BHop": self.b_hop,
+            "KTC": self.k_tc,
+            "KBarTC": self.comb_offset,
+            "CyclicShift": self.cyclic_shift,
+            "FrequencyStart": self.frequency_shift,
+            "NRRC": self.frequency_position,
+            "NSRSID": self.sequence_id,
+            "GroupSeqHopping": self.group_seq_hopping,
+            "Repetition": self.repetition,
+            "ResourceType": self.resource_type,
+            "SRSPeriod": (
+                (
+                    [self.periodicity, self.slot_offset]
+                    if self.resource_type != "aperiodic"
+                    else "on"
+                )
+                if self.enabled
+                else "off"
+            ),
+            "SRSPositioning": False,
+            "FrequencyScalingFactor": 1,
+            "StartRBIndex": 0,
+            "EnableStartRBHopping": False,
+            "EnableEightPortTDM": False,
+            "CyclicShiftHopping": False,
+            "CombOffsetHopping": False,
+            "HoppingFinerGranularity": False,
+            "HoppingWithRepetition": False,
+        }

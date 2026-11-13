@@ -19,13 +19,18 @@ class NRUplinkCodebook:
         if n_ports not in (1, 2, 4):
             raise ValueError("R15 n_ports must be 1, 2 or 4")
         entries = UPLINK_CODEBOOKS[n_ports, rank]
-        _integer("tpmi", tpmi, 0, len(entries)-1)
+        _integer("tpmi", tpmi, 0, len(entries) - 1)
         denominator_squared, rows = entries[tpmi]
         return np.asarray(rows, dtype=np.complex128) / np.sqrt(denominator_squared)
 
     @staticmethod
-    def select(channel: np.ndarray, noise_power: float, tx_power: float = 1.0,
-               max_rank: int | None = None, allowed_tpmi: dict[int, list[int]] | None = None) -> dict:
+    def select(
+        channel: np.ndarray,
+        noise_power: float,
+        tx_power: float = 1.0,
+        max_rank: int | None = None,
+        allowed_tpmi: dict[int, list[int]] | None = None,
+    ) -> dict:
         """在共同观测频点的H[F,Rx,Tx]上搜索RI/TPMI，最大化平均log2det。
 
         比较时W除以其Frobenius范数，使候选使用相同UE总发送功率tx_power。
@@ -34,8 +39,15 @@ class NRUplinkCodebook:
         平分时确定性选择较低RI/TPMI；零信道返回None建议。不是标准强制反馈算法。
         """
         h = np.asarray(channel, dtype=np.complex128)
-        if h.ndim != 3 or not all(h.shape) or h.shape[2] not in (1, 2, 4) or not np.all(np.isfinite(h)):
-            raise ValueError("channel must be finite nonempty [frequency,rx,tx], tx=1/2/4")
+        if (
+            h.ndim != 3
+            or not all(h.shape)
+            or h.shape[2] not in (1, 2, 4)
+            or not np.all(np.isfinite(h))
+        ):
+            raise ValueError(
+                "channel must be finite nonempty [frequency,rx,tx], tx=1/2/4"
+            )
         for name, value in (("noise_power", noise_power), ("tx_power", tx_power)):
             if isinstance(value, bool) or not isinstance(value, (int, float)):
                 raise TypeError(f"{name} must be a real number")
@@ -58,22 +70,42 @@ class NRUplinkCodebook:
                     raise ValueError("allowed TPMI lists must not repeat indices")
         candidates = []
         rho = tx_power / max(noise_power, NRUplinkCodebook.NOISE_FLOOR)
-        for rank in range(1, limit+1):
-            entries = (range(len(UPLINK_CODEBOOKS[h.shape[2], rank])) if allowed_tpmi is None
-                       else sorted(allowed_tpmi.get(rank, [])))
+        for rank in range(1, limit + 1):
+            entries = (
+                range(len(UPLINK_CODEBOOKS[h.shape[2], rank]))
+                if allowed_tpmi is None
+                else sorted(allowed_tpmi.get(rank, []))
+            )
             for tpmi in entries:
                 w = NRUplinkCodebook.matrix(h.shape[2], rank, tpmi)
                 effective = h @ (w / np.linalg.norm(w))
-                eigenvalues = np.linalg.eigvalsh(effective.conj().transpose(0, 2, 1) @ effective)
-                score = float(np.mean(np.sum(np.log1p(rho*np.maximum(eigenvalues, 0))/np.log(2), axis=1)))
+                eigenvalues = np.linalg.eigvalsh(
+                    effective.conj().transpose(0, 2, 1) @ effective
+                )
+                score = float(
+                    np.mean(
+                        np.sum(
+                            np.log1p(rho * np.maximum(eigenvalues, 0)) / np.log(2),
+                            axis=1,
+                        )
+                    )
+                )
                 candidates.append({"ri": rank, "tpmi": tpmi, "score_bps_hz": score})
         best = candidates[0]
         for candidate in candidates[1:]:
             if candidate["score_bps_hz"] > best["score_bps_hz"] + 1e-10:
                 best = candidate
         present = bool(np.any(h)) and tx_power > 0
-        return {"ri": best["ri"] if present else None, "tpmi": best["tpmi"] if present else None,
-                "precoder": NRUplinkCodebook.matrix(h.shape[2], best["ri"], best["tpmi"]) if present else None,
-                "score_bps_hz": best["score_bps_hz"], "candidates": candidates,
-                "scoring_normalization": "W / FrobeniusNorm(W); fixed total UE tx_power",
-                "noise_power_used": max(noise_power, NRUplinkCodebook.NOISE_FLOOR)}
+        return {
+            "ri": best["ri"] if present else None,
+            "tpmi": best["tpmi"] if present else None,
+            "precoder": (
+                NRUplinkCodebook.matrix(h.shape[2], best["ri"], best["tpmi"])
+                if present
+                else None
+            ),
+            "score_bps_hz": best["score_bps_hz"],
+            "candidates": candidates,
+            "scoring_normalization": "W / FrobeniusNorm(W); fixed total UE tx_power",
+            "noise_power_used": max(noise_power, NRUplinkCodebook.NOISE_FLOOR),
+        }
